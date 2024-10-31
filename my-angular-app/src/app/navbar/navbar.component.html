@@ -1,0 +1,15 @@
+<nav>
+    <ul>
+        <li (click)="navigateTo('/')">Home</li>
+
+        <ng-container *ngIf="!isLoggedIn()">
+            <li (click)="navigateTo('/register')">Register</li>
+            <li (click)="navigateTo('/login')">Login</li>
+        </ng-container>
+
+        <ng-container *ngIf="isLoggedIn()">
+            <li (click)="navigateTo('/categories')">Categories</li>
+            <li (click)="logout()">Logout</li>
+        </ng-container>
+    </ul>
+</nav>
