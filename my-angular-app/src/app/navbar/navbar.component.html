@@ -9,6 +9,7 @@
 
         <ng-container *ngIf="isLoggedIn()">
             <li (click)="navigateTo('/categories')">Categories</li>
+            <li (click)="navigateTo('/add-product')">Add product</li>
             <li (click)="logout()">Logout</li>
         </ng-container>
     </ul>
