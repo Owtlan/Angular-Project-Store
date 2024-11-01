@@ -14,6 +14,8 @@ import { environment } from 'src/environments/environment';
 import { RegisterComponent } from './user/register/register.component';
 import { LoginComponent } from './user/login/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { ProductAddComponent } from './product-add/product-add.component';
+import { provideStorage, getStorage } from '@angular/fire/storage';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     HomeComponent,
     RegisterComponent,
     LoginComponent,
-    NavbarComponent
+    NavbarComponent,
+    ProductAddComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +33,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage())
   ],
   providers: [],
   bootstrap: [AppComponent]
