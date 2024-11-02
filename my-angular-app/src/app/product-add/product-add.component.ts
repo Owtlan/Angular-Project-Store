@@ -9,18 +9,20 @@ import { Product } from '../model/product.model';
 })
 export class ProductAddComponent {
   product: Product = {
+    id: '',
     name: '',
     description: '',
     price: 0,
-    imageUrl: ''
+    imageUrl: '',
+    ownerId: '',
   };
-  selectedFile: File | null = null; 
+  selectedFile: File | null = null;
 
   constructor(private productService: ProductService) { }
 
- 
+
   onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];  
+    this.selectedFile = event.target.files[0];
   }
 
 
@@ -29,8 +31,8 @@ export class ProductAddComponent {
       this.productService.addProductWithImage(this.product, this.selectedFile)
         .then(() => {
           console.log('Product added successfully!');
-          this.product = { name: '', description: '', price: 0, imageUrl: '' };
-          this.selectedFile = null; 
+          this.product = { id: '', name: '', description: '', price: 0, imageUrl: '', ownerId: '' }; // Ресетни product
+          this.selectedFile = null;
         })
         .catch(error => {
           console.error('Error adding product:', error);
