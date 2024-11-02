@@ -1,16 +1,17 @@
 <form (ngSubmit)="addProduct()">
-    <label>Product Name:</label>
-    <input [(ngModel)]="product.name" name="productName" required />
-  
-    <label>Product Description:</label>
-    <textarea [(ngModel)]="product.description" name="productDescription" required></textarea>
-  
-    <label>Product Price:</label>
-    <input type="number" [(ngModel)]="product.price" name="productPrice" required />
-  
-    <label>Product Image:</label>
-    <input type="file" (change)="onFileSelected($event)" />
-  
-    <button type="submit">Add Product</button>
-  </form>
+  <label>Product Name:</label>
+  <input [(ngModel)]="product.name" name="productName" required />
+
+  <label>Product Description:</label>
+  <textarea [(ngModel)]="product.description" name="productDescription" required></textarea>
+
+  <label>Product Price:</label>
+  <input type="number" [(ngModel)]="product.price" name="productPrice" required />
+
+  <label>Product Image:</label>
+  <input type="file" (change)="onFileSelected($event)" />
+
+  <button type="submit">Add Product</button>
+</form>
+
   
