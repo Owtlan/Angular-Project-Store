@@ -1,0 +1,10 @@
+<div *ngIf="product">
+    <h2>{{ product.name }}</h2>
+    <img [src]="product.imageUrl" alt="{{ product.name }}" />
+    <p>{{ product.description }}</p>
+    <p>Цена: {{ product.price | currency:'BGN' }}</p>
+    
+    <!-- Добави тук бутони за edit и delete, ако потребителят е собственик -->
+    <button *ngIf="isProductOwner(product)" (click)="editProduct(product)">Edit</button>
+    <button *ngIf="isProductOwner(product)" (click)="deleteProduct(product)">Delete</button>
+</div>
