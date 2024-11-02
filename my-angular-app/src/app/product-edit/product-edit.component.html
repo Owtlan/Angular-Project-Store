@@ -1,0 +1,23 @@
+<div *ngIf="product">
+    <h2>Редактиране на {{ product.name }}</h2>
+    <form (ngSubmit)="updateProduct()">
+      <div>
+        <label>Име:</label>
+        <input type="text" [(ngModel)]="product.name" name="name" required />
+      </div>
+      <div>
+        <label>Описание:</label>
+        <textarea [(ngModel)]="product.description" name="description" required></textarea>
+      </div>
+      <div>
+        <label>Цена:</label>
+        <input type="number" [(ngModel)]="product.price" name="price" required />
+      </div>
+      <div>
+        <label>URL на изображение:</label>
+        <input type="text" [(ngModel)]="product.imageUrl" name="imageUrl" required />
+      </div>
+      <button type="submit">Запази промени</button>
+    </form>
+  </div>
+  
