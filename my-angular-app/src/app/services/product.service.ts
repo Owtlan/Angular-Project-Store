@@ -1,20 +1,42 @@
 import { Injectable } from "@angular/core";
-import { Firestore, collection, addDoc, doc, setDoc, collectionData } from '@angular/fire/firestore';
-import { Storage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage';
+import { HttpClient } from "@angular/common/http";
+import { Firestore, collection, doc, setDoc, collectionData, deleteDoc, docData } from '@angular/fire/firestore';
 import { Product } from "../model/product.model";
-import { Observable } from 'rxjs'
-
-
+import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { Auth } from '@angular/fire/auth';
 
 @Injectable({
     providedIn: 'root'
 })
-
-
 export class ProductService {
+    deleteImageFromCloudinary(publicId: string): Promise<void> {
+        const url = `https://api.cloudinary.com/v1_1/${environment.cloudinary.cloudName}/image/destroy`;
+        
+        return this.http.post(url, {
+            public_id: publicId,
+          
+        }).toPromise().then(() => {
+            console.log('Изображението е успешно изтрито от Cloudinary');
+        }).catch(error => {
+            console.error('Грешка при изтриване на изображението от Cloudinary:', error);
+            throw error;
+        });
+    }
+    async updateProduct(product: Product): Promise<void> {
+        const productDocRef = doc(this.productsCollection, product.id);
+        await setDoc(productDocRef, product);
+    }
+
+    async deleteProduct(productId: string | undefined): Promise<void> {
+        if (!productId) throw new Error("Product ID is undefined");
+        const productDocRef = doc(this.productsCollection, productId);
+        await deleteDoc(productDocRef);
+    }
+
     private productsCollection;
 
-    constructor(private firestore: Firestore, private storage: Storage) {
+    constructor(private firestore: Firestore, private http: HttpClient, private auth: Auth) {
         this.productsCollection = collection(this.firestore, 'products');
     }
 
@@ -27,20 +49,32 @@ export class ProductService {
         return collectionData(this.productsCollection, { idField: 'id' }) as Observable<Product[]>;
     }
 
-    async uploadImage(file: File): Promise<string> {
-        const filePath = `product-image/${file.name}`;
-        const storageRef = ref(this.storage, filePath);
+    async uploadImageToCloudinary(file: File): Promise<string> {
+        const url = `https://api.cloudinary.com/v1_1/${environment.cloudinary.cloudName}/image/upload`;
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', 'vpseafg5 ');  
 
-        await uploadBytes(storageRef, file);
-
-        return await getDownloadURL(storageRef);
+        const response = await this.http.post<any>(url, formData).toPromise();
+        return response.secure_url; 
     }
 
     async addProductWithImage(product: Product, file: File): Promise<void> {
-        const imageUrl = await this.uploadImage(file); 
-        const productWithImage = { ...product, imageUrl };
-    
-        const newDocRef = doc(this.productsCollection); 
+        const imageUrl = await this.uploadImageToCloudinary(file);
+        const currentUser = this.auth.currentUser;
+        const productWithImage = {
+            ...product,
+            imageUrl,
+            ownerId: currentUser ? currentUser.uid : ''
+        };
+
+        const newDocRef = doc(this.productsCollection);
         return setDoc(newDocRef, { ...productWithImage, id: newDocRef.id });
     }
+
+    getProductById(productId: string): Observable<Product> {
+        const productDocRef = doc(this.productsCollection, productId);
+        return docData(productDocRef, { idField: 'id' }) as Observable<Product>;
+    }
+
 }
