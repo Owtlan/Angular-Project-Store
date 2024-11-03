@@ -20,6 +20,10 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductEditComponent } from './product-edit/product-edit.component';
+import { CartComponent } from './cart/cart.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { OrderComponent } from './order/order.component';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +34,9 @@ import { ProductEditComponent } from './product-edit/product-edit.component';
     NavbarComponent,
     ProductAddComponent,
     ProductDetailComponent,
-    ProductEditComponent
+    ProductEditComponent,
+    CartComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +46,8 @@ import { ProductEditComponent } from './product-edit/product-edit.component';
     provideFirebaseApp(() => initializeApp(environment.firebase)), 
     provideAuth(() => getAuth()), 
     provideFirestore(() => getFirestore()),  
-    provideStorage(() => getStorage())
+    provideStorage(() => getStorage()),
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
