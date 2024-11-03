@@ -1,0 +1,24 @@
+<div class="order-container">
+    <h2>Поръчка на продукти</h2>
+    <form (ngSubmit)="placeOrder()">
+      <div>
+        <label for="address">Адрес:</label>
+        <input type="text" id="address" [(ngModel)]="shippingDetails.address" name="address" required />
+      </div>
+      <div>
+        <label for="city">Град:</label>
+        <input type="text" id="city" [(ngModel)]="shippingDetails.city" name="city" required />
+      </div>
+      <div>
+        <label for="postalCode">Пощенски код:</label>
+        <input type="text" id="postalCode" [(ngModel)]="shippingDetails.postalCode" name="postalCode" required />
+      </div>
+      <div>
+        <label for="phoneNumber">Телефон:</label>
+        <input type="text" id="phoneNumber" [(ngModel)]="shippingDetails.phoneNumber" name="phoneNumber" required />
+      </div>
+      <button type="submit">Поръчай</button>
+    </form>
+</div>
+
+  
