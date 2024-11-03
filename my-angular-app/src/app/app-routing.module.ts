@@ -6,7 +6,8 @@ import { RegisterComponent } from './user/register/register.component';
 import { ProductAddComponent } from './product-add/product-add.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductEditComponent } from './product-edit/product-edit.component'; // Импортирай новия компонент
-
+import { CartComponent } from './cart/cart.component';
+import { OrderComponent } from './order/order.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'add-product', component: ProductAddComponent },
   { path: 'product/:id', component: ProductDetailComponent },
   { path: 'product/edit/:id', component: ProductEditComponent },
-
+  { path: 'cart', component: CartComponent },
+  { path: 'order', component: OrderComponent },
 ];
 
 @NgModule({
