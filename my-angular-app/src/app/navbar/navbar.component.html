@@ -8,9 +8,16 @@
         </ng-container>
 
         <ng-container *ngIf="isLoggedIn()">
+            <li *ngIf="userEmail">Logged in as: {{ userEmail }}</li>
             <li (click)="navigateTo('/categories')">Categories</li>
             <li (click)="navigateTo('/add-product')">Add product</li>
             <li (click)="logout()">Logout</li>
+            <li>
+                  <fa-icon [icon]="faCartShopping"></fa-icon>
+                <button (click)="goToCart()" class="cart-button">
+                    <span class="cart-count" *ngIf="cartCount > 0">{{ cartCount }}</span>
+                </button>
+            </li>
         </ng-container>
     </ul>
 </nav>
