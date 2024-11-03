@@ -1,21 +1,49 @@
 nav {
-    background-color: #333;
-    padding: 10px;
-  }
-  
-  nav ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  nav ul li {
-    display: inline;
-    margin-right: 20px;
-    color: white;
-    cursor: pointer;
-  }
-  
-  nav ul li:hover {
-    text-decoration: underline;
-  }
-  
+  background-color: #333;
+  padding: 10px;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 20px;
+  color: white;
+  cursor: pointer;
+}
+
+nav ul li:hover {
+  text-decoration: underline;
+}
+
+.cart-button {
+  position: relative;
+  /* За да можем да позиционираме броя */
+  background: none;
+  /* Премахваме фона */
+  border: none;
+  /* Премахваме границата */
+  cursor: pointer;
+  /* Показваме, че е кликаем */
+}
+
+.cart-count {
+  position: absolute;
+  top: -10px;
+  /* Позиция нагоре */
+  right: -10px;
+  /* Позиция надясно */
+  background-color: red;
+  /* Цвета на кръга */
+  color: white;
+  /* Цвета на текста */
+  border-radius: 50%;
+  /* Правим го кръгло */
+  padding: 5px 10px;
+  /* Някакво отстояние за размера */
+  font-size: 14px;
+  /* Размер на текста */
+}
