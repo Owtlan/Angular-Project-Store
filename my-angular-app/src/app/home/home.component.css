@@ -1,3 +1,71 @@
+.position-buy-btn {
+    display: flex;
+    justify-content: end;
+}
+
+.buy-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+
+}
+
+.buy-btn:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+.buy-btn:active {
+    transform: scale(0.95);
+}
+
+
+.buy-btn fa-icon {
+    margin-left: 5px;
+    font-size: 1rem;
+}
+
+.price-and-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 10px;
+}
+
+.product-price {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+
+.learn-more-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 0;
+}
+
+
+.learn-more-btn:hover {
+    background-color: #0056b3;
+}
+
+
+
 
 .home-container {
     display: flex;
@@ -32,7 +100,6 @@
 }
 
 button {
-    width: 100%;
     padding: 10px;
     margin-top: 10px;
     border: none;
@@ -59,6 +126,9 @@ button:hover {
 }
 
 .product-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     padding: 15px;
     border: 1px solid #ddd;
     border-radius: 8px;
