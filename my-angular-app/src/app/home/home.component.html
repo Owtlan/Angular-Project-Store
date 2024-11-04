@@ -9,18 +9,28 @@
             </div>
             <div class="filter-group">
                 <label for="category">Категория</label>
-                <select id="category" [(ngModel)]="filters.category" name="category">
+                <select id="category" [(ngModel)]="filters.category" name="category" (change)="applyFilters()">
                     <option value="">Всички</option>
-                    <option value="keyboard">Клавиатури</option>
-                    <option value="mouse">Мишки</option>
+                    <option value="keyboard">keyboard</option>
+                    <option value="mouse">mouse</option>
                     <option value="phone">Телефони</option>
-                
+                    <option value="tv">Телевизори</option>
                 </select>
             </div>
             <div class="filter-group">
-                <label for="priceRange">Цена до</label>
-                <input type="number" id="priceRange" [(ngModel)]="filters.price" name="priceRange" />
+                <label for="priceRange">Цена</label>
+                <select id="priceRange" [(ngModel)]="filters.price" name="priceRange" (change)="applyFilters()">
+                    <option value="">Всички цени</option>
+                    <option value="0-99">0 - 99 лв</option>
+                    <option value="100-199">100 - 199 лв</option>
+                    <option value="200-299">200 - 299 лв</option>
+                    <option value="300-399">300 - 399 лв</option>
+                    <option value="400-499">400 - 499 лв</option>
+                    <option value="500-1000">500 - 1000 лв</option>
+                    <option value="1000+">Над 1000 лв</option>
+                </select>
             </div>
+
             <button type="submit">Приложи филтър</button>
             <button type="button" (click)="clearFilters()">Изчисти филтъра</button>
         </form>
@@ -31,15 +41,21 @@
         <h2>Нашите Продукти</h2>
         <div class="product-grid">
             <div class="product-card" *ngFor="let product of filteredProducts">
-                <img [src]="product.imageUrl" [alt]="product.name" />
                 <h3>{{ product.name }}</h3>
-                <p>{{ product.description }}</p>
-                <p>Цена: {{ product.price | currency:'BGN' }}</p>
-                <button *ngIf="product.ownerId !== userId" (click)="addToCart(product)">Добави в количката</button>
-                <button *ngIf="product.id" (click)="goToDetail(product.id)">Детайли</button>
+                <img [src]="product.imageUrl" [alt]="product.name" />
+                <!-- <p>{{ product.description }}</p> -->
+
+                <div class="position-buy-btn" *ngIf="isLoggedIn()">
+                    <button class="buy-btn" *ngIf="product.ownerId !== userId" (click)="addToCart(product)">Buy <fa-icon
+                            [icon]="faCartShopping"></fa-icon></button>
+                </div>
+
+                <div class="price-and-button">
+                    <button *ngIf="product.id" class="learn-more-btn" (click)="goToDetail(product.id)">Learn
+                        more</button>
+                    <p class="product-price">Цена: {{ product.price | currency:'BGN' }}</p>
+                </div>
             </div>
         </div>
     </section>
 </div>
-
-
