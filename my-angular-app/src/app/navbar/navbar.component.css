@@ -1,49 +1,85 @@
-nav {
-  background-color: #333;
-  padding: 10px;
+.navbar {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-
-nav ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-nav ul li {
-  display: inline;
-  margin-right: 20px;
-  color: white;
+.logo {
+  width: 100px; 
+  height: auto; 
+  margin-right: 10px;
   cursor: pointer;
 }
+.shop-name-postion {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
 
-nav ul li:hover {
-  text-decoration: underline;
+
+.user-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 5px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.user-email {
+  font-size: 14px;
+  color: #333;
+}
+
+.cart-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .cart-button {
-  position: relative;
-  /* За да можем да позиционираме броя */
   background: none;
-  /* Премахваме фона */
   border: none;
-  /* Премахваме границата */
   cursor: pointer;
-  /* Показваме, че е кликаем */
+  position: relative;
+  padding: 0;
+  display: flex;
+  align-items: center;
 }
 
 .cart-count {
-  position: absolute;
-  top: -10px;
-  /* Позиция нагоре */
-  right: -10px;
-  /* Позиция надясно */
-  background-color: red;
-  /* Цвета на кръга */
+  background-color: #ff5722;
   color: white;
-  /* Цвета на текста */
-  border-radius: 50%;
-  /* Правим го кръгло */
-  padding: 5px 10px;
-  /* Някакво отстояние за размера */
+  border-radius: 12px;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-left: 6px;
+}
+
+.cart-total {
   font-size: 14px;
-  /* Размер на текста */
+  font-weight: bold;
+  color: #333;
+  margin-left: 15px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 15px;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-links li {
+  cursor: pointer;
+  font-size: 16px;
+  color: #007bff;
+  transition: color 0.3s;
+}
+
+.nav-links li:hover {
+  color: #0056b3;
 }
