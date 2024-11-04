@@ -1,23 +1,29 @@
-<nav>
-    <ul>
-        <li (click)="navigateTo('/')">Home</li>
+<nav class="navbar">
+  <div class="user-info" *ngIf="isLoggedIn()">
+    <div class="shop-name-postion">
 
-        <ng-container *ngIf="!isLoggedIn()">
-            <li (click)="navigateTo('/register')">Register</li>
-            <li (click)="navigateTo('/login')">Login</li>
-        </ng-container>
+      <img (click)="navigateTo('/')" src="assets/cropped-pixelspot.png" alt="PixelSpot Logo" class="logo" />
+      <span *ngIf="userEmail" class="user-email">Logged in as: {{ userEmail }}</span>
+    </div>
+    <div class="cart-info">
+      <button (click)="goToCart()" class="cart-button">
+        <fa-icon [icon]="faCartShopping"></fa-icon>
+        <span class="cart-count" *ngIf="cartCount > 0">{{ cartCount }}</span>
+      </button>
+      <span class="cart-total" *ngIf="totalSum > 0">{{ totalSum | currency:'BGN' }}</span>
+    </div>
+  </div>
 
-        <ng-container *ngIf="isLoggedIn()">
-            <li *ngIf="userEmail">Logged in as: {{ userEmail }}</li>
-            <li (click)="navigateTo('/categories')">Categories</li>
-            <li (click)="navigateTo('/add-product')">Add product</li>
-            <li (click)="logout()">Logout</li>
-            <li>
-                  <fa-icon [icon]="faCartShopping"></fa-icon>
-                <button (click)="goToCart()" class="cart-button">
-                    <span class="cart-count" *ngIf="cartCount > 0">{{ cartCount }}</span>
-                </button>
-            </li>
-        </ng-container>
-    </ul>
+  <ul class="nav-links">
+    <li (click)="navigateTo('/')">Home</li>
+    <ng-container *ngIf="!isLoggedIn()">
+      <li (click)="navigateTo('/register')">Register</li>
+      <li (click)="navigateTo('/login')">Login</li>
+    </ng-container>
+    <ng-container *ngIf="isLoggedIn()">
+      <li (click)="navigateTo('/categories')">Categories</li>
+      <li (click)="navigateTo('/add-product')">Add product</li>
+      <li (click)="logout()">Logout</li>
+    </ng-container>
+  </ul>
 </nav>
