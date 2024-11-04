@@ -4,22 +4,24 @@ import { Product } from '../model/product.model';
 import { Auth, authState } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { CartService } from '../services/cart.service';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
- 
+
 export class HomeComponent implements OnInit {
   products: Product[] = [];
   filteredProducts: Product[] = [];
   filters = { productName: '', category: '', price: null };
   userId: string | null = null
+  faCartShopping = faCartShopping;
 
 
-
-  constructor(private productService: ProductService, private auth: Auth, private router: Router, private cartService: CartService) { }
+  constructor(private productService: ProductService, private auth: Auth, private router: Router, private cartService: CartService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.loadProducts();
@@ -49,10 +51,42 @@ export class HomeComponent implements OnInit {
       const matchesCategory = this.filters.category
         ? product.category === this.filters.category
         : true;
-      const matchesPrice = this.filters.price ? product.price <= this.filters.price : true;
+
+      let matchesPrice = true;
+      if (this.filters.price) {
+        const [minPrice, maxPrice] = this.getPriceRange(this.filters.price);
+        matchesPrice = maxPrice
+          ? product.price >= minPrice && product.price <= maxPrice
+          : product.price >= minPrice;
+      }
+
       return matchesName && matchesCategory && matchesPrice;
     });
   }
+
+
+  getPriceRange(priceRange: string): [number, number | null] {
+    switch (priceRange) {
+      case '0-99':
+        return [0, 99];
+      case '100-199':
+        return [100, 199];
+      case '200-299':
+        return [200, 299];
+      case '300-399':
+        return [300, 399];
+      case '400-499':
+        return [400, 499];
+      case '500-1000':
+        return [500, 1000];
+      case '1000+':
+        return [1000, null]; // Без горна граница за продукти над 1000 лв
+      default:
+        return [0, null];
+    }
+  }
+
+
 
   clearFilters(): void {
     this.filters = { productName: '', category: '', price: null };
@@ -76,7 +110,9 @@ export class HomeComponent implements OnInit {
     console.log(`Добавен продукт в количката: ${product.name}`);
   }
 
-
+  isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
+  }
 
 
 }
