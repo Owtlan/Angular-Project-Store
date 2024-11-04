@@ -4,6 +4,8 @@ import { ProductService } from '../services/product.service';
 import { Product } from '../model/product.model';
 import { Auth, authState } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { CartService } from '../services/cart.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -13,18 +15,20 @@ import { Router } from '@angular/router';
 export class ProductDetailComponent implements OnInit {
   product: Product | null = null;
   currentUserId: string | null = null;
- 
+
 
   constructor(
+    private cartService: CartService,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private productService: ProductService,
     private auth: Auth,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     authState(this.auth).subscribe(user => {
-      this.currentUserId = user ? user.uid : null; 
+      this.currentUserId = user ? user.uid : null;
     });
 
     this.route.params.subscribe(params => {
@@ -45,11 +49,26 @@ export class ProductDetailComponent implements OnInit {
   }
 
   isProductOwner(product: Product): boolean {
-    return product.ownerId === this.currentUserId; // Проверка дали текущият потребител е собственик
+    return product.ownerId === this.currentUserId;
   }
 
   editProduct(product: Product) {
-    this.router.navigate(['/product/edit', product.id]); // Пренасочва към новата страница за редактиране
+    this.router.navigate(['/product/edit', product.id]);
+  }
+
+
+  onBuyClick(product: Product): void {
+    if (this.authService.isLoggedIn()) {
+      this.addToCart(product);
+    } else {
+      alert('Моля, логнете се или се регистрирайте, за да добавите продукта в количката.');
+      this.router.navigate(['/login'])
+    }
+  }
+
+  addToCart(product: Product): void {
+    this.cartService.addToCart(product);
+    console.log(`Добавен продукт в количката: ${product.name}`);
   }
 
   deleteProduct(product: Product) {
