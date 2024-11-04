@@ -14,23 +14,32 @@ export class NavbarComponent implements OnInit {
 
   userEmail: string | null = null;
   cartCount: number = 0;
+  totalSum: number = 0;
   faCartShopping = faCartShopping;
 
-  
+
   constructor(private router: Router,
     private authService: AuthService,
     private cartService: CartService,
     private auth: Auth) { }
 
   ngOnInit(): void {
-    // Наблюдавай състоянието на потребителя, за да вземем имейла
     authState(this.auth).subscribe(user => {
-      this.userEmail = user ? user.email : null;
+      if (user) {
+        this.userEmail = user.email;
+        this.cartService.setUserId(user.uid);
+      } else {
+        this.userEmail = null;
+        this.cartService.setUserId(null);
+      }
     });
 
-    // Вземи броя на продуктите в количката
     this.cartService.cartCount$.subscribe(count => {
       this.cartCount = count;
+    });
+
+    this.cartService.totalSum$.subscribe(total => {
+      this.totalSum = total;
     });
   }
 
@@ -46,6 +55,8 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     this.authService.logout()
+    this.userEmail = null;
+    this.cartService.setUserId(null);
     this.navigateTo('/')
   }
 
