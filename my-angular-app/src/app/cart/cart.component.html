@@ -1,9 +1,9 @@
 <h2>Моята Количка</h2>
 <div *ngFor="let item of cartItems" class="cart-item">
-    <img [src]="item.imageUrl" alt="{{ item.name }}" class="product-image" /> <!-- Показваме изображение на продукта -->
+    <img [src]="item.imageUrl" alt="{{ item.name }}" class="product-image" />
     <h3>{{ item.name }}</h3>
     <p>Цена: {{ item.price | currency:'BGN' }}</p>
-    <button (click)="removeFromCart(item)">X</button> <!-- Бутон за премахване -->
+    <button (click)="removeFromCart(item)">X</button>
 </div>
-<p>Обща сума: {{ getTotalPrice() | currency:'BGN' }}</p>
-<li (click)="navigateTo('/order')">Поръчка</li>
+<p class="total-price">Обща сума: {{ getTotalPrice() | currency:'BGN' }}</p>
+<button class="order-button" (click)="navigateTo('/order')">Поръчка</button>
