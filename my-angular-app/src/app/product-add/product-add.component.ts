@@ -31,7 +31,7 @@ export class ProductAddComponent {
       this.productService.addProductWithImage(this.product, this.selectedFile)
         .then(() => {
           console.log('Product added successfully!');
-          this.product = { id: '', name: '', description: '', price: 0, imageUrl: '', ownerId: '' }; // Ресетни product
+          this.product = { id: '', name: '', description: '', price: 0, imageUrl: '', ownerId: '' };
           this.selectedFile = null;
         })
         .catch(error => {
