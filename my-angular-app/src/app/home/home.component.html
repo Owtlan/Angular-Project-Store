@@ -1,6 +1,6 @@
 <div class="home-container">
 
-    <aside class="filter-sidebar">
+    <aside class="filter-sidebar" *ngIf="isLoggedIn()">
         <h3>Филтри</h3>
         <form (ngSubmit)="applyFilters()">
             <div class="filter-group">
@@ -41,9 +41,11 @@
         <h2>Нашите Продукти</h2>
         <div class="product-grid">
             <div class="product-card" *ngFor="let product of filteredProducts">
+                <button *ngIf="product.id" class="glow-on-hover" (click)="goToDetail(product.id)">Learn
+                    more</button>
+
                 <h3>{{ product.name }}</h3>
                 <img [src]="product.imageUrl" [alt]="product.name" />
-                <!-- <p>{{ product.description }}</p> -->
 
                 <div class="position-buy-btn" *ngIf="isLoggedIn()">
                     <button class="buy-btn" *ngIf="product.ownerId !== userId" (click)="addToCart(product)">Buy <fa-icon
@@ -51,8 +53,6 @@
                 </div>
 
                 <div class="price-and-button">
-                    <button *ngIf="product.id" class="learn-more-btn" (click)="goToDetail(product.id)">Learn
-                        more</button>
                     <p class="product-price">Цена: {{ product.price | currency:'BGN' }}</p>
                 </div>
             </div>
