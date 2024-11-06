@@ -14,6 +14,7 @@ export class CartService {
 
   cartCount$ = this.cartCount.asObservable();
   totalSum$ = this.totalSum.asObservable()
+  cartItems$ = new BehaviorSubject<Product[]>([]);
 
   constructor() {
     const savedUserId = localStorage.getItem('userId');
@@ -39,6 +40,7 @@ export class CartService {
       this.cart = savedCart ? JSON.parse(savedCart) : [];
       this.cartCount.next(this.cart.length);
       this.updateTotalSum();
+      this.cartItems$.next(this.cart)
     }
   }
 
@@ -51,8 +53,9 @@ export class CartService {
 
   addToCart(product: Product): void {
     this.cart.push(product);
-    this.cartCount.next(this.cart.length); // Актуализираме броя на продуктите в количката
+    this.cartCount.next(this.cart.length);
     this.updateTotalSum()
+    this.cartItems$.next(this.cart)
     this.saveCart();
   }
 
@@ -70,6 +73,7 @@ export class CartService {
       this.cart.splice(index, 1);
       this.cartCount.next(this.cart.length);
       this.updateTotalSum();
+      this.cartItems$.next(this.cart)
       this.saveCart();
     }
   }
@@ -78,6 +82,7 @@ export class CartService {
     this.cart = []
     this.cartCount.next(this.cart.length);
     this.totalSum.next(0);
+    this.cartItems$.next([])
     if (this.userId) {
       localStorage.removeItem(`cart_${this.userId}`);
     }
