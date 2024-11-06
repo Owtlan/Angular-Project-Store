@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { CartService } from '../services/cart.service';
 import { Auth, authState } from '@angular/fire/auth';
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faUser } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-navbar',
@@ -15,8 +15,10 @@ export class NavbarComponent implements OnInit {
   userEmail: string | null = null;
   cartCount: number = 0;
   totalSum: number = 0;
+  cartItems: any[] = []
   faCartShopping = faCartShopping;
-
+  faUserIcon = faUser;
+  showUserMenu = false;
 
   constructor(private router: Router,
     private authService: AuthService,
@@ -32,6 +34,11 @@ export class NavbarComponent implements OnInit {
         this.userEmail = null;
         this.cartService.setUserId(null);
       }
+    });
+
+
+    this.cartService.cartItems$.subscribe(items => {
+      this.cartItems = items;
     });
 
     this.cartService.cartCount$.subscribe(count => {
@@ -64,4 +71,7 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/cart']);
   }
 
+  removeFromCart(item: any) {
+    this.cartService.removeFromCart(item)
+  }
 }
