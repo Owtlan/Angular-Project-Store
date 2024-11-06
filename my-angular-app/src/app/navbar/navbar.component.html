@@ -1,15 +1,51 @@
 <nav class="navbar">
-  <div class="user-info" *ngIf="isLoggedIn()">
+  <div class="user-info">
     <div class="shop-name-postion">
 
       <img (click)="navigateTo('/')" src="assets/cropped-pixelspot.png" alt="PixelSpot Logo" class="logo" />
-      <span *ngIf="userEmail" class="user-email">Logged in as: {{ userEmail }}</span>
+
+
+      <div class="user-dropdown" (mouseover)="showUserMenu = true" (mouseleave)="showUserMenu = false">
+        <fa-icon [icon]="faUserIcon" class="user-icon"></fa-icon>
+        <span class="user-email">{{ isLoggedIn() ? userEmail : 'My Account' }}</span>
+      
+        <div class="user-menu" *ngIf="showUserMenu">
+          <ng-container *ngIf="isLoggedIn(); else loggedOutMenu">
+            <p><a (click)="navigateTo('/profile')">Преглед на профила</a></p>
+            <p><a (click)="logout()">Logout</a></p>
+          </ng-container>
+          <ng-template #loggedOutMenu>
+            <p><a (click)="navigateTo('/register')">Register</a></p>
+            <p><a (click)="navigateTo('/login')">Login</a></p>
+          </ng-template>
+        </div>
+      </div>
+      
+
+      
     </div>
-    <div class="cart-info">
-      <button (click)="goToCart()" class="cart-button">
+    <div class="cart-info" *ngIf="isLoggedIn()">
+
+
+      <button (click)="goToCart()" class="cart-button" [disabled]="cartCount === 0">
         <fa-icon [icon]="faCartShopping"></fa-icon>
         <span class="cart-count" *ngIf="cartCount > 0">{{ cartCount }}</span>
       </button>
+
+      <div *ngIf="cartItems.length > 0" class="cart-dropdown">
+        <ul class="cart-item-list">
+          <li *ngFor="let item of cartItems" class="cart-item">
+            <img [src]="item.imageUrl" alt="{{item.name}}" class="cart-item-image">
+
+            <div class="cart-item-details">
+              <span>{{ item.name }}</span>
+              <span>{{ item.price | currency:'BGN' }}</span>
+            </div>
+            <button (click)="removeFromCart(item)">X</button>
+          </li>
+        </ul>
+      </div>
+
       <span class="cart-total" *ngIf="totalSum > 0">{{ totalSum | currency:'BGN' }}</span>
     </div>
   </div>
