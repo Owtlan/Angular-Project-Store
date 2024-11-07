@@ -86,6 +86,7 @@
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #f4f4f4;
+    max-width: 300px;
 }
 
 .filter-group {
@@ -130,6 +131,7 @@ button:hover {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
+    padding: 20px 40px;
 }
 
 .product-card {
