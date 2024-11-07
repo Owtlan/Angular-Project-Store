@@ -10,19 +10,10 @@ import { Auth } from '@angular/fire/auth';
     providedIn: 'root'
 })
 export class ProductService {
-    deleteImageFromCloudinary(publicId: string): Promise<void> {
-        const url = `https://api.cloudinary.com/v1_1/${environment.cloudinary.cloudName}/image/destroy`;
-        
-        return this.http.post(url, {
-            public_id: publicId,
-          
-        }).toPromise().then(() => {
-            console.log('Изображението е успешно изтрито от Cloudinary');
-        }).catch(error => {
-            console.error('Грешка при изтриване на изображението от Cloudinary:', error);
-            throw error;
-        });
+    constructor(private firestore: Firestore, private http: HttpClient, private auth: Auth) {
+        this.productsCollection = collection(this.firestore, 'products');
     }
+ 
     async updateProduct(product: Product): Promise<void> {
         const productDocRef = doc(this.productsCollection, product.id);
         await setDoc(productDocRef, product);
@@ -36,9 +27,6 @@ export class ProductService {
 
     private productsCollection;
 
-    constructor(private firestore: Firestore, private http: HttpClient, private auth: Auth) {
-        this.productsCollection = collection(this.firestore, 'products');
-    }
 
     addProduct(product: Product): Promise<void> {
         const newDocRef = doc(this.productsCollection);
@@ -53,10 +41,10 @@ export class ProductService {
         const url = `https://api.cloudinary.com/v1_1/${environment.cloudinary.cloudName}/image/upload`;
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('upload_preset', 'vpseafg5 ');  
+        formData.append('upload_preset', 'vpseafg5 ');
 
         const response = await this.http.post<any>(url, formData).toPromise();
-        return response.secure_url; 
+        return response.secure_url;
     }
 
     async addProductWithImage(product: Product, file: File): Promise<void> {
