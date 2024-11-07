@@ -23,6 +23,7 @@ import { ProductEditComponent } from './product-edit/product-edit.component';
 import { CartComponent } from './cart/cart.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { OrderComponent } from './order/order.component';
+import { ProfileComponent } from './user/profile/profile.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { OrderComponent } from './order/order.component';
     ProductDetailComponent,
     ProductEditComponent,
     CartComponent,
-    OrderComponent
+    OrderComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
