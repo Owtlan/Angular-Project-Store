@@ -8,6 +8,8 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { ProductEditComponent } from './product-edit/product-edit.component'; // Импортирай новия компонент
 import { CartComponent } from './cart/cart.component';
 import { OrderComponent } from './order/order.component';
+import { ProfileComponent } from './user/profile/profile.component';
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -18,6 +20,7 @@ const routes: Routes = [
   { path: 'product/edit/:id', component: ProductEditComponent },
   { path: 'cart', component: CartComponent },
   { path: 'order', component: OrderComponent },
+  { path: 'profile', component: ProfileComponent }
 ];
 
 @NgModule({
