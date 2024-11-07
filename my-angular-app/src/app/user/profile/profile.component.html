@@ -1,0 +1,16 @@
+
+<div class="profile-container">
+    <h2>Моят профил</h2>
+    
+    <div class="profile-picture">
+      <img *ngIf="profilePictureUrl" [src]="profilePictureUrl" alt="Profile Picture" />
+      <input type="file" (change)="onFileSelected($event)" />
+    </div>
+    
+    <div class="user-info">
+      <p>Email: {{ currentUser.email }}</p>
+      <p>Phone: {{ currentUser.phone }}</p>
+    </div>
+  </div>
+  
+  
