@@ -55,6 +55,9 @@ export class NavbarComponent implements OnInit {
   navigateTo(path: string) {
     this.router.navigate([path]);
   }
+  navigateToProfile() {
+    this.router.navigate(['/profile']);
+  }
 
   isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
