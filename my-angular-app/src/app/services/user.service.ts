@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, addDoc } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, doc, setDoc ,updateDoc,getDoc} from '@angular/fire/firestore';
 import { Auth, User } from '@angular/fire/auth';
 
 @Injectable({
@@ -9,17 +9,60 @@ export class UserService {
 
   constructor(private firestore: Firestore, private auth: Auth) { }
 
-  async addUser(user: User) {
+  async addUser(user: User, additionalData: { phone: string; },) {
     try {
       const usersCollection = collection(this.firestore, 'users');
       await addDoc(usersCollection, {
         uid: user.uid,
         email: user.email,
+        phone: additionalData.phone,
         createdAt: new Date()
       })
     } catch (error) {
       console.error("Error adding user: ", error);
     }
   }
+  getFirestore() {
+    return this.firestore;
+  }
+  async updateProfilePicture(uid: string, imageUrl: string): Promise<void> {
+    try {
+      const userDocRef = doc(this.firestore, `users/${uid}`);
+      
+      const userDoc = await getDoc(userDocRef);
+      if (userDoc.exists()) {
+        await updateDoc(userDocRef, {
+          profilePicture: imageUrl
+        });
+        console.log('Профилната снимка беше обновена!');
+      } else {
+        console.log(`Документът за потребителя не съществува, създаваме нов`);
+        await setDoc(userDocRef, {
+          profilePicture: imageUrl
+        });
+        console.log('Документът беше създаден с профилна снимка!');
+      }
+    } catch (error) {
+      console.error('Грешка при обновяване на снимка:', error);
+    }
+  }
+
+
+
+  async getProfilePicture(uid: string) {
+    try {
+      const userDocRef = doc(this.firestore, `users/${uid}`);
+      const userDoc = await getDoc(userDocRef);
+      if (userDoc.exists()) {
+        return userDoc.data()?.['profilePicture'];
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error("Грешка при зареждане на снимката от Firestore:", error);
+      return null;
+    }
+  }
+
 
 }
