@@ -6,6 +6,8 @@ import { Auth, authState } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { CartService } from '../services/cart.service';
 import { AuthService } from '../auth/auth.service';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'app-product-detail',
@@ -15,7 +17,8 @@ import { AuthService } from '../auth/auth.service';
 export class ProductDetailComponent implements OnInit {
   product: Product | null = null;
   currentUserId: string | null = null;
-
+  selectedImageUrl: string | null = null;
+  faCartShopping = faCartShopping;
 
   constructor(
     private cartService: CartService,
@@ -41,12 +44,22 @@ export class ProductDetailComponent implements OnInit {
     this.productService.getProductById(productId).subscribe(
       (data: Product) => {
         this.product = data;
+        this.selectedImageUrl = data.imageUrl;
       },
       (error) => {
         console.error('Error loading product details:', error);
       }
     );
   }
+
+  selectColorImage(imageUrl: string) {
+    if (imageUrl === 'original') {
+      this.selectedImageUrl = this.product?.imageUrl || '';
+    } else {
+      this.selectedImageUrl = imageUrl
+    }
+  }
+
 
   isProductOwner(product: Product): boolean {
     return product.ownerId === this.currentUserId;
