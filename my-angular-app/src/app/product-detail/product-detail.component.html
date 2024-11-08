@@ -1,13 +1,35 @@
 <div *ngIf="product" class="product-detail">
     <h2>{{ product.name }}</h2>
 
-    <img [src]="product.imageUrl" alt="{{ product.name }}" />
+    <img [src]="selectedImageUrl || product.imageUrl" alt="{{ product.name }}" />
 
     <p>{{ product.description }}</p>
     <p>Цена: {{ product.price | currency:'BGN' }}</p>
 
+
+    <div *ngIf="product.colorImages && product.colorImages.length">
+        <label>Избери цвят:</label>
+        <div class="color-option" (click)="selectColorImage('original')">
+            <img [src]="product.imageUrl" alt="Original" class="color-thumbnail" />
+        </div>
+
+
+        <div *ngFor="let colorImage of product.colorImages" class="color-option"
+            (click)="selectColorImage(colorImage.imageUrl)">
+
+            <img [src]="colorImage.imageUrl" [alt]="colorImage.color" class="color-thumbnail"
+                [class.selected]="selectedImageUrl === colorImage.imageUrl">
+        </div>
+    </div>
+
+
     <button *ngIf="isProductOwner(product)" (click)="editProduct(product)">Edit</button>
     <button *ngIf="isProductOwner(product)" (click)="deleteProduct(product)">Delete</button>
+    <button *ngIf="!isProductOwner(product)" (click)="onBuyClick(product)"> <fa-icon [icon]="faCartShopping"></fa-icon>Buy</button>
 
-    <button *ngIf="!isProductOwner(product)" (click)="onBuyClick(product)">Buy</button>
+
+
+
+
+    
 </div>
