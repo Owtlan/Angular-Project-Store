@@ -6,4 +6,5 @@ export interface Product {
     price: number;
     imageUrl: string;
     ownerId: string;
+    colorImages?: { color: string; imageUrl: string }[];
 }
