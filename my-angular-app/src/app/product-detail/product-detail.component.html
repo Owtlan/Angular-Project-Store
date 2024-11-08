@@ -26,10 +26,4 @@
     <button *ngIf="isProductOwner(product)" (click)="editProduct(product)">Edit</button>
     <button *ngIf="isProductOwner(product)" (click)="deleteProduct(product)">Delete</button>
     <button *ngIf="!isProductOwner(product)" (click)="onBuyClick(product)"> <fa-icon [icon]="faCartShopping"></fa-icon>Buy</button>
-
-
-
-
-
-    
 </div>
