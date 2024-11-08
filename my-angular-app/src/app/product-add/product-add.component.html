@@ -13,11 +13,18 @@
     <option value="keyboard">Клавиатури</option>
     <option value="mouse">Мишки</option>
     <option value="phone">Телефони</option>
-    <option value="tv">Телевизори</option> 
+    <option value="tv">Телевизори</option>
   </select>
 
   <label>Product Image:</label>
   <input type="file" (change)="onFileSelected($event)" />
+
+
+  <label>Product Color Images:</label>
+  <div *ngFor="let color of colors">
+    <label>{{ color }}</label>
+    <input type="file" (change)="onColorImageSelected($event, color)" />
+  </div>
 
   <button type="submit">Add Product</button>
 </form>
