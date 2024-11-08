@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from '../model/product.model';
+import { Auth } from '@angular/fire/auth';
+
 
 @Component({
   selector: 'app-product-add',
@@ -15,28 +17,53 @@ export class ProductAddComponent {
     price: 0,
     imageUrl: '',
     ownerId: '',
+    colorImages: [],
   };
   selectedFile: File | null = null;
 
-  constructor(private productService: ProductService) { }
+  colors = ['green', 'black', 'red', 'blue']
+  colorFiles: { [color: string]: File | null } = {};
+
+
+  constructor(private productService: ProductService, private auth: Auth) { }
 
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
   }
 
+  onColorImageSelected(event: any, color: string) {
+    this.colorFiles[color] = event.target.files[0]
+  }
 
-  addProduct() {
+  async addProduct() {
+    const currentUser = this.auth.currentUser;
+    if (!currentUser) {
+      console.error('No user is logged in');
+      return;
+    }
+
     if (this.selectedFile) {
-      this.productService.addProductWithImage(this.product, this.selectedFile)
-        .then(() => {
-          console.log('Product added successfully!');
-          this.product = { id: '', name: '', description: '', price: 0, imageUrl: '', ownerId: '' };
-          this.selectedFile = null;
-        })
-        .catch(error => {
-          console.error('Error adding product:', error);
-        });
+      try {
+        this.product.ownerId = currentUser.uid;
+
+        const imageUrl = await this.productService.uploadImageToCloudinary(this.selectedFile);
+        this.product.imageUrl = imageUrl;
+
+        const colorImages: { color: string; imageUrl: string }[] = [];
+        for (const color of this.colors) {
+          if (this.colorFiles[color]) {
+            const colorImageUrl = await this.productService.uploadImageToCloudinary(this.colorFiles[color]!);
+            colorImages.push({ color, imageUrl: colorImageUrl });
+          }
+        }
+        this.product.colorImages = colorImages;
+
+        await this.productService.addProduct(this.product);
+        console.log('Product added successfully!');
+      } catch (error) {
+        console.error('Error adding product:', error);
+      }
     } else {
       console.error('Please select an image file.');
     }
