@@ -87,7 +87,6 @@ export class ProductDetailComponent implements OnInit {
   deleteProduct(product: Product) {
     this.productService.deleteProduct(product.id).then(() => {
       console.log('Продуктът е изтрит');
-      // Можеш да добавиш навигация обратно към списъка с продукти
     }).catch((error) => {
       console.error('Грешка при изтриване на продукта:', error);
     });
