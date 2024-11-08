@@ -11,13 +11,14 @@ export class UserService {
 
   async addUser(user: User, additionalData: { phone: string; },) {
     try {
-      const usersCollection = collection(this.firestore, 'users');
-      await addDoc(usersCollection, {
+      const userDocRef = doc(this.firestore, `users/${user.uid}`);
+
+      await setDoc(userDocRef, {
         uid: user.uid,
         email: user.email,
         phone: additionalData.phone,
         createdAt: new Date()
-      })
+      });
     } catch (error) {
       console.error("Error adding user: ", error);
     }
@@ -28,15 +29,16 @@ export class UserService {
   async updateProfilePicture(uid: string, imageUrl: string): Promise<void> {
     try {
       const userDocRef = doc(this.firestore, `users/${uid}`);
-      
       const userDoc = await getDoc(userDocRef);
+
+
+
       if (userDoc.exists()) {
         await updateDoc(userDocRef, {
           profilePicture: imageUrl
         });
         console.log('Профилната снимка беше обновена!');
       } else {
-        console.log(`Документът за потребителя не съществува, създаваме нов`);
         await setDoc(userDocRef, {
           profilePicture: imageUrl
         });
