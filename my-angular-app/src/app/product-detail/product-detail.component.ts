@@ -20,6 +20,8 @@ export class ProductDetailComponent implements OnInit {
   selectedImageUrl: string | null = null;
   faCartShopping = faCartShopping;
 
+  isImageChanged = false;
+
   constructor(
     private cartService: CartService,
     private authService: AuthService,
@@ -53,12 +55,26 @@ export class ProductDetailComponent implements OnInit {
   }
 
   selectColorImage(imageUrl: string) {
+
+    const previousImage = this.selectedImageUrl;
+
+
     if (imageUrl === 'original') {
       this.selectedImageUrl = this.product?.imageUrl || '';
     } else {
       this.selectedImageUrl = imageUrl
     }
+
+    if (this.selectedImageUrl !== previousImage) {
+      this.isImageChanged = true;
+    }
+
   }
+
+  resetAnimation() {
+    this.isImageChanged = false; 
+  }
+
 
 
   isProductOwner(product: Product): boolean {
