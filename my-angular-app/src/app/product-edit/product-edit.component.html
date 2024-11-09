@@ -17,6 +17,18 @@
         <label>URL на изображение:</label>
         <input type="text" [(ngModel)]="product.imageUrl" name="imageUrl" required />
       </div>
+
+      <div>
+        <label>Категория:</label>
+        <select [(ngModel)]="product.category" name="category" required>
+          <option value="keyboard">Keyboard</option>
+          <option value="mouse">Mouse</option>
+          <option value="phone">Phone</option>
+          <option value="laptop">laptop</option>
+          <option value="TV">TV</option>
+        </select>
+      </div>
+
       <button type="submit">Запази промени</button>
     </form>
   </div>
