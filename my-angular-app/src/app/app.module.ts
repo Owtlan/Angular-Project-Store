@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
@@ -25,6 +25,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { OrderComponent } from './order/order.component';
 import { ProfileComponent } from './user/profile/profile.component';
 
+import { register } from 'swiper/element/bundle'
+
+
+register()
 
 @NgModule({
   declarations: [
@@ -38,21 +42,22 @@ import { ProfileComponent } from './user/profile/profile.component';
     ProductEditComponent,
     CartComponent,
     OrderComponent,
-    ProfileComponent
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    provideFirebaseApp(() => initializeApp(environment.firebase)), 
-    provideAuth(() => getAuth()), 
-    provideFirestore(() => getFirestore()),  
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
-    FontAwesomeModule
+    FontAwesomeModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
 
