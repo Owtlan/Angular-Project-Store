@@ -1,4 +1,4 @@
-<nav class="navbar">
+<nav class="navbar" [ngClass]="{'sticky': isSticky}">
   <div class="user-info">
     <div class="shop-name-postion">
 
@@ -8,7 +8,7 @@
       <div class="user-dropdown" (mouseover)="showUserMenu = true" (mouseleave)="showUserMenu = false">
         <fa-icon [icon]="faUserIcon" class="user-icon"></fa-icon>
         <span class="user-email">{{ isLoggedIn() ? userEmail : 'My Account' }}</span>
-      
+
         <div class="user-menu" *ngIf="showUserMenu">
           <ng-container *ngIf="isLoggedIn(); else loggedOutMenu">
             <p><a (click)="navigateTo('/profile')">Преглед на профила</a></p>
@@ -20,9 +20,9 @@
           </ng-template>
         </div>
       </div>
-      
 
-      
+
+
     </div>
     <div class="cart-info" *ngIf="isLoggedIn()">
 
@@ -57,7 +57,7 @@
       <li (click)="navigateTo('/login')">Login</li>
     </ng-container>
     <ng-container *ngIf="isLoggedIn()">
-      <li (click)="navigateTo('/categories')">Categories</li>
+      <!-- <li (click)="navigateTo('/categories')">Categories</li> -->
       <li (click)="navigateTo('/add-product')">Add product</li>
       <li (click)="logout()">Logout</li>
     </ng-container>
