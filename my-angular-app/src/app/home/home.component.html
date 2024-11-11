@@ -1,26 +1,27 @@
 <div class="home-container animate__animated animate__fadeIn">
-<div class="ms">
-    <swiper-container class="product-swiper-1" [navigation]="swiperConfig.navigation" [loop]="swiperConfig.loop"
-    [slidesPerView]="swiperConfig.slidesPerView" [spaceBetween]="swiperConfig.spaceBetween"
-    [pagination]="swiperConfig.pagination">
-    <swiper-slide *ngFor="let product of filteredProducts">
-        <div class="product-card-1">
-            <div class="product-info-1">
-                <div class="product-items" (click)="goToDetail(product.id)">
-                    <img [src]="product.imageUrl" [alt]="product.name" class="product-image" />
-                    <div class="product-details-1">
-                        <h3>{{ product.name }}</h3>
-                        <p class="product-price-1">Цена: {{ product.price | currency: 'BGN' }}</p>
+    <div class="main-section">
+        <swiper-container class="product-swiper-1" [navigation]="swiperConfig.navigation" [loop]="swiperConfig.loop"
+            [slidesPerView]="swiperConfig.slidesPerView" [spaceBetween]="swiperConfig.spaceBetween"
+            [pagination]="swiperConfig.pagination">
+            <swiper-slide *ngFor="let product of swiperProducts">
+                <div class="product-card-1">
+                    <div class="product-info-1">
+                        <div class="product-items" (click)="goToDetail(product.id)">
+                            <img [src]="product.imageUrl" [alt]="product.name" class="product-image" />
+                            <div class="product-details-1">
+                                <h3>{{ product.name }}</h3>
+                                <p class="product-price-1">{{ product.price | currency: 'BGN' }} лв.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </swiper-slide>
+            </swiper-slide>
 
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
-</swiper-container>
-</div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            
+        </swiper-container>
+    </div>
 
 
     <div class="filter-sidebarProduct">
@@ -66,15 +67,14 @@
         <section class="products">
             <h2>Нашите Продукти</h2>
             <div class="product-grid">
-                <div class="product-card" *ngFor="let product of filteredProducts">
-                    <button *ngIf="product.id" class="glow-on-hover" (click)="goToDetail(product.id)">Learn
-                        more</button>
+                <div class="product-card" *ngFor="let product of filteredProducts" (click)="goToDetail(product.id)">
+       
 
                     <h3>{{ product.name }}</h3>
                     <img [src]="product.imageUrl" [alt]="product.name" />
 
                     <div class="position-buy-btn" *ngIf="isLoggedIn()">
-                        <button class="buy-btn" *ngIf="product.ownerId !== userId" (click)="addToCart(product)">Buy
+                        <button class="buy-btn" *ngIf="product.ownerId !== userId" (click)="addToCart(product); $event.stopPropagation()">Buy
                             <fa-icon [icon]="faCartShopping"></fa-icon></button>
                     </div>
 
