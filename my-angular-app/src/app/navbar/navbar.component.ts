@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { CartService } from '../services/cart.service';
 import { Auth, authState } from '@angular/fire/auth';
-import { faCartShopping, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faUser, faHome, faUserPlus, faSignInAlt, faPlusCircle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,31 +12,48 @@ import { faCartShopping, faUser } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
   userEmail: string | null = null;
+  profilePictureUrl: string | null = null;
   cartCount: number = 0;
   totalSum: number = 0;
-  cartItems: any[] = []
+  cartItems: any[] = [];
   faCartShopping = faCartShopping;
   faUserIcon = faUser;
+  faHome = faHome;
+  faUserPlus = faUserPlus;
+  faSignInAlt = faSignInAlt;
+  faPlusCircle = faPlusCircle;
+  faSignOutAlt = faSignOutAlt;
+
   showUserMenu = false;
+  isSticky: boolean = false;
 
   constructor(private router: Router,
     private authService: AuthService,
     private cartService: CartService,
-    private auth: Auth) { }
+    private auth: Auth,
+    private userService: UserService
+  ) { }
 
   ngOnInit(): void {
     authState(this.auth).subscribe(user => {
       if (user) {
         this.userEmail = user.email;
+        this.userService.getProfilePicture(user.uid).then(profilePicture => {
+          this.profilePictureUrl = profilePicture || user.photoURL;
+        });
         this.cartService.setUserId(user.uid);
       } else {
         this.userEmail = null;
+        this.profilePictureUrl = null;
         this.cartService.setUserId(null);
       }
     });
 
+
+    this.userService.profilePicture$.subscribe(newProfilePictureUrl => {
+      this.profilePictureUrl = newProfilePictureUrl
+    })
 
     this.cartService.cartItems$.subscribe(items => {
       this.cartItems = items;
@@ -50,13 +68,23 @@ export class NavbarComponent implements OnInit {
     });
   }
 
+  // onProfilePictureUpdated(newProfilePictureUrl: string) {
+  //   this.profilePictureUrl = newProfilePictureUrl;
+  // }
 
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll(event: any) {
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (scrollPosition > 100) {
+      this.isSticky = true;
+    } else {
+      this.isSticky = false;
+    }
+  }
 
   navigateTo(path: string) {
     this.router.navigate([path]);
-  }
-  navigateToProfile() {
-    this.router.navigate(['/profile']);
   }
 
   isLoggedIn(): boolean {
@@ -64,10 +92,11 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout()
+    this.authService.logout();
     this.userEmail = null;
     this.cartService.setUserId(null);
-    this.navigateTo('/')
+    this.profilePictureUrl = null;
+    this.navigateTo('/');
   }
 
   goToCart() {
@@ -75,6 +104,8 @@ export class NavbarComponent implements OnInit {
   }
 
   removeFromCart(item: any) {
-    this.cartService.removeFromCart(item)
+    this.cartService.removeFromCart(item);
   }
+
+
 }
