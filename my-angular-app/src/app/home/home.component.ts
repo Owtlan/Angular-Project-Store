@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { CartService } from '../services/cart.service';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from '../auth/auth.service';
+import { SwiperOptions } from 'swiper/types';
 
 @Component({
   selector: 'app-home',
@@ -16,10 +17,19 @@ import { AuthService } from '../auth/auth.service';
 export class HomeComponent implements OnInit {
   products: Product[] = [];
   filteredProducts: Product[] = [];
+  swiperProducts: Product[] = [];
   filters = { productName: '', category: '', price: null };
   userId: string | null = null
   faCartShopping = faCartShopping;
 
+  //adding swiper
+  swiperConfig: SwiperOptions = {
+    navigation: true,
+    pagination: { clickable: true, type: 'bullets', el: '.swiper-pagination' },
+    loop: true,
+    slidesPerView: 1,
+    spaceBetween: 0,
+  };
 
   constructor(private productService: ProductService, private auth: Auth, private router: Router, private cartService: CartService, private authService: AuthService) { }
 
@@ -35,6 +45,7 @@ export class HomeComponent implements OnInit {
     this.productService.getProducts().subscribe(
       (data: Product[]) => {
         this.products = data;
+        this.swiperProducts = data;
         this.applyFilters();
       },
       (error) => {
@@ -64,7 +75,6 @@ export class HomeComponent implements OnInit {
     });
   }
 
-
   getPriceRange(priceRange: string): [number, number | null] {
     switch (priceRange) {
       case '0-99':
@@ -80,18 +90,17 @@ export class HomeComponent implements OnInit {
       case '500-1000':
         return [500, 1000];
       case '1000+':
-        return [1000, null]; // Без горна граница за продукти над 1000 лв
+        return [1000, null];
       default:
         return [0, null];
     }
   }
 
-
-
   clearFilters(): void {
     this.filters = { productName: '', category: '', price: null };
     this.applyFilters();
   }
+  
   goToDetail(productId: string | undefined) {
     if (productId) {
       this.router.navigate(['/product', productId]);
@@ -103,7 +112,7 @@ export class HomeComponent implements OnInit {
   addToCart(product: Product): void {
     if (product.ownerId === this.userId) {
       console.log(`Не можете да добавите продукт, тъй като вие сте създателя: ${product.name}`);
-      return; // Не позволявайте добавяне на продукта в количката
+      return; 
     }
 
     this.cartService.addToCart(product);
