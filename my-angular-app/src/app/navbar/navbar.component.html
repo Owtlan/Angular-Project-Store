@@ -6,7 +6,14 @@
 
 
       <div class="user-dropdown" (mouseover)="showUserMenu = true" (mouseleave)="showUserMenu = false">
-        <fa-icon [icon]="faUserIcon" class="user-icon"></fa-icon>
+
+        <ng-container *ngIf="profilePictureUrl; else userIconTemplate">
+          <img [src]="profilePictureUrl" alt="Profile Picture" class="profile-picture" (click)="navigateTo('profile')">
+        </ng-container>
+        <ng-template #userIconTemplate>
+          <fa-icon [icon]="faUserIcon" class="user-icon"></fa-icon>
+        </ng-template>
+
         <span class="user-email">{{ isLoggedIn() ? userEmail : 'My Account' }}</span>
 
         <div class="user-menu" *ngIf="showUserMenu">
@@ -20,8 +27,6 @@
           </ng-template>
         </div>
       </div>
-
-
 
     </div>
     <div class="cart-info" *ngIf="isLoggedIn()">
@@ -49,17 +54,25 @@
       <span class="cart-total" *ngIf="totalSum > 0">{{ totalSum | currency:'BGN' }}</span>
     </div>
   </div>
-
   <ul class="nav-links">
-    <li (click)="navigateTo('/')">Home</li>
+    <li (click)="navigateTo('/')">
+      <fa-icon [icon]="faHome"></fa-icon> Home
+    </li>
     <ng-container *ngIf="!isLoggedIn()">
-      <li (click)="navigateTo('/register')">Register</li>
-      <li (click)="navigateTo('/login')">Login</li>
+      <li (click)="navigateTo('/register')">
+        <fa-icon [icon]="faUserPlus"></fa-icon> Register
+      </li>
+      <li (click)="navigateTo('/login')">
+        <fa-icon [icon]="faSignInAlt"></fa-icon> Login
+      </li>
     </ng-container>
     <ng-container *ngIf="isLoggedIn()">
-      <!-- <li (click)="navigateTo('/categories')">Categories</li> -->
-      <li (click)="navigateTo('/add-product')">Add product</li>
-      <li (click)="logout()">Logout</li>
+      <li (click)="navigateTo('/add-product')">
+        <fa-icon [icon]="faPlusCircle"></fa-icon> Add Product
+      </li>
+      <li (click)="logout()">
+        <fa-icon [icon]="faSignOutAlt"></fa-icon> Logout
+      </li>
     </ng-container>
   </ul>
 </nav>
