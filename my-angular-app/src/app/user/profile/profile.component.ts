@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { UserService } from 'src/app/services/user.service';
 import { ProductService } from 'src/app/services/product.service';
-import { Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-profile',
@@ -14,19 +12,19 @@ export class ProfileComponent implements OnInit {
   currentUser: any;
   profilePictureUrl: string | null = null;
 
+
+
   constructor(
     private auth: Auth,
     private userService: UserService,
-    private productService: ProductService,
-    private router: Router
+    private productService: ProductService
   ) { }
-
 
   ngOnInit(): void {
     const user = this.auth.currentUser;
     if (user) {
       this.currentUser = user;
-      this.profilePictureUrl = user.photoURL || null; 
+      this.profilePictureUrl = user.photoURL || null;
       this.loadProfilePicture(user.uid);
     }
   }
@@ -35,7 +33,7 @@ export class ProfileComponent implements OnInit {
     try {
       const profilePicture = await this.userService.getProfilePicture(uid);
       if (profilePicture) {
-        this.profilePictureUrl = profilePicture;  
+        this.profilePictureUrl = profilePicture;
       }
     } catch (error) {
       console.error("Грешка при зареждане на снимката от Firestore:", error);
@@ -50,7 +48,8 @@ export class ProfileComponent implements OnInit {
 
         if (this.currentUser) {
           await this.userService.updateProfilePicture(this.currentUser.uid, imageUrl);
-          this.profilePictureUrl = imageUrl;  
+          this.profilePictureUrl = imageUrl;
+     
         }
       } catch (error) {
         console.error('Грешка при качване на изображение:', error);
