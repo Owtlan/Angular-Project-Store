@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { Firestore, collection, addDoc, doc, setDoc ,updateDoc,getDoc} from '@angular/fire/firestore';
 import { Auth, User } from '@angular/fire/auth';
 
@@ -6,6 +7,8 @@ import { Auth, User } from '@angular/fire/auth';
   providedIn: 'root'
 })
 export class UserService {
+  private profilePictureSubject = new BehaviorSubject<string | null>(null);
+  public profilePicture$ = this.profilePictureSubject.asObservable();
 
   constructor(private firestore: Firestore, private auth: Auth) { }
 
@@ -26,6 +29,9 @@ export class UserService {
   getFirestore() {
     return this.firestore;
   }
+
+
+
   async updateProfilePicture(uid: string, imageUrl: string): Promise<void> {
     try {
       const userDocRef = doc(this.firestore, `users/${uid}`);
@@ -44,6 +50,9 @@ export class UserService {
         });
         console.log('Документът беше създаден с профилна снимка!');
       }
+
+
+      this.profilePictureSubject.next(imageUrl);
     } catch (error) {
       console.error('Грешка при обновяване на снимка:', error);
     }
