@@ -9,12 +9,12 @@ import { ProductEditComponent } from './product-edit/product-edit.component'; //
 import { CartComponent } from './cart/cart.component';
 import { OrderComponent } from './order/order.component';
 import { ProfileComponent } from './user/profile/profile.component';
-
+import { AuthGuard } from './auth.guard'
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
+  { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
   { path: 'add-product', component: ProductAddComponent },
   { path: 'product/:id', component: ProductDetailComponent },
   { path: 'product/edit/:id', component: ProductEditComponent },
