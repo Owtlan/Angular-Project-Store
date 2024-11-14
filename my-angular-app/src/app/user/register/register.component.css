@@ -24,10 +24,10 @@
     border-radius: 4px;
   }
   
-  button {
+  /* button {
     width: 100%;
     padding: 10px;
-    background-color: #28a745;
+
     color: white;
     border: none;
     border-radius: 4px;
@@ -36,5 +36,37 @@
   
   button:hover {
     background-color: #218838;
+  } */
+  
+
+  /* error handler css */
+  .error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
   }
+  
+  .error-message p {
+    margin: 0;
+  }
+
+  button {
+    width: 100%;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button.disabled {
+    background-color: #d3d3d3; 
+    color: #aaa;
+    cursor: not-allowed;
+  }
+  
+  button.active {
+    background-color: #28a745; 
+    color: white;
+  }
+  
   
