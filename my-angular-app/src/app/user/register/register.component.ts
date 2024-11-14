@@ -11,36 +11,45 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
   email: string = '';
+  firstname: string = '';
+  lastname: string = '';
   phone: string = '';
   password: string = '';
   rePass: string = '';
+  errorMessage: string = ''
 
   constructor(private auth: Auth, private userService: UserService, private router: Router) { }
 
-  register() {
+  async register() {
 
     if (this.password !== this.rePass) {
       console.log('passwords do not match.')
       return
     }
 
+    const emailOrPhoneExists = await this.userService.checkIfEmailOrPhoneExists(this.email, this.phone)
+
+    if (emailOrPhoneExists) {
+      this.errorMessage = 'This email or phone number already exists.';
+      return;
+    }
 
     createUserWithEmailAndPassword(this.auth, this.email, this.password)
-    .then(userCredential => {
-      const user: User = userCredential.user;
+      .then(userCredential => {
+        const user: User = userCredential.user;
 
-      this.userService.addUser(user, { phone: this.phone }).then(() => {
-        console.log("User added successfully");
-      }).catch(error => {
-        console.error("Error adding user: ", error);
+        this.userService.addUser(user, { phone: this.phone }).then(() => {
+          console.log("User added successfully");
+        }).catch(error => {
+          console.error("Error adding user: ", error);
+        });
+
+        this.router.navigate(['/']);
+        console.log('Registration successful:', user);
+      })
+      .catch(error => {
+        console.log('Registration error:', error);
       });
-
-      this.router.navigate(['/']);
-      console.log('Registration successful:', user);
-    })
-    .catch(error => {
-      console.log('Registration error:', error);
-    });
   }
 
 }
