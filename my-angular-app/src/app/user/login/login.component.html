@@ -1,13 +1,45 @@
 <div class="login-container">
-    <h2>Login</h2>
-    <form (ngSubmit)="login()">
-      <label for="email">Email:</label>
-      <input type="email" id="email" [(ngModel)]="email" name="email" required>
-  
-      <label for="password">Password:</label>
-      <input type="password" id="password" [(ngModel)]="password" name="password" required>
-  
-      <button type="submit">Login</button>
-    </form>
-  </div>
-  
+  <h2>Login</h2>
+  <form (ngSubmit)="login()" #loginForm="ngForm">
+
+    <!-- Email Field -->
+    <label for="email">Email:</label>
+    <input type="email" 
+           id="email" 
+           [(ngModel)]="email" 
+           name="email" 
+           #emailField="ngModel" 
+           required email>
+    <div *ngIf="emailField.invalid && emailField.touched" class="error-message">
+      <p *ngIf="emailField.errors?.['required']">Email is required.</p>
+      <p *ngIf="emailField.errors?.['email']">Please enter a valid email.</p>
+    </div>
+
+    <!-- Password Field -->
+    <label for="password">Password:</label>
+    <input type="password" 
+           id="password" 
+           [(ngModel)]="password" 
+           name="password" 
+           #passwordField="ngModel" 
+           required minlength="6">
+    <div *ngIf="passwordField.invalid && passwordField.touched" class="error-message">
+      <p *ngIf="passwordField.errors?.['required']">Password is required.</p>
+      <p *ngIf="passwordField.errors?.['minlength']">Password must be at least 6 characters long.</p>
+    </div>
+
+
+    <div *ngIf="loginError" class="error-message">
+      <p>{{ loginError }}</p>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" 
+            [disabled]="loginForm.invalid" 
+            [ngClass]="{
+              'active': !loginForm.invalid,
+              'disabled': loginForm.invalid
+            }">Login</button>
+  </form>
+</div>
+
