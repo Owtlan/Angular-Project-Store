@@ -19,5 +19,6 @@ export class AppComponent implements OnInit {
     this.user$.subscribe(user => {
       console.log('User ', user);
     });
+    
   }
 }
