@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Firestore, collection, addDoc, doc, setDoc ,updateDoc,getDoc} from '@angular/fire/firestore';
+import { Firestore, collection, where, doc, setDoc, updateDoc, getDoc, getDocs, query } from '@angular/fire/firestore';
 import { Auth, User } from '@angular/fire/auth';
 
 @Injectable({
@@ -30,6 +30,22 @@ export class UserService {
     return this.firestore;
   }
 
+
+  async checkIfEmailOrPhoneExists(email: string, phone: string): Promise<boolean> {
+    const userCollection = collection(this.firestore, 'users');
+
+    const emailQuery = query(userCollection, where('email', '==', email))
+    const phoneQuery = query(userCollection, where('phone', '==', phone))
+
+
+    const emailSnapshot = await getDocs(emailQuery);
+    const phoneSnapshot = await getDocs(phoneQuery)
+
+    if (!emailSnapshot.empty || !phoneSnapshot.empty) {
+      return true;
+    }
+    return false;
+  }
 
 
   async updateProfilePicture(uid: string, imageUrl: string): Promise<void> {
