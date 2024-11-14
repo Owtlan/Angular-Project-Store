@@ -1,4 +1,4 @@
-import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
@@ -26,7 +26,7 @@ import { OrderComponent } from './order/order.component';
 import { ProfileComponent } from './user/profile/profile.component';
 
 import { register } from 'swiper/element/bundle'
-
+import { GlobalErrorHandler } from './ErrorHandler/global-error-handler.service';
 
 register()
 
@@ -55,7 +55,9 @@ register()
     provideStorage(() => getStorage()),
     FontAwesomeModule,
   ],
-  providers: [],
+  providers: [
+    { provide: ErrorHandler, useClass: GlobalErrorHandler }
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
