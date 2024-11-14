@@ -1,20 +1,76 @@
 <div class="register-container">
   <h2>Register</h2>
-  <form (ngSubmit)="register()">
+  <form (ngSubmit)="register()" #registerForm="ngForm">
+
+    <!-- Email Field -->
     <label for="email">Email:</label>
-    <input type="email" id="email" [(ngModel)]="email" name="email" required>
+    <input type="email" id="email" [(ngModel)]="email" name="email" #emailField="ngModel" required email
+      pattern="^[a-zA-Z0-9._%+-]+@(gmail\.com|abv\.bg)$">
+    <div *ngIf="emailField.invalid && emailField.touched" class="error-message">
+      <p *ngIf="emailField.errors?.['required']">Email is required.</p>
+      <p *ngIf="emailField.errors?.['email']">Please enter a valid email.</p>
+      <p *ngIf="emailField.errors?.['pattern']">Email must be from @gmail.com or @abv.bg.</p>
+    </div>
 
+    <!-- Username Field -->
+    <label for="username">First name:</label>
+    <input type="text" id="firstname" [(ngModel)]="firstname" name="firstname" #usernameField="ngModel" required
+      minlength="4" maxlength="20" pattern="^[a-zA-Z0-9]+$">
+    <div *ngIf="usernameField.invalid && usernameField.touched" class="error-message">
+      <p *ngIf="usernameField.errors?.['required']">Username is required.</p>
+      <p *ngIf="usernameField.errors?.['minlength']">Username must be at least 4 characters long.</p>
+      <p *ngIf="usernameField.errors?.['maxlength']">Username cannot be longer than 20 characters.</p>
+      <p *ngIf="usernameField.errors?.['pattern']">Username can only contain letters and numbers.</p>
+    </div>
+
+
+    <label for="lastname">Last name:</label>
+    <input type="text" id="lastname" [(ngModel)]="lastname" name="lastname" #lastnameField="ngModel" required
+      minlength="4" maxlength="20" pattern="^[a-zA-Z0-9]+$">
+    <div *ngIf="lastnameField.invalid && lastnameField.touched" class="error-message">
+      <p *ngIf="lastnameField.errors?.['required']">Username is required.</p>
+      <p *ngIf="lastnameField.errors?.['minlength']">Username must be at least 4 characters long.</p>
+      <p *ngIf="lastnameField.errors?.['maxlength']">Username cannot be longer than 20 characters.</p>
+      <p *ngIf="lastnameField.errors?.['pattern']">Username can only contain letters and numbers.</p>
+    </div>
+
+    <!-- Phone Field -->
     <label for="phone">Phone number:</label>
-    <input type="tel" id="phone" [(ngModel)]="phone" name="phone" required>
+    <input type="tel" id="phone" [(ngModel)]="phone" name="phone" #phoneField="ngModel" required
+      pattern="^\+?[0-9]{10,15}$">
+    <div *ngIf="phoneField.invalid && phoneField.touched" class="error-message">
+      <p *ngIf="phoneField.errors?.['required']">Phone number is required.</p>
+      <p *ngIf="phoneField.errors?.['pattern']">Please enter a valid phone number (e.g., +1234567890).</p>
+    </div>
 
+    <!-- Password Field -->
     <label for="password">Password:</label>
-    <input type="password" id="password" [(ngModel)]="password" name="password" required>
+    <input type="password" id="password" [(ngModel)]="password" name="password" #passwordField="ngModel" required
+      minlength="6" pattern="^[a-zA-Z0-9]+$">
+    <div *ngIf="passwordField.invalid && passwordField.touched" class="error-message">
+      <p *ngIf="passwordField.errors?.['required']">Password is required.</p>
+      <p *ngIf="passwordField.errors?.['minlength']">Password must be at least 6 characters long.</p>
+      <p *ngIf="passwordField.errors?.['pattern']">Password can only contain letters and numbers.</p>
+    </div>
 
+    <!-- Repeat Password Field -->
     <label for="rePass">Repeat Password:</label>
-    <input type="password" id="rePass" [(ngModel)]="rePass" name="rePass" required>
+    <input type="password" id="rePass" [(ngModel)]="rePass" name="rePass" #rePassField="ngModel" required
+      [pattern]="password" minlength="6">
+    <div *ngIf="rePassField.invalid && rePassField.touched" class="error-message">
+      <p *ngIf="rePassField.errors?.['required']">Please confirm your password.</p>
+      <p *ngIf="rePassField.errors?.['pattern']">Passwords do not match.</p>
+      <p *ngIf="rePassField.errors?.['minlength']">Password must be at least 6 characters long.</p>
+    </div>
 
+    <div *ngIf="errorMessage" class="error-message">
+      <p>{{ errorMessage }}</p>
+    </div>
 
+    <button type="submit" [disabled]="registerForm.invalid" [ngClass]="{
+      'disabled': registerForm.invalid,
+      'active': !registerForm.invalid
+    }">Register</button>
 
-    <button type="submit">Register</button>
   </form>
 </div>
