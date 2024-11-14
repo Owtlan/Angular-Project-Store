@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'firebase/auth';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -13,8 +13,9 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   email: string = '';
   password: string = '';
+  loginError: string | null = null;
 
-  constructor(private auth: Auth, private userService: UserService,private router: Router) { }
+  constructor(private auth: Auth, private userService: UserService, private router: Router) { }
 
   login() {
     signInWithEmailAndPassword(this.auth, this.email, this.password)
@@ -26,6 +27,13 @@ export class LoginComponent {
       })
       .catch(error => {
         console.error('Login error:', error);
+        if (error.code === 'auth/user-not-found') {
+          this.loginError = 'Email or Password is invalid.';
+        } else if (error.code === 'auth/wrong-password') {
+          this.loginError = 'Email or Password is invalid.';
+        } else {
+          this.loginError = 'Email or Password is invalid.';
+        }
       });
   }
 }
