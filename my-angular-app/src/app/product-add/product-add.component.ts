@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from '../model/product.model';
 import { Auth } from '@angular/fire/auth';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-add',
@@ -25,7 +25,7 @@ export class ProductAddComponent {
   colorFiles: { [color: string]: File | null } = {};
 
 
-  constructor(private productService: ProductService, private auth: Auth) { }
+  constructor(private productService: ProductService, private auth: Auth, private router: Router) { }
 
 
   onFileSelected(event: any) {
@@ -61,6 +61,7 @@ export class ProductAddComponent {
 
         await this.productService.addProduct(this.product);
         console.log('Product added successfully!');
+        this.router.navigate(['/'])
       } catch (error) {
         console.error('Error adding product:', error);
       }
