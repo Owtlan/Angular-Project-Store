@@ -7,6 +7,26 @@ import { Auth, User } from '@angular/fire/auth';
   providedIn: 'root'
 })
 export class UserService {
+  async getFirestoreUser(uid: string): Promise<any> {
+    try {
+      const userDocRef = doc(this.firestore, `users/${uid}`);
+      const userDoc = await getDoc(userDocRef);
+      if (userDoc.exists()) {
+        return userDoc.data();
+      } else {
+        console.warn('Потребителят не е намерен в Firestore.');
+        return null;
+      }
+    } catch (error) {
+      console.error('Грешка при извличане на потребителя от Firestore:', error);
+      return null;
+    }
+  }
+
+
+
+
+
   private profilePictureSubject = new BehaviorSubject<string | null>(null);
   public profilePicture$ = this.profilePictureSubject.asObservable();
 
@@ -26,6 +46,10 @@ export class UserService {
       console.error("Error adding user: ", error);
     }
   }
+
+
+
+  
   getFirestore() {
     return this.firestore;
   }
