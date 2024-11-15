@@ -22,8 +22,27 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     const user = this.auth.currentUser;
+  
     if (user) {
-      this.currentUser = user;
+      // Първо взимаме данни от Firebase Authentication
+      this.currentUser = {
+        email: user.email,
+        phone: user.phoneNumber || null, // Първо проверяваме дали phoneNumber съществува
+        photoURL: user.photoURL,
+        uid: user.uid,
+      };
+  
+      // Ако телефонът не е наличен, го зареждаме от Firestore
+      if (!this.currentUser.phone) {
+        this.userService.getFirestoreUser(user.uid).then((data) => {
+          if (data?.phone) {
+            this.currentUser.phone = data.phone;
+          } else {
+            this.currentUser.phone = 'Not provided';
+          }
+        });
+      }
+  
       this.profilePictureUrl = user.photoURL || null;
       this.loadProfilePicture(user.uid);
     }
