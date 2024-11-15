@@ -8,14 +8,38 @@ import { Observable } from 'rxjs';
 })
 export class AuthGuard {
 
-  constructor(private auth: Auth, private router: Router) { }
+  constructor(private auth: Auth, private router: Router) {}
+
+  canActivate(): Observable<boolean> {
+    return new Observable<boolean>(observer => {
+      this.auth.onAuthStateChanged(user => {
+        if (user) {
+          observer.next(true);
+        } else {
+          this.router.navigate(['/']);
+          observer.next(false);
+        }
+        observer.complete();
+      });
+    });
+  }
+}
+
+
+@Injectable({
+  providedIn: 'root'
+})
+
+export class GuestGuard {
+
+  constructor(private auth: Auth, private router: Router) {}
 
   canActivate(): Observable<boolean> {
     return new Observable<boolean>(observer => {
       this.auth.onAuthStateChanged(user => {
         if (user) {
           this.router.navigate(['/']);
-          observer.next(false); 
+          observer.next(false);
         } else {
           observer.next(true);
         }
