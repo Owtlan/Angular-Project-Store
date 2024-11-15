@@ -38,7 +38,7 @@
       </button>
 
       <div *ngIf="cartItems.length > 0" class="cart-dropdown">
-        <ul class="cart-item-list">
+        <ul class="cart-item-list" (click)="navigateTo('/cart')">
           <li *ngFor="let item of cartItems" class="cart-item">
             <img [src]="item.imageUrl" alt="{{item.name}}" class="cart-item-image">
 
