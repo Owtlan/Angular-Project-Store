@@ -1,5 +1,5 @@
 <h2>Моята Количка</h2>
-<div *ngFor="let item of cartItems" class="cart-item">
+<div *ngFor="let item of cartItems" class="cart-item" (click)="navigateTo('/order')">
     <img [src]="item.imageUrl" alt="{{ item.name }}" class="product-image" />
     <h3>{{ item.name }}</h3>
     <p>Цена: {{ item.price | currency:'BGN' }}</p>
