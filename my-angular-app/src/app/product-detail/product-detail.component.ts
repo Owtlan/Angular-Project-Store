@@ -45,16 +45,29 @@ export class ProductDetailComponent implements OnInit {
   loadProductDetails(productId: string) {
     this.productService.getProductById(productId).subscribe(
       (data: Product) => {
+        if (!data) {
+          this.router.navigate(['/']);
+          return;
+        }
+
+
         this.product = data;
         this.selectedImageUrl = data.imageUrl;
       },
       (error) => {
         console.error('Error loading product details:', error);
+        this.router.navigate(['/']);
       }
     );
   }
 
   selectColorImage(imageUrl: string) {
+
+    if (!this.product) {
+      console.warn('Продуктът не е наличен за промяна на изображението');
+      return;
+    }
+
 
     const previousImage = this.selectedImageUrl;
 
@@ -103,8 +116,12 @@ export class ProductDetailComponent implements OnInit {
   deleteProduct(product: Product) {
     this.productService.deleteProduct(product.id).then(() => {
       console.log('Продуктът е изтрит');
+      this.router.navigate(['/']);
     }).catch((error) => {
       console.error('Грешка при изтриване на продукта:', error);
+      alert('Не успяхме да изтрием продукта. Моля, опитайте по-късно.');
+      this.router.navigate(['/']); 
     });
   }
+  
 }
