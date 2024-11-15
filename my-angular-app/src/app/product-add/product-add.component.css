@@ -33,6 +33,7 @@
     outline: none;
 }
 
+/* Стил за основния бутон */
 .product-form button {
     background-color: #007bff;
     color: white;
@@ -42,8 +43,34 @@
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
+  }
+  
+  .product-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Стил за бутона когато е неактивен */
+  .product-form button:disabled {
+    background-color: #cccccc;  /* светлосив фон */
+    color: #666666;  /* по-сив текст */
+    cursor: not-allowed;  /* курсорът да показва, че не може да бъде натиснат */
+  }
+  
+  .product-form button:disabled:hover {
+    background-color: #cccccc;  /* няма промяна при hover за неактивния бутон */
+  }
+  
+
+
+.form-group {
+    margin-bottom: 1rem;
 }
 
-.product-form button:hover {
-    background-color: #0056b3;
+.error small {
+    color: red;
+    display: block;
+}
+
+.color-group {
+    margin-bottom: 0.5rem;
 }
