@@ -1,5 +1,10 @@
 <div class="home-container animate__animated animate__fadeIn">
-    <div class="main-section">
+    <div *ngIf="isLoading" class="loader">
+        <div class="spinner"></div> 
+    </div>
+
+
+    <div class="main-section" *ngIf="!isLoading">
         <swiper-container class="product-swiper-1" [navigation]="swiperConfig.navigation" [loop]="swiperConfig.loop"
             [slidesPerView]="swiperConfig.slidesPerView" [spaceBetween]="swiperConfig.spaceBetween"
             [pagination]="swiperConfig.pagination">
@@ -19,7 +24,7 @@
 
             <div class="swiper-button-next"></div>
             <div class="swiper-button-prev"></div>
-            
+
         </swiper-container>
     </div>
 
@@ -58,8 +63,17 @@
                     </select>
                 </div>
 
-                <button type="submit">Приложи филтър</button>
-                <button type="button" (click)="clearFilters()">Изчисти филтъра</button>
+
+
+                <div class="wrap-btn">
+                    <button type="submit" class="styled-button-1">
+                        <span>Приложи филтър</span>
+                    </button>
+                    <button type="button" class="styled-button-2" (click)="clearFilters()">
+                        <span>Изчисти филтър</span>
+                    </button>
+                </div>
+
             </form>
         </aside>
 
@@ -68,13 +82,14 @@
             <h2>Нашите Продукти</h2>
             <div class="product-grid">
                 <div class="product-card" *ngFor="let product of filteredProducts" (click)="goToDetail(product.id)">
-       
+
 
                     <h3>{{ product.name }}</h3>
                     <img [src]="product.imageUrl" [alt]="product.name" />
 
                     <div class="position-buy-btn" *ngIf="isLoggedIn()">
-                        <button class="buy-btn" *ngIf="product.ownerId !== userId" (click)="addToCart(product); $event.stopPropagation()">Buy
+                        <button class="buy-btn" *ngIf="product.ownerId !== userId"
+                            (click)="addToCart(product); $event.stopPropagation()">Buy
                             <fa-icon [icon]="faCartShopping"></fa-icon></button>
                     </div>
 
