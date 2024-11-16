@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
   filters = { productName: '', category: '', price: null };
   userId: string | null = null
   faCartShopping = faCartShopping;
+  isLoading: boolean = true;
 
   //adding swiper
   swiperConfig: SwiperOptions = {
@@ -40,16 +41,19 @@ export class HomeComponent implements OnInit {
       this.userId = user ? user.uid : null;
     });
   }
-
+// load products at homepage
   loadProducts(): void {
+    this.isLoading = true;
     this.productService.getProducts().subscribe(
       (data: Product[]) => {
         this.products = data;
         this.swiperProducts = data;
         this.applyFilters();
+        this.isLoading = false;
       },
       (error) => {
         console.error('Error loading products:', error);
+         this.isLoading = false;
       }
     );
   }
