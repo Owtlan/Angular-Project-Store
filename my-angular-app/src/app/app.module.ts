@@ -27,6 +27,7 @@ import { ProfileComponent } from './user/profile/profile.component';
 
 import { register } from 'swiper/element/bundle'
 import { GlobalErrorHandler } from './ErrorHandler/global-error-handler.service';
+import { FooterComponent } from './footer/footer.component';
 
 register()
 
@@ -43,6 +44,7 @@ register()
     CartComponent,
     OrderComponent,
     ProfileComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
