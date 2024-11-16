@@ -1,10 +1,9 @@
-
 .navbar {
   position: relative;
   display: flex;
-  flex-direction: column;
+justify-content: center;
   padding: 15px 30px;
-  background-color: #1f1f1f; 
+  background-color: #1f1f1f;
   color: #fff;
   transition: box-shadow 0.5s ease-in-out;
   z-index: 1000;
@@ -13,7 +12,7 @@
 .navbar.sticky {
   position: sticky;
   top: 0;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); 
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   animation: slideDown 0.3s ease-out;
 }
 
@@ -22,22 +21,27 @@
   0% {
     transform: translateY(-100%);
   }
+
   100% {
     transform: translateY(0);
   }
 }
 
+.nav-wrapper {
+  max-width: 1200px;
+  width: 100%;
+}
 
 .logo {
-  width: 120px; 
-  height: auto; 
+  width: 120px;
+  height: auto;
   margin-right: 20px;
   cursor: pointer;
   transition: transform 0.3s ease;
 }
 
 .logo:hover {
-  transform: scale(1.05); 
+  transform: scale(1.05);
 }
 
 
@@ -47,12 +51,12 @@
   justify-content: space-between;
   margin-bottom: 10px;
   padding: 5px 0;
-  border-bottom: 1px solid #444; 
+  border-bottom: 1px solid #444;
 }
 
 .user-email {
   font-size: 15px;
-  color: #ffb74d; 
+  color: #ffb74d;
   font-weight: 600;
 }
 
@@ -108,14 +112,13 @@
 }
 
 .nav-links li:hover {
-  color: #ff5722; 
+  color: #ff5722;
 }
 
 
 .cart-dropdown {
   position: absolute;
   top: 40px;
-  right: 0;
   background-color: #222;
   color: #fff;
   border: 1px solid #333;
@@ -163,7 +166,7 @@
 .cart-item-details span {
   display: block;
   font-size: 14px;
-  color: #ffb74d; 
+  color: #ffb74d;
 }
 
 .cart-item button {
@@ -220,9 +223,10 @@
 .user-menu a:hover {
   text-decoration: underline;
 }
+
 .profile-picture {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  margin-right: 8px; 
+  margin-right: 8px;
 }
