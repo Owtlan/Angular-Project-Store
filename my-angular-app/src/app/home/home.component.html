@@ -1,8 +1,7 @@
 <div class="home-container animate__animated animate__fadeIn">
     <div *ngIf="isLoading" class="loader">
-        <div class="spinner"></div> 
+        <div class="spinner"></div>
     </div>
-
 
     <div class="main-section" *ngIf="!isLoading">
         <swiper-container class="product-swiper-1" [navigation]="swiperConfig.navigation" [loop]="swiperConfig.loop"
@@ -15,7 +14,7 @@
                             <img [src]="product.imageUrl" [alt]="product.name" class="product-image" />
                             <div class="product-details-1">
                                 <h3>{{ product.name }}</h3>
-                                <p class="product-price-1">{{ product.price | currency: 'BGN' }} лв.</p>
+                                <p class="product-price-1">{{ product.price | currency: 'BGN ' }}</p>
                             </div>
                         </div>
                     </div>
@@ -24,66 +23,57 @@
 
             <div class="swiper-button-next"></div>
             <div class="swiper-button-prev"></div>
-
         </swiper-container>
     </div>
 
-
     <div class="filter-sidebarProduct">
         <aside class="filter-sidebar">
-
-            <h3>Филтри</h3>
+            <h3>Filters</h3>
             <form (ngSubmit)="applyFilters()">
                 <div class="filter-group">
-                    <label for="productName">Име на продукт</label>
+                    <label for="productName">Product Name</label>
                     <input type="text" id="productName" [(ngModel)]="filters.productName" name="productName" />
                 </div>
                 <div class="filter-group">
-                    <label for="category">Категория</label>
+                    <label for="category">Category</label>
                     <select id="category" [(ngModel)]="filters.category" name="category" (change)="applyFilters()">
-                        <option value="">Всички</option>
-                        <option value="keyboard">keyboard</option>
-                        <option value="mouse">mouse</option>
-                        <option value="phone">Телефони</option>
-                        <option value="laptop">Лаптопи</option>
+                        <option value="">All</option>
+                        <option value="keyboard">Keyboard</option>
+                        <option value="mouse">Mouse</option>
+                        <option value="phone">Phones</option>
+                        <option value="laptop">Laptops</option>
                         <option value="TV">TV</option>
                     </select>
                 </div>
                 <div class="filter-group">
-                    <label for="priceRange">Цена</label>
+                    <label for="priceRange">Price</label>
                     <select id="priceRange" [(ngModel)]="filters.price" name="priceRange" (change)="applyFilters()">
-                        <option value="">Всички цени</option>
-                        <option value="0-99">0 - 99 лв</option>
-                        <option value="100-199">100 - 199 лв</option>
-                        <option value="200-299">200 - 299 лв</option>
-                        <option value="300-399">300 - 399 лв</option>
-                        <option value="400-499">400 - 499 лв</option>
-                        <option value="500-1000">500 - 1000 лв</option>
-                        <option value="1000+">Над 1000 лв</option>
+                        <option value="">All Prices</option>
+                        <option value="0-99">0 - 99 BGN</option>
+                        <option value="100-199">100 - 199 BGN</option>
+                        <option value="200-299">200 - 299 BGN</option>
+                        <option value="300-399">300 - 399 BGN</option>
+                        <option value="400-499">400 - 499 BGN</option>
+                        <option value="500-1000">500 - 1000 BGN</option>
+                        <option value="1000+">Over 1000 BGN</option>
                     </select>
                 </div>
 
-
-
                 <div class="wrap-btn">
                     <button type="submit" class="styled-button-1">
-                        <span>Приложи филтър</span>
+                        <span>Apply Filter</span>
                     </button>
                     <button type="button" class="styled-button-2" (click)="clearFilters()">
-                        <span>Изчисти филтър</span>
+                        <span>Clear Filter</span>
                     </button>
                 </div>
-
             </form>
         </aside>
 
-
         <section class="products">
-            <h2>Нашите Продукти</h2>
+            <h2>Our Products</h2>
             <div class="product-grid">
                 <div class="product-card" *ngFor="let product of filteredProducts" (click)="goToDetail(product.id)">
-
-
                     <h3>{{ product.name }}</h3>
                     <img [src]="product.imageUrl" [alt]="product.name" />
 
@@ -94,7 +84,7 @@
                     </div>
 
                     <div class="price-and-button">
-                        <p class="product-price">Цена: {{ product.price | currency:'BGN' }}</p>
+                        <p class="product-price">Price: {{ product.price | currency:'BGN' }}</p>
                     </div>
                 </div>
             </div>
