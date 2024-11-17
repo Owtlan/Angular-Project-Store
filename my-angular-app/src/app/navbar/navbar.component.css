@@ -1,7 +1,7 @@
 .navbar {
   position: relative;
   display: flex;
-justify-content: center;
+  justify-content: center;
   padding: 15px 30px;
   background-color: #1f1f1f;
   color: #fff;
@@ -55,9 +55,9 @@ justify-content: center;
 }
 
 .user-email {
-  font-size: 15px;
+  font-size: 16px;
   color: #ffb74d;
-  font-weight: 600;
+
 }
 
 
@@ -106,7 +106,7 @@ justify-content: center;
 .nav-links li {
   cursor: pointer;
   font-size: 17px;
-  color: #007bff;
+  color: white;
   font-weight: bold;
   transition: color 0.3s;
 }
@@ -132,6 +132,7 @@ justify-content: center;
   transform: translateY(10px);
   transition: all 0.3s ease;
   z-index: 10;
+  margin-top: 20px;
 }
 
 .cart-info:hover .cart-dropdown {
@@ -184,6 +185,7 @@ justify-content: center;
   align-items: center;
   gap: 8px;
   cursor: pointer;
+  padding-bottom: 10px;
 }
 
 .user-icon {
@@ -197,7 +199,7 @@ justify-content: center;
   left: 0;
   background: #333;
   color: white;
-  padding: 10px;
+  padding: 10px 20px;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   width: 150px;
@@ -206,6 +208,9 @@ justify-content: center;
   transform: translateY(10px);
   transition: all 0.3s ease;
   z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .user-dropdown:hover .user-menu {
@@ -220,8 +225,12 @@ justify-content: center;
   font-size: 0.9rem;
 }
 
+
+
 .user-menu a:hover {
-  text-decoration: underline;
+  transition: ease-in-out 0.3s;
+  color: wheat;
+
 }
 
 .profile-picture {
@@ -230,3 +239,24 @@ justify-content: center;
   border-radius: 50%;
   margin-right: 8px;
 }
+.nav-links .home-page{
+  display: flex;
+  gap: 5px
+}
+.wrapping-login-logout{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.filter-group input{
+  max-width: 233px;
+}
+.shop-name-postion{
+  display: flex;
+}
+.shop-name-postion img{
+  object-fit: contain;
+}
+
+
+
