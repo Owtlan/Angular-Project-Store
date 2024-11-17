@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, ElementRef,ViewChild } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { UserService } from 'src/app/services/user.service';
 import { ProductService } from 'src/app/services/product.service';
@@ -12,6 +12,7 @@ export class ProfileComponent implements OnInit {
   currentUser: any;
   profilePictureUrl: string | null = null;
 
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>; // Свързване със скрития input
 
 
   constructor(
@@ -24,15 +25,14 @@ export class ProfileComponent implements OnInit {
     const user = this.auth.currentUser;
   
     if (user) {
-      // Първо взимаме данни от Firebase Authentication
+
       this.currentUser = {
         email: user.email,
-        phone: user.phoneNumber || null, // Първо проверяваме дали phoneNumber съществува
+        phone: user.phoneNumber || null, 
         photoURL: user.photoURL,
         uid: user.uid,
       };
   
-      // Ако телефонът не е наличен, го зареждаме от Firestore
       if (!this.currentUser.phone) {
         this.userService.getFirestoreUser(user.uid).then((data) => {
           if (data?.phone) {
@@ -55,7 +55,7 @@ export class ProfileComponent implements OnInit {
         this.profilePictureUrl = profilePicture;
       }
     } catch (error) {
-      console.error("Грешка при зареждане на снимката от Firestore:", error);
+      console.error("Error loading the picture from Firestore:", error);
     }
   }
 
@@ -71,8 +71,13 @@ export class ProfileComponent implements OnInit {
      
         }
       } catch (error) {
-        console.error('Грешка при качване на изображение:', error);
+        console.error('Error uploading image:', error);
       }
     }
   }
+
+  triggerFileInput() {
+    this.fileInput.nativeElement.click(); 
+  }
+
 }
