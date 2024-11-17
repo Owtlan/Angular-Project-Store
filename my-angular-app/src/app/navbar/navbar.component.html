@@ -20,7 +20,7 @@
 
           <div class="user-menu" *ngIf="showUserMenu">
             <ng-container *ngIf="isLoggedIn(); else loggedOutMenu">
-              <p><a (click)="navigateTo('/profile')">Преглед на профила</a></p>
+              <p><a (click)="navigateTo('/profile')">View Profile</a></p>
               <p><a (click)="logout()">Logout</a></p>
             </ng-container>
             <ng-template #loggedOutMenu>
@@ -57,25 +57,30 @@
       </div>
     </div>
     <ul class="nav-links">
-      <li (click)="navigateTo('/')">
+      <li (click)="navigateTo('/')" class="home-page">
         <fa-icon [icon]="faHome"></fa-icon> Home
       </li>
       <ng-container *ngIf="!isLoggedIn()">
-        <li (click)="navigateTo('/register')">
-          <fa-icon [icon]="faUserPlus"></fa-icon> Register
-        </li>
-        <li (click)="navigateTo('/login')">
-          <fa-icon [icon]="faSignInAlt"></fa-icon> Login
-        </li>
+        <div class="wrapping-login-logout">
+          <li (click)="navigateTo('/register')">
+            <fa-icon [icon]="faUserPlus"></fa-icon> Register
+          </li>
+          <li (click)="navigateTo('/login')">
+            <fa-icon [icon]="faSignInAlt"></fa-icon> Login
+          </li>
+        </div>
       </ng-container>
       <ng-container *ngIf="isLoggedIn()">
-        <li (click)="navigateTo('/add-product')">
-          <fa-icon [icon]="faPlusCircle"></fa-icon> Add Product
-        </li>
-        <li (click)="logout()">
-          <fa-icon [icon]="faSignOutAlt"></fa-icon> Logout
-        </li>
+        <div class="wrapping-login-logout">
+          <li (click)="navigateTo('/add-product')">
+            <fa-icon [icon]="faPlusCircle"></fa-icon> Add Product
+          </li>
+          <li (click)="logout()">
+            <fa-icon [icon]="faSignOutAlt"></fa-icon> Logout
+          </li>
+        </div>
       </ng-container>
     </ul>
   </div>
+  
 </nav>
