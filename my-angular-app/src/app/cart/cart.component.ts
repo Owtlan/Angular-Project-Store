@@ -27,6 +27,7 @@ export class CartComponent implements OnInit {
 
   navigateTo(path: string) {
     this.router.navigate([path]);
+    // this.router.navigate(['/']);
   }
 
 
