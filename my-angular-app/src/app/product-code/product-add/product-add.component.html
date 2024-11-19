@@ -1,0 +1,123 @@
+<form #addForm="ngForm" (ngSubmit)="addProduct()" class="product-form animate__animated animate__fadeIn" novalidate>
+
+  <div class="form-group">
+    <label for="productName">Product Name:</label>
+    <input 
+      id="productName" 
+      class="form-control" 
+      type="text" 
+      [(ngModel)]="product.name" 
+      name="productName" 
+      #productName="ngModel" 
+      required 
+      minlength="3"
+    />
+    <div *ngIf="productName.invalid && productName.touched" class="error">
+      <small *ngIf="productName.errors?.['required']">The name is required.</small>
+      <small *ngIf="productName.errors?.['minlength']">The name must be at least 3 characters long.</small>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="productDescription">Product Description:</label>
+    <textarea 
+      id="productDescription" 
+      class="form-control" 
+      [(ngModel)]="product.description" 
+      name="productDescription" 
+      #productDescription="ngModel" 
+      required 
+      minlength="10"
+    ></textarea>
+    <div *ngIf="productDescription.invalid && productDescription.touched" class="error">
+      <small *ngIf="productDescription.errors?.['required']">The description is required.</small>
+      <small *ngIf="productDescription.errors?.['minlength']">The description must be at least 10 characters long.</small>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="productPrice">Product Price:</label>
+    <input 
+      id="productPrice" 
+      class="form-control" 
+      type="number" 
+      [(ngModel)]="product.price" 
+      name="productPrice" 
+      #productPrice="ngModel" 
+      required 
+      min="1"
+    />
+    <div *ngIf="productPrice.invalid && productPrice.touched" class="error">
+      <small *ngIf="productPrice.errors?.['required']">The price is required.</small>
+      <small *ngIf="productPrice.errors?.['min']">The price must be at least 1.</small>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="productCategory">Category:</label>
+    <select 
+      id="productCategory" 
+      class="form-control" 
+      [(ngModel)]="product.category" 
+      name="productCategory" 
+      #productCategory="ngModel" 
+      required
+    >
+      <option value="" disabled selected>Select a category</option>
+      <option value="keyboard">Keyboards</option>
+      <option value="mouse">Mouses</option>
+      <option value="phone">Phones</option>
+      <option value="laptop">Laptops</option>
+      <option value="tv">Televisions</option>
+    </select>
+    <div *ngIf="productCategory.invalid && productCategory.touched" class="error">
+      <small *ngIf="productCategory.errors?.['required']">Please select a category.</small>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="productImage">Main Image:</label>
+    <div class="custom-file-upload">
+      <input 
+        id="productImage" 
+        type="file" 
+        (change)="onFileSelected($event)" 
+        required 
+        #fileInput 
+        style="display: none;" 
+      />
+      <button type="button" (click)="fileInput.click()" class="btn btn-custom">
+        Select Image
+      </button>
+      <span *ngIf="selectedFile" class="file-name">{{ selectedFile.name }}</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Images by Color:</label>
+    <div *ngFor="let color of colors" class="color-group">
+      <div class="custom-file-upload">
+        <input 
+          id="colorImage-{{ color }}" 
+          type="file" 
+          (change)="onColorImageSelected($event, color)" 
+          style="display: none;" 
+          #colorFileInput 
+        />
+        <button type="button" (click)="colorFileInput.click()" class="btn btn-custom">
+          Select color
+        </button>
+        <span *ngIf="colorFiles[color]" class="file-name">{{ colorFiles[color]?.name }}</span>
+      </div>
+    </div>
+  </div>
+  
+
+  <button 
+    type="submit" 
+    class="btn btn-primary" 
+    [disabled]="addForm.invalid || !selectedFile || !addForm.dirty"
+  >
+    Add Product
+  </button>
+</form>
