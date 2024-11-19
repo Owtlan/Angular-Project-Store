@@ -5,6 +5,13 @@
     <img *ngIf="profilePictureUrl" [src]="profilePictureUrl" alt="Profile Picture" (click)="triggerFileInput()" />
     <input type="file" #fileInput (change)="onFileSelected($event)" style="display: none;" />
 
+
+    <div *ngIf="!profilePictureUrl">
+      <button (click)="triggerFileInput()">Качете снимка</button>
+    </div>
+
+    <input type="file" #fileInput (change)="onFileSelected($event)" style="display: none;" />
+
   </div>
 
   <div class="user-info">
