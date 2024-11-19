@@ -24,6 +24,7 @@ h2 {
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     cursor: pointer;
+    gap: 10px;
 }
 
 .product-image {
@@ -69,23 +70,130 @@ button:hover {
     text-align: right;
 }
 
-.order-button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    font-size: 1.2rem;
-    border: none;
-    border-radius: 4px;
-    width: 100%;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 20px;
-}
-
-.order-button:hover {
-    background-color: #0056b3;
-}
 
 .wrap-cart .cart-item:last-child {
     margin-bottom: 0;
 }
+
+.order-btn {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+
+.link_wrapper {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.link_wrapper a {
+    display: inline-block;
+    width: 250px;
+    height: 50px;
+    line-height: 50px;
+    font-weight: bold;
+    text-decoration: none;
+    background: #333;
+    text-align: center;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 3px solid #333;
+    transition: all 0.35s;
+}
+
+.link_wrapper .icon {
+    width: 50px;
+    height: 50px;
+    border: 3px solid transparent;
+    position: absolute;
+    transform: rotate(45deg);
+    right: 0;
+    top: 0;
+    z-index: -1;
+    transition: all 0.35s;
+}
+
+.link_wrapper .icon svg {
+    width: 30px;
+    position: absolute;
+    top: calc(50% - 15px);
+    left: calc(50% - 15px);
+    transform: rotate(-45deg);
+    fill: #2ecc71;
+    transition: all 0.35s;
+}
+
+.link_wrapper a:hover {
+    width: 200px;
+    border: 3px solid #2ecc71;
+    background: transparent;
+    color: #2ecc71;
+}
+
+.link_wrapper a:hover+.icon {
+    border: 3px solid #2ecc71;
+    right: -25%;
+}
+
+/* empty cart */
+
+.empty-cart-message {
+    text-align: center;
+    padding: 30px;
+    border-radius: 8px;
+    background-color: #f8d7da; 
+    color: #721c24; 
+    border: 1px solid #f5c6cb;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    animation: fadeIn 1s ease-out;
+  }
+  
+  .empty-cart-message h2 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .empty-cart-message p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 30px;
+  }
+  
+
+  .empty-cart-message button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #28a745; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+
+  .empty-cart-message button:hover {
+    background-color: #218838; 
+  }
+  
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
