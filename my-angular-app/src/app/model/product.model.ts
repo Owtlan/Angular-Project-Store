@@ -6,5 +6,7 @@ export interface Product {
     price: number;
     imageUrl: string;
     ownerId: string;
+    likes: string[];
+    dislikes: string[];
     colorImages?: { color: string; imageUrl: string }[];
 }
