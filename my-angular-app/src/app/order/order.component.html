@@ -1,24 +1,29 @@
 <div class="order-container">
-    <h2>Product Order</h2>
-    <form (ngSubmit)="placeOrder()">
-      <div>
-        <label for="address">Address:</label>
-        <input type="text" id="address" [(ngModel)]="shippingDetails.address" name="address" required />
-      </div>
-      <div>
-        <label for="city">City:</label>
-        <input type="text" id="city" [(ngModel)]="shippingDetails.city" name="city" required />
-      </div>
-      <div>
-        <label for="postalCode">Postal Code:</label>
-        <input type="text" id="postalCode" [(ngModel)]="shippingDetails.postalCode" name="postalCode" required />
-      </div>
-      <div>
-        <label for="phoneNumber">Phone:</label>
-        <input type="text" id="phoneNumber" [(ngModel)]="shippingDetails.phoneNumber" name="phoneNumber" required />
-      </div>
-      <button type="submit">Place Order</button>
-    </form>
-</div>
+  <h2>Product Order</h2>
 
-  
+  <div *ngIf="orderPlaced" class="thank-you-message">
+    <h3>Thank you for your order!</h3>
+    <p>Your order has been placed successfully. We will contact you soon!</p>
+  </div>
+
+
+  <form *ngIf="!orderPlaced" (ngSubmit)="placeOrder()">
+    <div>
+      <label for="address">Address:</label>
+      <input type="text" id="address" [(ngModel)]="shippingDetails.address" name="address" required />
+    </div>
+    <div>
+      <label for="city">City:</label>
+      <input type="text" id="city" [(ngModel)]="shippingDetails.city" name="city" required />
+    </div>
+    <div>
+      <label for="postalCode">Postal Code:</label>
+      <input type="text" id="postalCode" [(ngModel)]="shippingDetails.postalCode" name="postalCode" required />
+    </div>
+    <div>
+      <label for="phoneNumber">Phone:</label>
+      <input type="text" id="phoneNumber" [(ngModel)]="shippingDetails.phoneNumber" name="phoneNumber" required />
+    </div>
+    <button type="submit">Place Order</button>
+  </form>
+</div>
