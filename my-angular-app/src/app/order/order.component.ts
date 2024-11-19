@@ -21,6 +21,7 @@ export class OrderComponent {
   };
 
   totalPrice: number = 0;
+  orderPlaced = false; 
 
 
   constructor(
@@ -33,6 +34,8 @@ export class OrderComponent {
       this.userId = user ? user.uid : null;
     })
   }
+
+
 
 
   placeOrder() {
@@ -53,7 +56,12 @@ export class OrderComponent {
         console.log('Order placed successfully!');
       
         this.cartService.clearCart(); 
-        this.router.navigate(['/'])
+        this.orderPlaced = true;
+     
+
+        setTimeout(() => {
+          this.router.navigate(['/']);
+        }, 5000);
 
       })
       .catch(error => {
