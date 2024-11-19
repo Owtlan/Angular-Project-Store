@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Firestore, collection, doc, setDoc, collectionData, deleteDoc, docData } from '@angular/fire/firestore';
+import { Firestore, collection, doc, setDoc, collectionData, deleteDoc, docData, getDoc, updateDoc } from '@angular/fire/firestore';
 import { Product } from "../model/product.model";
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -16,6 +16,55 @@ export class ProductService {
         this.productsCollection = collection(this.firestore, 'products');
     }
 
+
+
+// add like
+    async toggleLike(productId: string, userId: string): Promise<void> {
+        const productRef = doc(this.firestore, `products/${productId}`);
+        const docSnap = await getDoc(productRef);
+
+        if (!docSnap.exists()) {
+            console.error('Продуктът не е намерен.');
+            return;
+        }
+
+        const product = docSnap.data() as Product;
+        const likes = product.likes || [];
+        const dislikes = product.dislikes || [];
+
+        if (likes.includes(userId)) {
+            await updateDoc(productRef, { likes: likes.filter((id) => id !== userId) });
+        } else {
+            await updateDoc(productRef, {
+                likes: [...likes, userId],
+                dislikes: dislikes.filter((id) => id !== userId),
+            });
+        }
+    }
+ // add dislike
+    async toggleDislike(productId: string, userId: string): Promise<void> {
+        const productRef = doc(this.firestore, `products/${productId}`);
+        const docSnap = await getDoc(productRef);
+
+        if (!docSnap.exists()) {
+            console.error('Продуктът не е намерен.');
+            return;
+        }
+
+        const product = docSnap.data() as Product;
+        const dislikes = product.dislikes || [];
+        const likes = product.likes || [];
+
+        if (dislikes.includes(userId)) {
+            // Премахване на Dislike
+            await updateDoc(productRef, { dislikes: dislikes.filter((id) => id !== userId) });
+        } else {
+            await updateDoc(productRef, {
+                dislikes: [...dislikes, userId],
+                likes: likes.filter((id) => id !== userId),
+            });
+        }
+    }
 
     async uploadImageToCloudinary(file: File): Promise<string> {
         const url = `https://api.cloudinary.com/v1_1/${environment.cloudinary.cloudName}/image/upload`;
@@ -42,7 +91,7 @@ export class ProductService {
         const productWithImages = {
             ...product,
             imageUrl: mainImageUrl,
-            colorImages: colorImagesUrls, 
+            colorImages: colorImagesUrls,
             ownerId: currentUser ? currentUser.uid : ''
         };
 
