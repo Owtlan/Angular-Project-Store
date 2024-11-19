@@ -1,11 +1,33 @@
-<div class="wrap-cart animate__animated animate__fadeIn">
-    <h2>My Cart</h2>
-    <div *ngFor="let item of cartItems" class="cart-item">
+<div class="cart-container">
+    <!-- Check if the cart is empty -->
+    <div *ngIf="cartItems.length === 0" class="empty-cart-message">
+      <h2>Your cart is empty!</h2>
+      <p>Don't worry, check out our products!</p>
+      <button (click)="navigateTo('/')">Go to product page</button>
+    </div>
+  
+    <!-- If the cart is not empty, display the products -->
+    <div *ngIf="cartItems.length > 0" class="wrap-cart animate__animated animate__fadeIn">
+      <h2>My Cart</h2>
+      <div *ngFor="let item of cartItems" class="cart-item">
         <img [src]="item.imageUrl" alt="{{ item.name }}" class="product-image" />
         <h3>{{ item.name }}</h3>
-        <p>Price: {{ item.price | currency:'BGN' }}</p>
+        <p>Price: {{ item.price | currency:'BGN ' }}</p>
         <button (click)="removeFromCart(item)">X</button>
+      </div>
+      <p class="total-price">Total Amount: {{ getTotalPrice() | currency:'BGN' }}</p>
+  
+      <div class="order-btn">
+        <div class="link_wrapper">
+          <a (click)="navigateTo('/order')">Order</a>
+          <div class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 268.832 268.832">
+              <path d="M265.17 125.577l-80-80c-4.88-4.88-12.796-4.88-17.677 0-4.882 4.882-4.882 12.796 0 17.678l58.66 58.66H12.5c-6.903 0-12.5 5.598-12.5 12.5 0 6.903 5.597 12.5 12.5 12.5h213.654l-58.66 58.662c-4.88 4.882-4.88 12.796 0 17.678 2.44 2.44 5.64 3.66 8.84 3.66s6.398-1.22 8.84-3.66l79.997-80c4.883-4.882 4.883-12.796 0-17.678z" />
+            </svg>
+          </div>
+        </div>
+      </div>
     </div>
-    <p class="total-price">Total Amount: {{ getTotalPrice() | currency:'BGN' }}</p>
-    <button class="order-button" (click)="navigateTo('/order')">Order</button>
 </div>
+
+  
