@@ -10,9 +10,12 @@
 }
 
 .navbar.sticky {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  width: 100%;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
   animation: slideDown 0.3s ease-out;
 }
 
@@ -52,6 +55,7 @@
   margin-bottom: 10px;
   padding: 5px 0;
   border-bottom: 1px solid #444;
+  
 }
 
 .user-email {
@@ -187,6 +191,7 @@
   align-items: center;
   gap: 8px;
   cursor: pointer;
+  height: 40px;
 }
 
 .user-icon {
@@ -194,52 +199,73 @@
   color: #ffb74d;
 }
 
+/* Позициониране на менюто */
 .user-menu {
   position: absolute;
-  top: 100%;
-  left: 0;
-  background: #333;
+  top: calc(100% + 10px);
+  /* Разстояние под профилната икона */
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: linear-gradient(135deg, #1f2937, #111827);
   color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  width: 150px;
+  padding: 15px 20px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  width: 200px;
   visibility: hidden;
   opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.3s ease;
+  transition: all 0.3s ease, box-shadow 0.2s ease-in-out;
   z-index: 10;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
-.user-dropdown:hover .user-menu {
+/* Показване на менюто при ховър върху контейнера или менюто */
+.user-dropdown:hover .user-menu,
+.user-menu:hover {
   visibility: visible;
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(-50%) translateY(0);
+  /* Плавно изкачване */
 }
 
+/* Елементи в менюто */
 .user-menu a {
   color: #ffb74d;
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 10px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-
-
+/* Променяме цветове на линковете при ховър */
 .user-menu a:hover {
-  transition: ease-in-out 0.3s;
-  color: wheat;
+  background-color: #ffb74d;
+  color: #1f2937;
+}
 
+.user-menu p {
+  margin: 0;
+  /* Премахваме марджини */
 }
 
 .profile-picture {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  margin-right: 8px;
+  border: 2px solid #ffb74d;
+  cursor: pointer;
+  transition: transform 0.3s ease, border-color 0.3s ease;
 }
+
+.profile-picture:hover {
+  transform: scale(1.1);
+  border-color: #fff;
+}
+
 
 .nav-links .home-page {
   display: flex;
@@ -262,4 +288,11 @@
 
 .shop-name-postion img {
   object-fit: contain;
+}
+
+.fake-field {
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  top: 0;
 }
