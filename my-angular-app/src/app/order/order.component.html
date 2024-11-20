@@ -6,24 +6,86 @@
     <p>Your order has been placed successfully. We will contact you soon!</p>
   </div>
 
+  <form *ngIf="!orderPlaced" #orderForm="ngForm" (ngSubmit)="placeOrder()" class="order-form animate__animated animate__fadeIn" novalidate>
 
-  <form *ngIf="!orderPlaced" (ngSubmit)="placeOrder()">
-    <div>
+    <!-- Address Field -->
+    <div class="form-group">
       <label for="address">Address:</label>
-      <input type="text" id="address" [(ngModel)]="shippingDetails.address" name="address" required />
+      <input 
+        id="address" 
+        class="form-control" 
+        type="text" 
+        [(ngModel)]="shippingDetails.address" 
+        name="address" 
+        #address="ngModel" 
+        required 
+      />
+      <div *ngIf="address.invalid && address.touched" class="error">
+        <small *ngIf="address.errors?.['required']">Address is required.</small>
+      </div>
     </div>
-    <div>
+
+    <!-- City Field -->
+    <div class="form-group">
       <label for="city">City:</label>
-      <input type="text" id="city" [(ngModel)]="shippingDetails.city" name="city" required />
+      <input 
+        id="city" 
+        class="form-control" 
+        type="text" 
+        [(ngModel)]="shippingDetails.city" 
+        name="city" 
+        #city="ngModel" 
+        required 
+      />
+      <div *ngIf="city.invalid && city.touched" class="error">
+        <small *ngIf="city.errors?.['required']">City is required.</small>
+      </div>
     </div>
-    <div>
+
+    <!-- Postal Code Field -->
+    <div class="form-group">
       <label for="postalCode">Postal Code:</label>
-      <input type="text" id="postalCode" [(ngModel)]="shippingDetails.postalCode" name="postalCode" required />
+      <input 
+        id="postalCode" 
+        class="form-control" 
+        type="text" 
+        [(ngModel)]="shippingDetails.postalCode" 
+        name="postalCode" 
+        #postalCode="ngModel" 
+        required 
+        pattern="[0-9]{4}" 
+      />
+      <div *ngIf="postalCode.invalid && postalCode.touched" class="error">
+        <small *ngIf="postalCode.errors?.['required']">Postal code is required.</small>
+        <small *ngIf="postalCode.errors?.['pattern']">Postal code must be 4 digits.</small>
+      </div>
     </div>
-    <div>
+
+    <!-- Phone Number Field -->
+    <div class="form-group">
       <label for="phoneNumber">Phone:</label>
-      <input type="text" id="phoneNumber" [(ngModel)]="shippingDetails.phoneNumber" name="phoneNumber" required />
+      <input 
+        id="phoneNumber" 
+        class="form-control" 
+        type="text" 
+        [(ngModel)]="shippingDetails.phoneNumber" 
+        name="phoneNumber" 
+        #phoneNumber="ngModel" 
+        required 
+        pattern="^\d{10}$" 
+      />
+      <div *ngIf="phoneNumber.invalid && phoneNumber.touched" class="error">
+        <small *ngIf="phoneNumber.errors?.['required']">Phone number is required.</small>
+        <small *ngIf="phoneNumber.errors?.['pattern']">Phone number must be 10 digits long.</small>
+      </div>
     </div>
-    <button type="submit">Place Order</button>
+
+    <button 
+      type="submit" 
+      class="btn btn-primary" 
+      [disabled]="orderForm.invalid"
+    >
+      Place Order
+    </button>
   </form>
 </div>
