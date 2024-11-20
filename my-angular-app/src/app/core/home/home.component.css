@@ -416,7 +416,6 @@ span {
     animation: fadeOut 5s ease-out forwards; 
     position: absolute;
     right: 40px;
-    bottom: -40px;
   }
   
   @keyframes fadeOut {
