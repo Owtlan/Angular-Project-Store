@@ -136,9 +136,9 @@ export class ProductDetailComponent implements OnInit {
   addToCart(product: Product): void {
     this.cartService.addToCart(product);
     console.log(`Добавен продукт в количката: ${product.name}`);
-    this.showSuccessMessage = true;  // Показваме съобщението
+    this.showSuccessMessage = true; 
     setTimeout(() => {
-      this.showSuccessMessage = false;  // Скриваме съобщението след 3 секунди
+      this.showSuccessMessage = false;  
     }, 5000);
   }
 
