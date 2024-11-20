@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit {
         console.error('Error liking product:', err)
       );
     }
-  }
+  } 
   
   // load products at homepage
   loadProducts(): void {
@@ -141,7 +141,10 @@ export class HomeComponent implements OnInit {
     this.cartService.addToCart(product);
     console.log(`Добавен продукт в количката: ${product.name}`);
     this.showSuccessMessage = true; 
-
+    setTimeout(() => {
+      this.showSuccessMessage = false;
+    }, 5000);
+    
     this.lastAddedProduct = product;
 
 
