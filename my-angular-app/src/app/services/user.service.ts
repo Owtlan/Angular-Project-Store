@@ -7,6 +7,13 @@ import { Auth, User } from '@angular/fire/auth';
   providedIn: 'root'
 })
 export class UserService {
+  private profilePictureSubject = new BehaviorSubject<string | null>(null);
+  public profilePicture$ = this.profilePictureSubject.asObservable();
+
+  constructor(private firestore: Firestore, private auth: Auth) { }
+
+
+  
   async getFirestoreUser(uid: string): Promise<any> {
     try {
       const userDocRef = doc(this.firestore, `users/${uid}`);
@@ -27,10 +34,6 @@ export class UserService {
 
 
 
-  private profilePictureSubject = new BehaviorSubject<string | null>(null);
-  public profilePicture$ = this.profilePictureSubject.asObservable();
-
-  constructor(private firestore: Firestore, private auth: Auth) { }
 
   async addUser(user: User, additionalData: { phone: string; },) {
     try {
