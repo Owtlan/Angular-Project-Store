@@ -16,7 +16,6 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  // Properties
   products: Product[] = [];
   filteredProducts: Product[] = [];
   swiperProducts: Product[] = [];
@@ -39,7 +38,6 @@ export class HomeComponent implements OnInit {
   faCartShopping = faCartShopping;
   faHeart = faHeart;
 
-  // Swiper configuration
   swiperConfig: SwiperOptions = {
     navigation: true,
     pagination: { clickable: true, type: 'bullets', el: '.swiper-pagination' },
@@ -48,7 +46,6 @@ export class HomeComponent implements OnInit {
     spaceBetween: 0,
   };
 
-  // Reactive filters
   filters$ = new BehaviorSubject<{
     productName: string;
     category: string;
@@ -63,7 +60,6 @@ export class HomeComponent implements OnInit {
 
   filteredProducts$ = new BehaviorSubject<Product[]>([]);
 
-  // Constructor
   constructor(
     private productService: ProductService,
     private auth: Auth,
@@ -78,20 +74,14 @@ export class HomeComponent implements OnInit {
     this.setupReactiveFilters();
   }
 
-  // Methods
 
-  /**
-   * Set up listener for authentication state changes.
-   */
   private setupAuthListener(): void {
     authState(this.auth).subscribe(user => {
       this.userId = user ? user.uid : null;
     });
   }
 
-  /**
-   * Set up reactive filters with products.
-   */
+
   private setupReactiveFilters(): void {
     combineLatest([this.filters$, this.productService.getProducts()])
       .pipe(
@@ -100,9 +90,6 @@ export class HomeComponent implements OnInit {
       .subscribe(filteredProducts => this.filteredProducts$.next(filteredProducts));
   }
 
-  /**
-   * Load products and initialize filters.
-   */
   private loadProducts(): void {
     this.isLoading = true;
 
@@ -120,23 +107,17 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  /**
-   * Apply static filters to the product list.
-   */
+
   applyFilters(): void {
     this.filteredProducts = this.products.filter(product => this.matchesFilters(product));
   }
 
-  /**
-   * Apply reactive filters to update BehaviorSubject.
-   */
+
   applyReactiveFilters(): void {
     this.filters$.next({ ...this.filters });
   }
 
-  /**
-   * Check if a product matches the current filters.
-   */
+
   private matchesFilters(product: Product): boolean {
     const matchesName = this.filters.productName
       ? product.name.toLowerCase().includes(this.filters.productName.toLowerCase())
@@ -163,16 +144,12 @@ export class HomeComponent implements OnInit {
     return matchesName && matchesCategory && matchesPrice && matchesLikes && matchesLikesRange;
   }
 
-  /**
-   * Filter products based on reactive filters.
-   */
+
   private filterProducts(filters: any, products: Product[]): Product[] {
     return products.filter(product => this.matchesFilters(product));
   }
 
-  /**
-   * Check if a product's like count matches the selected ranges.
-   */
+
   private getLikesRangeMatch(likesCount: number): boolean {
     const ranges = this.filters.likesRange;
     if (ranges['1-2'] && likesCount >= 1 && likesCount <= 2) return true;
@@ -181,9 +158,7 @@ export class HomeComponent implements OnInit {
     return Object.values(ranges).every(value => value === false);
   }
 
-  /**
-   * Get price range from the selected filter.
-   */
+  
   private getPriceRange(priceRange: string): [number, number | null] {
     switch (priceRange) {
       case '0-99': return [0, 99];
@@ -197,9 +172,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  /**
-   * Clear all filters and reset the product list.
-   */
+
   clearFilters(): void {
     this.filters = {
       productName: '',
@@ -211,9 +184,7 @@ export class HomeComponent implements OnInit {
     this.applyFilters();
   }
 
-  /**
-   * Navigate to the product detail page.
-   */
+
   goToDetail(productId: string | undefined): void {
     if (productId) {
       this.router.navigate(['/product', productId]);
@@ -222,9 +193,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  /**
-   * Add a product to the cart and show success message.
-   */
+
   addToCart(product: Product): void {
     if (product.ownerId === this.userId) {
       console.log(`Cannot add your own product: ${product.name}`);
@@ -239,16 +208,12 @@ export class HomeComponent implements OnInit {
     setTimeout(() => (this.showSuccessMessage = false), 5000);
   }
 
-  /**
-   * Check if the user is logged in.
-   */
+ 
   isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }
 
-  /**
-   * Toggle like status for a product.
-   */
+
   onLikeClick(product: Product): void {
     if (this.currentUserId) {
       this.productService.toggleLike(product.id, this.currentUserId).catch(err =>
