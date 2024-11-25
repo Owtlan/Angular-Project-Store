@@ -129,6 +129,7 @@
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);
 }
 
 .filter-sidebar h3 {
@@ -159,7 +160,21 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 1rem;
+
 }
+
+.filter-by-likes {
+    border: 1px solid black;
+    margin-top: 100px;
+    padding: 20px 10px;
+    border-radius: 5px;
+
+}
+
+.filter-by-likes label {
+    padding-top: 10px;
+}
+
 
 .filter-group label {
     margin-bottom: 0.5rem;
@@ -184,6 +199,9 @@
 .products {
     flex: 1;
     margin-left: 20px;
+    padding: 20px;
+    border-radius: 5px;
+    background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);
 }
 
 .products h2 {
@@ -413,17 +431,75 @@ span {
     margin-top: 10px;
     border-radius: 5px;
     text-align: center;
-    animation: fadeOut 5s ease-out forwards; 
+    animation: fadeOut 5s ease-out forwards;
     position: absolute;
     right: 40px;
-  }
-  
-  @keyframes fadeOut {
-    0% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
+}
 
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+
+
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* Разстояние между квадратчето и текста */
+    cursor: pointer;
+    font-size: 14px;
+    /* Размер на текста */
+}
+
+.custom-checkbox input[type="checkbox"] {
+    /* Скриваме оригиналния чекбокс */
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    /* Размер на квадратчето */
+    height: 16px;
+    /* Размер на квадратчето */
+    border: 2px solid #444;
+    /* Тъмна рамка */
+    border-radius: 3px;
+    /* Заоблени ъгли */
+    background-color: white;
+    /* Цвят на фона */
+    cursor: pointer;
+    /* Ръка при мишката */
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+.custom-checkbox input[type="checkbox"]:checked {
+    background-color: #007bff;
+    /* Син фон, когато е избрано */
+    border-color: #007bff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.custom-checkbox input[type="checkbox"]:checked::after {
+    content: "✔";
+    /* Символ за отметка */
+    font-size: 12px;
+    /* Размер на отметката */
+    color: white;
+    /* Бял цвят на отметката */
+    display: block;
+    text-align: center;
+}
+
+.custom-checkbox span {
+    margin-left: 4px;
+    /* Разстояние между текста и квадратчето */
+}
