@@ -8,6 +8,7 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   font-family: 'Arial', sans-serif;
   text-align: center;
+  background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);
 }
 
 .profile-container h2 {
