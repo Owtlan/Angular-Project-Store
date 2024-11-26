@@ -27,7 +27,7 @@
     </div>
 
 
-    
+
 
     <div class="filter-sidebarProduct">
         <aside class="filter-sidebar">
@@ -70,13 +70,35 @@
                     </button>
                 </div>
             </form>
+
+
+            <div class="filter-by-likes">
+                <label>Likes Range</label>
+                <label class="custom-checkbox">
+                    <input type="checkbox" [(ngModel)]="filters.likesRange['1-2']" name="likesRange1to2"
+                        (change)="applyFilters()" />
+                    <span>1 - 2 Likes</span>
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox" [(ngModel)]="filters.likesRange['3-4']" name="likesRange3to4"
+                        (change)="applyFilters()" />
+                    <span>3 - 4 Likes</span>
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox" [(ngModel)]="filters.likesRange['5-6']" name="likesRange5to6"
+                        (change)="applyFilters()" />
+                    <span>5 - 6 Likes</span>
+                </label>
+            </div>
+
         </aside>
- 
+
+
         <section class="products">
             <div *ngIf="showSuccessMessage" class="success-message">
-                Продуктът {{ lastAddedProduct?.name }} беше добавен успешно в количката!
+                The product {{ lastAddedProduct?.name }} has been successfully added to the cart!
             </div>
-        
+
 
             <h2>Our Products</h2>
             <div class="product-grid">
@@ -100,11 +122,10 @@
                     </div>
 
                     <div class="price-and-button">
-                        <p class="product-price">Price: {{ product.price | currency:'BGN' }}</p>
+                        <p class="product-price">Price: {{ product.price | currency:'BGN ' }}</p>
                     </div>
 
-
-
+                 
                 </div>
             </div>
         </section>
