@@ -28,6 +28,9 @@ import { ProfileComponent } from './user/profile/profile.component';
 import { register } from 'swiper/element/bundle'
 import { GlobalErrorHandler } from './ErrorHandler/global-error-handler.service';
 import { FooterComponent } from './core/footer/footer.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
 
 register()
 
@@ -56,6 +59,7 @@ register()
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
     FontAwesomeModule,
+    BrowserAnimationsModule
   ],
   providers: [
     { provide: ErrorHandler, useClass: GlobalErrorHandler }
