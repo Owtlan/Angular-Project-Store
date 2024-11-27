@@ -1,64 +1,75 @@
+<!-- Success message -->
 <div *ngIf="product" class="product-detail animate__animated animate__fadeIn">
 
-    <!-- Success message -->
+    <div class="wrapper-container">
 
-    <h2 class="product-name">{{ product.name }}</h2>
 
-    <div class="product-section">
-        <div class="main-image-container">
-            <img [src]="selectedImageUrl || product.imageUrl" alt="{{ product.name }}"
-                [ngClass]="{'animate__animated': true, 'animate__fadeIn': isImageChanged}"
-                (animationend)="resetAnimation()" class="main-image" />
-        </div>
 
-        <div class="product-info">
-            <p class="product-description">{{ product.description }}</p>
-            <p class="product-price">Price: {{ product.price | currency:'BGN ' }}</p>
+        <h2 class="product-name">{{ product.name | titlecase }}</h2>
 
-            <div *ngIf="product.colorImages && product.colorImages.length" class="color-selection">
-                <label>Choose color:</label>
-                <div class="color-options">
-                    <div class="color-option" (click)="selectColorImage('original')">
-                        <img [src]="product.imageUrl" alt="Original" class="color-thumbnail" />
+        <div class="product-section">
+            <div class="main-image-container">
+                <img [src]="selectedImageUrl || product.imageUrl" alt="{{ product.name | uppercase }}"
+                    [ngClass]="{'animate__animated': true, 'animate__fadeIn': isImageChanged}"
+                    (animationend)="resetAnimation()" class="main-image" />
+            </div>
+
+            <div class="product-info">
+                <p class="product-description" *ngIf="!showFullDescription">{{ product.description | slice:0:100 }}...
+                    <button class="btn btn-link" (click)="toggleDescription()">Read more</button>
+                </p>
+                <div *ngIf="showFullDescription" class="full-description" [@expandCollapse]>
+                    <p>{{ product.description }}</p>
+                    <button class="btn btn-link" (click)="toggleDescription()">Show less</button>
+                </div>
+
+
+                <p class="product-price">Price: {{ product.price | currency:'BGN ' }}</p>
+
+                <div *ngIf="product.colorImages && product.colorImages.length" class="color-selection">
+                    <label>Choose color:</label>
+                    <div class="color-options">
+                        <div class="color-option" (click)="selectColorImage('original')">
+                            <img [src]="product.imageUrl" alt="Original" class="color-thumbnail" />
+                        </div>
+
+                        <div *ngFor="let colorImage of product.colorImages" class="color-option"
+                            (click)="selectColorImage(colorImage.imageUrl)">
+                            <img [src]="colorImage.imageUrl" [alt]="colorImage.color | titlecase"
+                                class="color-thumbnail" [class.selected]="selectedImageUrl === colorImage.imageUrl" />
+                        </div>
                     </div>
+                </div>
 
-                    <div *ngFor="let colorImage of product.colorImages" class="color-option"
-                        (click)="selectColorImage(colorImage.imageUrl)">
-                        <img [src]="colorImage.imageUrl" [alt]="colorImage.color" class="color-thumbnail"
-                            [class.selected]="selectedImageUrl === colorImage.imageUrl" />
-                    </div>
+                <div class="action-buttons">
+                    <button *ngIf="isProductOwner(product)" (click)="editProduct(product)"
+                        class="btn edit-btn">Edit</button>
+                    <button *ngIf="isProductOwner(product)" (click)="deleteProduct(product)"
+                        class="btn delete-btn">Delete</button>
+                    <button *ngIf="!isProductOwner(product)" (click)="onBuyClick(product)" class="btn buy-btn">
+                        <fa-icon [icon]="faCartShopping"></fa-icon> Buy
+                    </button>
+                </div>
+
+                <!-- like dislike -->
+                <div class="like-dislike-buttons animate__animated animate__pulse" *ngIf="!isProductOwner(product)">
+                    <button [class.active]="currentUserId && product.likes?.includes(currentUserId)"
+                        (click)="onLikeClick(product)">
+                        <fa-icon [icon]="faHeart"></fa-icon> Like ({{ product.likes?.length || 0 | number:'1.0-0' }})
+                    </button>
+
+                    <button [class.active]="currentUserId && product.dislikes?.includes(currentUserId)"
+                        (click)="onDislikeClick(product)">
+                        <fa-icon [icon]="faThumbsDown"></fa-icon> Dislike ({{ product.dislikes?.length || 0 |
+                        number:'1.0-0' }})
+                    </button>
                 </div>
             </div>
 
-            <div class="action-buttons">
-                <button *ngIf="isProductOwner(product)" (click)="editProduct(product)"
-                    class="btn edit-btn">Edit</button>
-                <button *ngIf="isProductOwner(product)" (click)="deleteProduct(product)"
-                    class="btn delete-btn">Delete</button>
-                <button *ngIf="!isProductOwner(product)" (click)="onBuyClick(product)" class="btn buy-btn">
-                    <fa-icon [icon]="faCartShopping"></fa-icon> Buy
-                </button>
-            </div>
-
-
-            <!-- like dislike -->
-            <div class="like-dislike-buttons animate__animated animate__pulse" *ngIf="!isProductOwner(product)">
-                <button [class.active]="currentUserId && product.likes?.includes(currentUserId)"
-                    (click)="onLikeClick(product)">
-                    <fa-icon [icon]="faHeart"></fa-icon> Like ({{ product.likes?.length || 0 }})
-                </button>
-
-                <button [class.active]="currentUserId && product.dislikes?.includes(currentUserId)"
-                    (click)="onDislikeClick(product)">
-                    <fa-icon [icon]="faThumbsDown"></fa-icon> Dislike ({{ product.dislikes?.length || 0 }})
-                </button>
-
-
+            <div *ngIf="showSuccessMessage" class="success-message">
+                Продуктът {{ product?.name | uppercase }} беше добавен успешно в количката!
             </div>
         </div>
-        
-        <div *ngIf="showSuccessMessage" class="success-message">
-            Продуктът {{ product?.name }} беше добавен успешно в количката!
-        </div>
+
     </div>
 </div>
