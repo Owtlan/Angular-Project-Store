@@ -7,12 +7,24 @@ import { Router } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { AuthService } from '../../auth/auth.service';
 import { faCartShopping, faHeart, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import { trigger, style, animate, transition } from '@angular/animations';
 
 
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
-  styleUrls: ['./product-detail.component.css']
+  styleUrls: ['./product-detail.component.css'],
+  animations: [
+    trigger('expandCollapse', [
+      transition(':enter', [
+        style({ height: '0px', opacity: 0 }),
+        animate('300ms ease-out', style({ height: '*', opacity: 1 })) 
+      ]),
+      transition(':leave', [
+        animate('300ms ease-in', style({ height: '0px', opacity: 0 })) 
+      ])
+    ])
+  ]
 })
 export class ProductDetailComponent implements OnInit {
   product: Product | null = null;
@@ -23,6 +35,9 @@ export class ProductDetailComponent implements OnInit {
   faThumbsDown = faThumbsDown;
   isImageChanged = false;
   showSuccessMessage: boolean = false;
+  showFullDescription = false;
+
+
 
   constructor(
     private cartService: CartService,
@@ -32,6 +47,11 @@ export class ProductDetailComponent implements OnInit {
     private auth: Auth,
     private router: Router
   ) { }
+
+  toggleDescription() {
+    this.showFullDescription = !this.showFullDescription;
+  }
+
 
   ngOnInit(): void {
     authState(this.auth).subscribe(user => {
@@ -60,9 +80,6 @@ export class ProductDetailComponent implements OnInit {
       );
     }
   }
-
-
-
 
   loadProductDetails(productId: string) {
     this.productService.getProductById(productId).subscribe(
@@ -136,9 +153,9 @@ export class ProductDetailComponent implements OnInit {
   addToCart(product: Product): void {
     this.cartService.addToCart(product);
     console.log(`Добавен продукт в количката: ${product.name}`);
-    this.showSuccessMessage = true; 
+    this.showSuccessMessage = true;
     setTimeout(() => {
-      this.showSuccessMessage = false;  
+      this.showSuccessMessage = false;
     }, 5000);
   }
 
