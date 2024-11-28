@@ -112,6 +112,32 @@
     </div>
   </div>
   
+  <div class="form-group">
+    <label>Additional Images:</label>
+    <div *ngFor="let image of product.additionalImages; let i = index" class="additional-image-group">
+      <div class="custom-file-upload">
+        <input 
+          id="additionalImage-{{ i }}" 
+          type="file" 
+          (change)="onAdditionalImageSelected($event, i)" 
+          style="display: none;" 
+          #additionalFileInput 
+        />
+        <button type="button" (click)="additionalFileInput.click()" class="btn btn-custom">
+          Select Image {{ i + 1 }}
+        </button>
+        <span *ngIf="image.imageUrl" class="file-name">{{ image.name }}</span>
+      </div>
+    </div>
+  
+    <div class="add-more-images">
+      <button type="button" class="btn btn-secondary" (click)="addAdditionalImage()">
+        Add More Images
+      </button>
+    </div>
+  </div>
+  
+
 
   <button 
     type="submit" 
