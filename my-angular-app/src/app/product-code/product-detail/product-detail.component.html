@@ -3,8 +3,6 @@
 
     <div class="wrapper-container">
 
-
-
         <h2 class="product-name">{{ product.name | titlecase }}</h2>
 
         <div class="product-section">
@@ -41,6 +39,20 @@
                     </div>
                 </div>
 
+
+                <div *ngIf="product.additionalImages && product.additionalImages.length" class="additional-images">
+                    <label>Additional Views:</label>
+                    <div class="additional-image-options">
+                        <div *ngFor="let additionalImage of product.additionalImages" class="additional-image-option"
+                            (click)="selectAdditionalImage(additionalImage.imageUrl)">
+                            <img [src]="additionalImage.imageUrl" [alt]="additionalImage.name | titlecase"
+                                class="additional-image-thumbnail"
+                                [class.selected]="selectedImageUrl === additionalImage.imageUrl" />
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="action-buttons">
                     <button *ngIf="isProductOwner(product)" (click)="editProduct(product)"
                         class="btn edit-btn">Edit</button>
@@ -53,21 +65,21 @@
 
                 <!-- like dislike -->
                 <div class="like-dislike-buttons animate__animated animate__pulse" *ngIf="!isProductOwner(product)">
-                    <button [class.active]="currentUserId && product.likes?.includes(currentUserId)"
+                    <button [class.active]="currentUserId && product.likes.includes(currentUserId)"
                         (click)="onLikeClick(product)">
-                        <fa-icon [icon]="faHeart"></fa-icon> Like ({{ product.likes?.length || 0 | number:'1.0-0' }})
+                        <fa-icon [icon]="faHeart"></fa-icon> Like ({{ product.likes.length || 0 | number:'1.0-0' }})
                     </button>
 
-                    <button [class.active]="currentUserId && product.dislikes?.includes(currentUserId)"
+                    <button [class.active]="currentUserId && product.dislikes.includes(currentUserId)"
                         (click)="onDislikeClick(product)">
-                        <fa-icon [icon]="faThumbsDown"></fa-icon> Dislike ({{ product.dislikes?.length || 0 |
+                        <fa-icon [icon]="faThumbsDown"></fa-icon> Dislike ({{ product.dislikes.length || 0 |
                         number:'1.0-0' }})
                     </button>
                 </div>
             </div>
 
             <div *ngIf="showSuccessMessage" class="success-message">
-                Продуктът {{ product?.name | uppercase }} беше добавен успешно в количката!
+                Продуктът {{ product.name | uppercase }} беше добавен успешно в количката!
             </div>
         </div>
 
