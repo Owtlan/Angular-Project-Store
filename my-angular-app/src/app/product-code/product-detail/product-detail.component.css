@@ -5,7 +5,6 @@
     flex-wrap: wrap;
     background-color: #f9f9f9;
     border-radius: 8px;
-    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
     gap: 20px;
 }
 
@@ -18,9 +17,12 @@
 }
 
 .main-image-container {
+    display: flex;
+    justify-content: center;
+    position: relative;
     flex: 1;
     max-width: 600px;
-    position: relative;
+    margin-bottom: 20px;
 }
 
 .main-image {
@@ -130,77 +132,51 @@
     display: flex;
     gap: 40px;
     cursor: pointer;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: relative;
 }
 
 
-
-.like-dislike-buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.like-dislike-buttons button {
-  background-color: #f7f7f7;
-  border: 1px solid #ccc;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.like-dislike-buttons button:hover {
-  background-color: #e0e0e0;
-}
-
-.like-dislike-buttons button.active {
-  background-color: #007bff;
-  color: white;
-  border-color: #007bff;
-}
-
-
-.success-message {
-    background-color: #4CAF50; 
-    color: white;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 5px;
-    text-align: center;
-    animation: fadeOut 5s ease-out forwards; 
+.additional-images {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     position: absolute;
-    right: 40px;
-    top: 150px;
-  }
-  
-  @keyframes fadeOut {
-    0% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
+    left: -150px;
+    align-items: center;
+}
 
+.additional-image-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
 
-  .full-description {
-    margin-top: 10px;
-    padding: 10px;
-    background-color: #f9f9f9;
+.additional-image-option {
+    width: 100%;
+    cursor: pointer;
+    position: relative;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  .wrapper-container{
-    margin: 60px 0px;
-    padding: 40px;
-  }
-  .wrapper-container h2{
-    text-align: center;
-  }
+    overflow: hidden;
+}
 
+.additional-image-thumbnail {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
 
+.additional-image-thumbnail.selected {
+    transform: scale(1.05);
+    opacity: 0.9;
+    box-shadow: 0 4px 20px rgba(0, 123, 255, 0.3);
+}
 
-
-
-  
-  
+.additional-image-thumbnail:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
