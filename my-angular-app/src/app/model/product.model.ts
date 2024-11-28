@@ -9,4 +9,5 @@ export interface Product {
     likes: string[];
     dislikes: string[];
     colorImages?: { color: string; imageUrl: string }[];
+    additionalImages: { name: string, imageUrl: string }[];
 }
