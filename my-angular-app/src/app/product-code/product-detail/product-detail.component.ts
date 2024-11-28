@@ -123,6 +123,12 @@ export class ProductDetailComponent implements OnInit {
 
   }
 
+  selectAdditionalImage(imageUrl: string): void {
+    this.selectedImageUrl = imageUrl;
+    this.isImageChanged = true;
+  }
+
+  
   resetAnimation() {
     this.isImageChanged = false;
   }
