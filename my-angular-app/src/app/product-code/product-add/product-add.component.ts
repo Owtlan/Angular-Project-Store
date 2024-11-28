@@ -20,6 +20,7 @@ export class ProductAddComponent {
     likes: [],
     dislikes: [],
     colorImages: [],
+    additionalImages: []
   };
   selectedFile: File | null = null;
 
@@ -35,6 +36,22 @@ export class ProductAddComponent {
 
   onColorImageSelected(event: any, color: string) {
     this.colorFiles[color] = event.target.files[0]
+  }
+
+  addAdditionalImage() {
+    this.product.additionalImages.push({ name: '', imageUrl: '' });
+  }
+
+  onAdditionalImageSelected(event: any, index: number) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.product.additionalImages[index].imageUrl = reader.result as string;
+        this.product.additionalImages[index].name = file.name;
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
   async addProduct() {
