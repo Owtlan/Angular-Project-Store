@@ -3,6 +3,8 @@ import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'firebase/auth';
 import { Router } from '@angular/router';
+import { MessageService } from 'src/app/services/message.service';
+
 
 @Component({
   selector: 'app-register',
@@ -18,7 +20,7 @@ export class RegisterComponent {
   rePass: string = '';
   errorMessage: string = ''
 
-  constructor(private auth: Auth, private userService: UserService, private router: Router) { }
+  constructor(private auth: Auth, private userService: UserService, private router: Router, private messageService: MessageService) { }
 
   async register() {
 
@@ -44,7 +46,16 @@ export class RegisterComponent {
           console.error("Error adding user: ", error);
         });
 
-        this.router.navigate(['/']);
+        // Set the welcome message and pass the email
+        this.messageService.setMessage(`Welcome, ${this.email}!`);
+
+
+      this.router.navigate(['/']).then(() => {
+          // Clear the message after 5 seconds
+          setTimeout(() => {
+            this.messageService.clearMessage();
+          }, 5000);
+        });
         console.log('Registration successful:', user);
       })
       .catch(error => {
