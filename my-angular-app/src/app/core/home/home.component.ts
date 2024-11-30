@@ -9,6 +9,7 @@ import { AuthService } from '../../auth/auth.service';
 import { SwiperOptions } from 'swiper/types';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +21,8 @@ export class HomeComponent implements OnInit {
   filteredProducts: Product[] = [];
   swiperProducts: Product[] = [];
   lastAddedProduct: Product | null = null;
+  welcomeMessage: string = '';
+
 
   filters = {
     productName: '',
@@ -41,7 +44,7 @@ export class HomeComponent implements OnInit {
   swiperConfig: SwiperOptions = {
     navigation: true,
     pagination: { clickable: true, type: 'bullets', el: '.swiper-pagination' },
-    loop: true,
+    loop: false,
     slidesPerView: 1,
     spaceBetween: 0,
   };
@@ -65,13 +68,19 @@ export class HomeComponent implements OnInit {
     private auth: Auth,
     private router: Router,
     private cartService: CartService,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private messageService: MessageService
+  ) { }
 
   ngOnInit(): void {
     this.loadProducts();
     this.setupAuthListener();
     this.setupReactiveFilters();
+
+
+    this.messageService.welcomeMessage$.subscribe(message => {
+      this.welcomeMessage = message;
+    });
   }
 
 
@@ -158,7 +167,7 @@ export class HomeComponent implements OnInit {
     return Object.values(ranges).every(value => value === false);
   }
 
-  
+
   private getPriceRange(priceRange: string): [number, number | null] {
     switch (priceRange) {
       case '0-99': return [0, 99];
@@ -208,7 +217,7 @@ export class HomeComponent implements OnInit {
     setTimeout(() => (this.showSuccessMessage = false), 5000);
   }
 
- 
+
   isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }
