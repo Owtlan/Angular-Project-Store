@@ -9,13 +9,11 @@
 
 }
 
-
 .product-swiper-1 {
     max-width: 1200px;
     width: 100%;
     margin: 20px auto;
     position: relative;
-    /* background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%); */
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -40,7 +38,6 @@
     padding: 60px 20px;
     align-items: center;
     justify-content: flex-start;
-    /* background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%); */
     background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
     display: flex;
     justify-content: center;
@@ -81,13 +78,6 @@
     border: 2px solid black;
     border-radius: 5px;
 }
-
-
-/* .swiper-button-next,
-.swiper-button-prev {
-    display: block !important;
-} */
-
 
 #btn-next {
     height: 25px;
@@ -287,10 +277,6 @@
 }
 
 
-
-
-/* btn  */
-
 .styled-button-1,
 .styled-button-2 {
     display: block;
@@ -421,9 +407,6 @@ span {
     margin-right: 5px;
 }
 
-/* test */
-
-
 .success-message {
     background-color: #4CAF50;
     color: white;
@@ -434,6 +417,7 @@ span {
     animation: fadeOut 5s ease-out forwards;
     position: absolute;
     right: 40px;
+    /* bottom: 200px; */
 }
 
 @keyframes fadeOut {
@@ -452,28 +436,19 @@ span {
     display: flex;
     align-items: center;
     gap: 8px;
-    /* Разстояние между квадратчето и текста */
     cursor: pointer;
     font-size: 14px;
-    /* Размер на текста */
 }
 
 .custom-checkbox input[type="checkbox"] {
-    /* Скриваме оригиналния чекбокс */
     appearance: none;
     -webkit-appearance: none;
     width: 16px;
-    /* Размер на квадратчето */
     height: 16px;
-    /* Размер на квадратчето */
     border: 2px solid #444;
-    /* Тъмна рамка */
     border-radius: 3px;
-    /* Заоблени ъгли */
     background-color: white;
-    /* Цвят на фона */
     cursor: pointer;
-    /* Ръка при мишката */
     display: inline-block;
     vertical-align: middle;
     margin-right: 8px;
@@ -481,7 +456,6 @@ span {
 
 .custom-checkbox input[type="checkbox"]:checked {
     background-color: #007bff;
-    /* Син фон, когато е избрано */
     border-color: #007bff;
     display: flex;
     align-items: center;
@@ -490,16 +464,34 @@ span {
 
 .custom-checkbox input[type="checkbox"]:checked::after {
     content: "✔";
-    /* Символ за отметка */
     font-size: 12px;
-    /* Размер на отметката */
     color: white;
-    /* Бял цвят на отметката */
     display: block;
     text-align: center;
 }
 
 .custom-checkbox span {
     margin-left: 4px;
-    /* Разстояние между текста и квадратчето */
 }
+
+.no-products {
+    text-align: center;
+    font-size: 18px;
+    color: #ff0000;
+    margin: 20px 0;
+    cursor: pointer;
+}
+.welcome-message {
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 18px;
+    margin: 20px 0;
+    border-radius: 5px;
+    position: absolute;
+    right: 110px;
+    font-weight: bold;
+  }
+
+  
