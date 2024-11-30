@@ -64,24 +64,25 @@
                 </div>
 
                 <!-- like dislike -->
-                <div class="like-dislike-buttons animate__animated animate__pulse" *ngIf="!isProductOwner(product)">
+                <div class="like-dislike-buttons animate__animated animate__fadeInDown" *ngIf="!isProductOwner(product)">
                     <button [class.active]="currentUserId && product.likes.includes(currentUserId)"
-                        (click)="onLikeClick(product)">
+                        (click)="onLikeClick(product)" class="like-button">
                         <fa-icon [icon]="faHeart"></fa-icon> Like ({{ product.likes.length || 0 | number:'1.0-0' }})
                     </button>
 
                     <button [class.active]="currentUserId && product.dislikes.includes(currentUserId)"
-                        (click)="onDislikeClick(product)">
+                        (click)="onDislikeClick(product)" class="dislike-button">
                         <fa-icon [icon]="faThumbsDown"></fa-icon> Dislike ({{ product.dislikes.length || 0 |
                         number:'1.0-0' }})
                     </button>
                 </div>
             </div>
 
-            <div *ngIf="showSuccessMessage" class="success-message">
+            <div *ngIf="showSuccessMessage" class="success-message animate__animated animate__pulse">
                 Продуктът {{ product.name | uppercase }} беше добавен успешно в количката!
             </div>
         </div>
 
     </div>
+    
 </div>
