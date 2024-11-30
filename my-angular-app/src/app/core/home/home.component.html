@@ -2,6 +2,10 @@
     <div *ngIf="isLoading" class="loader">
         <div class="spinner"></div>
     </div>
+    <div *ngIf="welcomeMessage" class="welcome-message animate__animated animate__fadeInDown">
+        <p>{{ welcomeMessage }}</p>
+    </div>
+
 
     <div class="main-section" *ngIf="!isLoading">
         <swiper-container class="product-swiper-1" [navigation]="swiperConfig.navigation" [loop]="swiperConfig.loop"
@@ -30,7 +34,10 @@
 
 
     <div class="filter-sidebarProduct">
-        <aside class="filter-sidebar">
+        <div *ngIf="isLoading" class="sidebar-loading">
+            <p>Loading filters...</p>
+        </div>
+        <aside class="filter-sidebar" *ngIf="!isLoading">
             <form (ngSubmit)="applyFilters()">
                 <div class="filter-group">
                     <label for="productName">Product Name</label>
@@ -41,6 +48,7 @@
                     <select id="category" [(ngModel)]="filters.category" name="category" (change)="applyFilters()">
                         <option value="">All</option>
                         <option value="keyboard">Keyboard</option>
+                        <option value="headphones">headphones</option>
                         <option value="mouse">Mouse</option>
                         <option value="phone">Phones</option>
                         <option value="laptop">Laptops</option>
@@ -101,15 +109,20 @@
 
 
             <h2>Our Products</h2>
-            <div class="product-grid">
+
+            <div *ngIf="filteredProducts.length === 0 && !isLoading" class="no-products">
+                <p>The product is not available!</p>
+            </div>
+
+            <div class="product-grid" *ngIf="filteredProducts.length > 0">
+
 
                 <div class="product-card" *ngFor="let product of filteredProducts" (click)="goToDetail(product.id)">
 
-
                     <div class="like-section">
-                        <button [class.active]="currentUserId && product.likes?.includes(currentUserId)"
+                        <button [class.active]="currentUserId && product.likes.includes(currentUserId)"
                             (click)="onLikeClick(product)">
-                            <fa-icon [icon]="faHeart"></fa-icon> Like ({{ product.likes?.length || 0 }})
+                            <fa-icon [icon]="faHeart"></fa-icon> Like ({{ product.likes.length || 0 }})
                         </button>
                     </div>
                     <h3>{{ product.name }}</h3>
@@ -125,7 +138,7 @@
                         <p class="product-price">Price: {{ product.price | currency:'BGN ' }}</p>
                     </div>
 
-                 
+
                 </div>
             </div>
         </section>
