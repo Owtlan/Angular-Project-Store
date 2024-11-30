@@ -1,83 +1,112 @@
+/* Base Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container */
 .order-container {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    text-align: center;
-  }
-  
-  h2 {
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  .thank-you-message {
-    background-color: #4caf50;
-    color: #fff;
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.order-container h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.thank-you-message {
+  text-align: center;
+  color: #4caf50;
+}
+
+.thank-you-message h3 {
+  font-size: 1.5em;
+}
+
+.thank-you-message p {
+  font-size: 1em;
+}
+
+/* Form */
+.order-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-control {
+  padding: 10px 12px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Error Messages */
+.error small {
+  color: #ff0000;
+}
+
+/* Button */
+.btn {
+  display: inline-block;
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 1em;
+  font-weight: bold;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.btn:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .order-container {
     padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
   }
-  
-  .form-group {
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+
+  .form-control {
+    font-size: 0.9em;
   }
-  
-  label {
-    font-size: 1.1rem;
-    margin-bottom: 8px;
-    color: #333;
+
+  .btn {
+    font-size: 0.9em;
   }
-  
-  input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    outline: none;
-    transition: border-color 0.2s ease-in-out;
-  }
-  
-  input:focus {
-    border-color: #ff5722;
-  }
-  
-  .error-message {
-    color: #ff5555;
-    font-size: 0.9rem;
-    margin-top: 5px;
-  }
-  
-  button {
-    background-color: #ff5722;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.2s ease-in-out;
-  }
-  
-  button:disabled {
-    background-color: #bdbdbd;
-    cursor: not-allowed;
-  }
-  .error {
-    color: red;
-    font-size: 12px;
-    margin-top: 5px;
-    font-style: italic;
-  }
-  
-  .form-group input.ng-invalid.ng-touched {
-    border-color: red;
-  }
-  
+}
