@@ -15,7 +15,7 @@
         <p>Price: {{ item.price | currency:'BGN ' }}</p>
         <button (click)="removeFromCart(item)">X</button>
       </div>
-      <p class="total-price">Total Amount: {{ getTotalPrice() | currency:'BGN' }}</p>
+      <p class="total-price">Total Amount: {{ getTotalPrice() | currency:'BGN ' }}</p>
   
       <div class="order-btn">
         <div class="link_wrapper">
