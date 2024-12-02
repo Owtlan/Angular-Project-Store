@@ -148,7 +148,7 @@ export class ProductDetailComponent implements OnInit {
     if (this.authService.isLoggedIn()) {
       this.addToCart(product);
     } else {
-      alert('Моля, логнете се или се регистрирайте, за да добавите продукта в количката.');
+      alert('Please log in or register to add the product to your cart.');
       this.router.navigate(['/login'])
     }
   }
@@ -158,7 +158,7 @@ export class ProductDetailComponent implements OnInit {
 
   addToCart(product: Product): void {
     this.cartService.addToCart(product);
-    console.log(`Добавен продукт в количката: ${product.name}`);
+    console.log(`Product added to the cart.: ${product.name}`);
     this.showSuccessMessage = true;
     setTimeout(() => {
       this.showSuccessMessage = false;
