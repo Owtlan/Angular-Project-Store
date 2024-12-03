@@ -22,6 +22,9 @@ export class HomeComponent implements OnInit {
   swiperProducts: Product[] = [];
   lastAddedProduct: Product | null = null;
   welcomeMessage: string = '';
+  currentPage: number = 1;
+  productsPerPage: number = 9;
+  pagedProducts: Product[] = [];
 
 
   filters = {
@@ -29,20 +32,18 @@ export class HomeComponent implements OnInit {
     category: '',
     price: null,
     onlyLiked: false,
-    likesRange: { '1-2': false, '3-4': false, '5-6': false }
+    likesRange: { '1-5': false, '6-10': false, '11-15': false, '16-19': false, '20+': false }
   };
 
   userId: string | null = null;
   currentUserId: string | null = null;
-
   isLoading: boolean = true;
   showSuccessMessage: boolean = false;
-
   faCartShopping = faCartShopping;
   faHeart = faHeart;
 
   swiperConfig: SwiperOptions = {
-    navigation: true,
+    // navigation: true,
     pagination: { clickable: true, type: 'bullets', el: '.swiper-pagination' },
     loop: false,
     slidesPerView: 1,
@@ -77,19 +78,47 @@ export class HomeComponent implements OnInit {
     this.setupAuthListener();
     this.setupReactiveFilters();
 
-
     this.messageService.welcomeMessage$.subscribe(message => {
       this.welcomeMessage = message;
     });
+
+    this.filteredProducts$.subscribe(() => {
+      this.updatePagedProducts();
+    })
   }
 
+  // home page rendering
+  updatePagedProducts(): void {
+    const startIndex = (this.currentPage - 1) * this.productsPerPage;
+    const endIndex = startIndex + this.productsPerPage;
+    this.pagedProducts = this.filteredProducts.slice(startIndex, endIndex);
+  }
+
+  goToNextPage(): void {
+    if (this.currentPage * this.productsPerPage < this.filteredProducts.length) {
+      this.currentPage++;
+      this.updatePagedProducts();
+    }
+  }
+
+  goToPreviousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePagedProducts();
+    }
+  }
+
+  getTotalPages(): number {
+    return Math.ceil(this.filteredProducts.length / this.productsPerPage);
+  }
+
+  // home page rendering
 
   private setupAuthListener(): void {
     authState(this.auth).subscribe(user => {
       this.userId = user ? user.uid : null;
     });
   }
-
 
   private setupReactiveFilters(): void {
     combineLatest([this.filters$, this.productService.getProducts()])
@@ -116,16 +145,13 @@ export class HomeComponent implements OnInit {
     );
   }
 
-
   applyFilters(): void {
     this.filteredProducts = this.products.filter(product => this.matchesFilters(product));
   }
 
-
   applyReactiveFilters(): void {
     this.filters$.next({ ...this.filters });
   }
-
 
   private matchesFilters(product: Product): boolean {
     const matchesName = this.filters.productName
@@ -153,20 +179,19 @@ export class HomeComponent implements OnInit {
     return matchesName && matchesCategory && matchesPrice && matchesLikes && matchesLikesRange;
   }
 
-
   private filterProducts(filters: any, products: Product[]): Product[] {
     return products.filter(product => this.matchesFilters(product));
   }
 
-
   private getLikesRangeMatch(likesCount: number): boolean {
     const ranges = this.filters.likesRange;
-    if (ranges['1-2'] && likesCount >= 1 && likesCount <= 2) return true;
-    if (ranges['3-4'] && likesCount >= 3 && likesCount <= 4) return true;
-    if (ranges['5-6'] && likesCount >= 5 && likesCount <= 6) return true;
+    if (ranges['1-5'] && likesCount >= 1 && likesCount <= 5) return true;
+    if (ranges['6-10'] && likesCount >= 6 && likesCount <= 10) return true;
+    if (ranges['11-15'] && likesCount >= 11 && likesCount <= 15) return true;
+    if (ranges['16-19'] && likesCount >= 16 && likesCount <= 19) return true;
+    if (ranges['20+'] && likesCount > 20) return true;
     return Object.values(ranges).every(value => value === false);
   }
-
 
   private getPriceRange(priceRange: string): [number, number | null] {
     switch (priceRange) {
@@ -181,18 +206,16 @@ export class HomeComponent implements OnInit {
     }
   }
 
-
   clearFilters(): void {
     this.filters = {
       productName: '',
       category: '',
       price: null,
       onlyLiked: false,
-      likesRange: { '1-2': false, '3-4': false, '5-6': false }
+      likesRange: { '1-5': false, '6-10': false, '11-15': false, '16-19': false, '20+': false }
     };
     this.applyFilters();
   }
-
 
   goToDetail(productId: string | undefined): void {
     if (productId) {
@@ -201,7 +224,6 @@ export class HomeComponent implements OnInit {
       console.error('Product ID is undefined');
     }
   }
-
 
   addToCart(product: Product): void {
     if (product.ownerId === this.userId) {
@@ -214,14 +236,12 @@ export class HomeComponent implements OnInit {
 
     this.lastAddedProduct = product;
     this.showSuccessMessage = true;
-    setTimeout(() => (this.showSuccessMessage = false), 5000);
+    setTimeout(() => (this.showSuccessMessage = false), 5000)
   }
-
 
   isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }
-
 
   onLikeClick(product: Product): void {
     if (this.currentUserId) {
