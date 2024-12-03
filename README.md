@@ -75,9 +75,13 @@ ng serve
 - **User Profiles**  
   Manage profile settings, including uploading custom profile pictures.
 
+## Host
+ 
+The Angular-Store platform is hosted on Firebase for both frontend and backend.
+ 
+- Frontend: Hosted at https://angular-softuni-project-store.web.app
 
-
-
-
-
+- Backend: Hosted as Firebase functions
+ 
+You can see it here: <a href="https://angular-softuni-project-store.web.app">Training-Camp</a>
 
