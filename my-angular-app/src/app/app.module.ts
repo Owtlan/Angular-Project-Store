@@ -30,8 +30,6 @@ import { GlobalErrorHandler } from './ErrorHandler/global-error-handler.service'
 import { FooterComponent } from './core/footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
-
 register()
 
 @NgModule({
