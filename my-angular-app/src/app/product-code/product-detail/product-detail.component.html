@@ -1,10 +1,7 @@
 <!-- Success message -->
 <div *ngIf="product" class="product-detail animate__animated animate__fadeIn">
-
     <div class="wrapper-container">
-
         <h2 class="product-name">{{ product.name | titlecase }}</h2>
-
         <div class="product-section">
             <div class="main-image-container">
                 <img [src]="selectedImageUrl || product.imageUrl" alt="{{ product.name | uppercase }}"
@@ -13,15 +10,6 @@
             </div>
 
             <div class="product-info">
-                <p class="product-description" *ngIf="!showFullDescription">{{ product.description | slice:0:100 }}...
-                    <button class="btn btn-link" (click)="toggleDescription()">Read more</button>
-                </p>
-                <div *ngIf="showFullDescription" class="full-description" [@expandCollapse]>
-                    <p>{{ product.description }}</p>
-                    <button class="btn btn-link" (click)="toggleDescription()">Show less</button>
-                </div>
-
-
                 <p class="product-price">Price: {{ product.price | currency:'BGN ' }}</p>
 
                 <div *ngIf="product.colorImages && product.colorImages.length" class="color-selection">
@@ -37,6 +25,7 @@
                                 class="color-thumbnail" [class.selected]="selectedImageUrl === colorImage.imageUrl" />
                         </div>
                     </div>
+
                 </div>
 
 
@@ -62,9 +51,8 @@
                         <fa-icon [icon]="faCartShopping"></fa-icon> Buy
                     </button>
                 </div>
-
                 <!-- like dislike -->
-                <div class="like-dislike-buttons animate__animated animate__fadeInDown" *ngIf="!isProductOwner(product)">
+                <div class="like-dislike-buttons animate__animated animate__pulse" *ngIf="!isProductOwner(product)">
                     <button [class.active]="currentUserId && product.likes.includes(currentUserId)"
                         (click)="onLikeClick(product)" class="like-button">
                         <fa-icon [icon]="faHeart"></fa-icon> Like ({{ product.likes.length || 0 | number:'1.0-0' }})
@@ -76,13 +64,17 @@
                         number:'1.0-0' }})
                     </button>
                 </div>
-            </div>
 
+                <p [ngClass]="{'active': showFullDescription}" class="product-description">{{ showFullDescription ?
+                    product.description : (product.description | slice: 0:100) + '...' }}
+                </p>
+                <button class="btn btn-link" (click)="toggleDescription()">{{showFullDescription ? 'Show less' : 'Read
+                    more'}}</button>
+
+            </div>
             <div *ngIf="showSuccessMessage" class="success-message animate__animated animate__pulse">
-                Продуктът {{ product.name | uppercase }} беше добавен успешно в количката!
+                The product {{ product.name | uppercase }} has been successfully added to the cart!
             </div>
         </div>
-
     </div>
-    
 </div>

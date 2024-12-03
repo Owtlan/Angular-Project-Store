@@ -16,9 +16,6 @@ export class ProductService {
         this.productsCollection = collection(this.firestore, 'products');
     }
 
-
-
-// add like
     async toggleLike(productId: string, userId: string): Promise<void> {
         const productRef = doc(this.firestore, `products/${productId}`);
         const docSnap = await getDoc(productRef);
@@ -41,7 +38,7 @@ export class ProductService {
             });
         }
     }
- // add dislike
+ 
     async toggleDislike(productId: string, userId: string): Promise<void> {
         const productRef = doc(this.firestore, `products/${productId}`);
         const docSnap = await getDoc(productRef);
@@ -56,7 +53,6 @@ export class ProductService {
         const likes = product.likes || [];
 
         if (dislikes.includes(userId)) {
-            // Премахване на Dislike
             await updateDoc(productRef, { dislikes: dislikes.filter((id) => id !== userId) });
         } else {
             await updateDoc(productRef, {

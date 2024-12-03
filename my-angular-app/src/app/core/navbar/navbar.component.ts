@@ -68,10 +68,6 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  // onProfilePictureUpdated(newProfilePictureUrl: string) {
-  //   this.profilePictureUrl = newProfilePictureUrl;
-  // }
-
   @HostListener('window:scroll', ['$event'])
   onWindowScroll(event: any) {
     const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
@@ -106,6 +102,4 @@ export class NavbarComponent implements OnInit {
   removeFromCart(item: any) {
     this.cartService.removeFromCart(item);
   }
-
-
 }

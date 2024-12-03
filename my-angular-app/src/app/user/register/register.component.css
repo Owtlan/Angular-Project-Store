@@ -25,23 +25,7 @@
     border: 1px solid #ccc;
     border-radius: 4px;
   }
-  
-  /* button {
-    width: 100%;
-    padding: 10px;
 
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #218838;
-  } */
-  
-
-  /* error handler css */
   .error-message {
     color: red;
     font-size: 14px;

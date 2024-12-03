@@ -1,13 +1,11 @@
 <div class="profile-container">
-  <h2>Моят профил</h2>
+  <h2>My Profile</h2>
 
   <div class="profile-picture">
     <img *ngIf="profilePictureUrl" [src]="profilePictureUrl" alt="Profile Picture" (click)="triggerFileInput()" />
     <input type="file" #fileInput (change)="onFileSelected($event)" style="display: none;" />
-
-
     <div *ngIf="!profilePictureUrl">
-      <button (click)="triggerFileInput()">Качете снимка</button>
+      <button (click)="triggerFileInput()">Upload Photo</button>
     </div>
 
     <input type="file" #fileInput (change)="onFileSelected($event)" style="display: none;" />

@@ -17,7 +17,6 @@ export class ProductEditComponent implements OnInit {
   product: Product | null = null;
   currentUserId: string | null = null;
 
-
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
@@ -34,8 +33,6 @@ export class ProductEditComponent implements OnInit {
       this.loadProductDetails(productId);
     });
   }
-
-
 
   isProductOwner(product: Product): boolean {
     return product.ownerId === this.currentUserId;
@@ -62,7 +59,7 @@ export class ProductEditComponent implements OnInit {
       if (!this.editForm.invalid) {
         this.productService.updateProduct(this.product).then(() => {
           console.log('Product updated successfully!');
-          this.router.navigate(['/product', this.product?.id]); 
+          this.router.navigate(['/product', this.product?.id]);
         }).catch((error) => {
           console.error('Error updating product:', error);
         });
@@ -77,8 +74,4 @@ export class ProductEditComponent implements OnInit {
       }
     }
   }
-
-
-
-
 }

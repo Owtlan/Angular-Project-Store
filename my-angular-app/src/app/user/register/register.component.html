@@ -2,7 +2,6 @@
   <h2>Register</h2>
   <form (ngSubmit)="register()" #registerForm="ngForm">
 
-    <!-- Email Field -->
     <label for="email">Email:</label>
     <input type="email" id="email" [(ngModel)]="email" name="email" #emailField="ngModel" required email
       pattern="^[a-zA-Z0-9._%+-]+@(gmail\.com|abv\.bg)$">
@@ -12,7 +11,6 @@
       <p *ngIf="emailField.errors?.['pattern']">Email must be from @gmail.com or @abv.bg.</p>
     </div>
 
-    <!-- Username Field -->
     <label for="username">First name:</label>
     <input type="text" id="firstname" [(ngModel)]="firstname" name="firstname" #usernameField="ngModel" required
       minlength="4" maxlength="20" pattern="^[a-zA-Z0-9]+$">

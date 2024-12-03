@@ -46,12 +46,9 @@ export class RegisterComponent {
           console.error("Error adding user: ", error);
         });
 
-        // Set the welcome message and pass the email
         this.messageService.setMessage(`Welcome, ${this.email}!`);
 
-
       this.router.navigate(['/']).then(() => {
-          // Clear the message after 5 seconds
           setTimeout(() => {
             this.messageService.clearMessage();
           }, 5000);
@@ -62,5 +59,4 @@ export class RegisterComponent {
         console.log('Registration error:', error);
       });
   }
-
 }

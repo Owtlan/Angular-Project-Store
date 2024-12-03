@@ -21,7 +21,7 @@ export class OrderComponent {
   };
 
   totalPrice: number = 0;
-  orderPlaced = false; 
+  orderPlaced = false;
 
 
   constructor(
@@ -54,10 +54,10 @@ export class OrderComponent {
     this.orderService.createOrder(order)
       .then(() => {
         console.log('Order placed successfully!');
-      
-        this.cartService.clearCart(); 
+
+        this.cartService.clearCart();
         this.orderPlaced = true;
-     
+
 
         setTimeout(() => {
           this.router.navigate(['/']);
@@ -67,7 +67,5 @@ export class OrderComponent {
       .catch(error => {
         console.error('Error placing order:', error);
       });
-
   }
-
 }

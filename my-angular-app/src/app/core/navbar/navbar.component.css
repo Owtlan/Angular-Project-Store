@@ -47,7 +47,6 @@
   transform: scale(1.05);
 }
 
-
 .user-info {
   display: flex;
   align-items: center;
@@ -63,7 +62,6 @@
   color: #ffb74d;
 
 }
-
 
 .cart-info {
   display: flex;
@@ -98,7 +96,6 @@
   margin-left: 8px;
 }
 
-
 .nav-links {
   display: flex;
   gap: 20px;
@@ -110,9 +107,6 @@
 .nav-links li {
   cursor: pointer;
   font-size: 17px;
-  /* background-image: linear-gradient(-225deg, #FFFEFF 0%, #D7FFFE 100%); */
-  /* border-radius: 5px;
-  padding: 5px; */
   font-weight: bold;
   transition: color 0.3s;
 }
@@ -199,11 +193,9 @@
   color: #ffb74d;
 }
 
-/* Позициониране на менюто */
 .user-menu {
   position: absolute;
   top: calc(100% + 10px);
-  /* Разстояние под профилната икона */
   left: 50%;
   transform: translateX(-50%) translateY(10px);
   background: linear-gradient(135deg, #1f2937, #111827);
@@ -221,16 +213,13 @@
   gap: 12px;
 }
 
-/* Показване на менюто при ховър върху контейнера или менюто */
 .user-dropdown:hover .user-menu,
 .user-menu:hover {
   visibility: visible;
   opacity: 1;
   transform: translateX(-50%) translateY(0);
-  /* Плавно изкачване */
 }
 
-/* Елементи в менюто */
 .user-menu a {
   color: #ffb74d;
   text-decoration: none;
@@ -241,7 +230,6 @@
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Променяме цветове на линковете при ховър */
 .user-menu a:hover {
   background-color: #ffb74d;
   color: #1f2937;
@@ -249,7 +237,6 @@
 
 .user-menu p {
   margin: 0;
-  /* Премахваме марджини */
 }
 
 .profile-picture {

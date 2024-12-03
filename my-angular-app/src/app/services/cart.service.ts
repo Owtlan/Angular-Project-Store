@@ -1,4 +1,3 @@
-// src/app/services/cart.service.ts
 import { Injectable } from '@angular/core';
 import { Product } from '../model/product.model';
 import { BehaviorSubject } from 'rxjs';
@@ -49,7 +48,6 @@ export class CartService {
       localStorage.setItem(`cart_${this.userId}`, JSON.stringify(this.cart));
     }
   }
-
 
   addToCart(product: Product): void {
     this.cart.push(product);

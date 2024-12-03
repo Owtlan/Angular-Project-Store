@@ -10,7 +10,6 @@
       </div>
     </div>
 
-
     <div>
       <label>Description:</label>
       <textarea [(ngModel)]="product.description" name="description" required #description="ngModel"></textarea>
@@ -51,7 +50,6 @@
         <option value="TV">TV</option>
       </select>
 
-
       <div *ngIf="category.invalid && category.touched" class="error">
         Category is required.
       </div>
@@ -60,4 +58,3 @@
     <button type="submit" [disabled]="editForm.invalid">Save Changes</button>
   </form>
 </div>
-

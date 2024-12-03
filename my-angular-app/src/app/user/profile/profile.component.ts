@@ -12,7 +12,7 @@ export class ProfileComponent implements OnInit {
   currentUser: any;
   profilePictureUrl: string | null = null;
 
-  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>; // Свързване със скрития input
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>; 
 
 
   constructor(
@@ -42,7 +42,6 @@ export class ProfileComponent implements OnInit {
           }
         });
       }
-  
       this.profilePictureUrl = user.photoURL || null;
       this.loadProfilePicture(user.uid);
     }
@@ -79,5 +78,4 @@ export class ProfileComponent implements OnInit {
   triggerFileInput() {
     this.fileInput.nativeElement.click(); 
   }
-
 }

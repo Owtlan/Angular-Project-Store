@@ -5,10 +5,8 @@
     <h3>Thank you for your order!</h3>
     <p>Your order has been placed successfully. We will contact you soon!</p>
   </div>
-
   <form *ngIf="!orderPlaced" #orderForm="ngForm" (ngSubmit)="placeOrder()" class="order-form animate__animated animate__fadeIn" novalidate>
 
-    <!-- Address Field -->
     <div class="form-group">
       <label for="address">Address:</label>
       <input 
@@ -25,7 +23,6 @@
       </div>
     </div>
 
-    <!-- City Field -->
     <div class="form-group">
       <label for="city">City:</label>
       <input 
@@ -42,7 +39,6 @@
       </div>
     </div>
 
-    <!-- Postal Code Field -->
     <div class="form-group">
       <label for="postalCode">Postal Code:</label>
       <input 
@@ -61,7 +57,6 @@
       </div>
     </div>
 
-    <!-- Phone Number Field -->
     <div class="form-group">
       <label for="phoneNumber">Phone:</label>
       <input 

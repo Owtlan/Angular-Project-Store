@@ -2,10 +2,7 @@
   <div class="nav-wrapper">
     <div class="user-info">
       <div class="shop-name-postion">
-
         <img (click)="navigateTo('/')" src="assets/cropped-pixelspot.png" alt="PixelSpot Logo" class="logo" />
-
-
         <div class="user-dropdown" (mouseover)="showUserMenu = true" (mouseleave)="showUserMenu = false">
           <div class="fake-field" (click)="navigateTo('profile')">
           </div>
@@ -17,8 +14,6 @@
           </ng-template>
 
           <span class="user-email">{{ isLoggedIn() ? userEmail : 'My Account' }}</span>
-
-
           <div class="user-menu" *ngIf="showUserMenu">
             <ng-container *ngIf="isLoggedIn(); else loggedOutMenu">
               <p><a (click)="navigateTo('/profile')">View Profile</a></p>
@@ -33,7 +28,6 @@
 
       </div>
       <div class="cart-info" *ngIf="isLoggedIn()">
-
 
         <button (click)="goToCart()" class="cart-button" [disabled]="cartCount === 0">
           <fa-icon [icon]="faCartShopping"></fa-icon>

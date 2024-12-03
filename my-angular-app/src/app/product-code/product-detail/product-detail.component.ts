@@ -17,11 +17,11 @@ import { trigger, style, animate, transition } from '@angular/animations';
   animations: [
     trigger('expandCollapse', [
       transition(':enter', [
-        style({ height: '0px', opacity: 0 }),
-        animate('300ms ease-out', style({ height: '*', opacity: 1 })) 
+        style({ maxHeight: '0px', opacity: 0 }),
+        animate('300ms ease-out', style({ maxHeight: '500px', opacity: 1 }))
       ]),
       transition(':leave', [
-        animate('300ms ease-in', style({ height: '0px', opacity: 0 })) 
+        animate('300ms ease-in', style({ maxHeight: '0px', opacity: 0 }))
       ])
     ])
   ]
@@ -37,8 +37,6 @@ export class ProductDetailComponent implements OnInit {
   showSuccessMessage: boolean = false;
   showFullDescription = false;
 
-
-
   constructor(
     private cartService: CartService,
     private authService: AuthService,
@@ -52,7 +50,6 @@ export class ProductDetailComponent implements OnInit {
     this.showFullDescription = !this.showFullDescription;
   }
 
-
   ngOnInit(): void {
     authState(this.auth).subscribe(user => {
       this.currentUserId = user ? user.uid : null;
@@ -63,7 +60,6 @@ export class ProductDetailComponent implements OnInit {
       this.loadProductDetails(productId);
     });
   }
-
 
   onLikeClick(product: Product) {
     if (this.currentUserId && !this.isProductOwner(product)) {
@@ -88,8 +84,6 @@ export class ProductDetailComponent implements OnInit {
           this.router.navigate(['/']);
           return;
         }
-
-
         this.product = data;
         this.selectedImageUrl = data.imageUrl;
       },
@@ -101,9 +95,8 @@ export class ProductDetailComponent implements OnInit {
   }
 
   selectColorImage(imageUrl: string) {
-
     if (!this.product) {
-      console.warn('Продуктът не е наличен за промяна на изображението');
+      console.warn('The product is not available for image change.');
       return;
     }
 
@@ -128,12 +121,9 @@ export class ProductDetailComponent implements OnInit {
     this.isImageChanged = true;
   }
 
-  
   resetAnimation() {
     this.isImageChanged = false;
   }
-
-
 
   isProductOwner(product: Product): boolean {
     return product.ownerId === this.currentUserId;
@@ -153,9 +143,6 @@ export class ProductDetailComponent implements OnInit {
     }
   }
 
-
-
-
   addToCart(product: Product): void {
     this.cartService.addToCart(product);
     console.log(`Product added to the cart.: ${product.name}`);
@@ -167,11 +154,11 @@ export class ProductDetailComponent implements OnInit {
 
   deleteProduct(product: Product) {
     this.productService.deleteProduct(product.id).then(() => {
-      console.log('Продуктът е изтрит');
+      console.log('The product has been deleted');
       this.router.navigate(['/']);
     }).catch((error) => {
-      console.error('Грешка при изтриване на продукта:', error);
-      alert('Не успяхме да изтрием продукта. Моля, опитайте по-късно.');
+      console.error('Error deleting the product:', error);
+      alert('We were unable to delete the product. Please try again later.');
       this.router.navigate(['/']);
     });
   }

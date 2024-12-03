@@ -13,7 +13,7 @@ export class UserService {
   constructor(private firestore: Firestore, private auth: Auth) { }
 
 
-  
+
   async getFirestoreUser(uid: string): Promise<any> {
     try {
       const userDocRef = doc(this.firestore, `users/${uid}`);
@@ -21,19 +21,14 @@ export class UserService {
       if (userDoc.exists()) {
         return userDoc.data();
       } else {
-        console.warn('Потребителят не е намерен в Firestore.');
+        console.warn('User not found in Firestore.');
         return null;
       }
     } catch (error) {
-      console.error('Грешка при извличане на потребителя от Firestore:', error);
+      console.error('Error retrieving the user from Firestore:', error);
       return null;
     }
   }
-
-
-
-
-
 
   async addUser(user: User, additionalData: { phone: string; },) {
     try {
@@ -50,20 +45,15 @@ export class UserService {
     }
   }
 
-
-
-  
   getFirestore() {
     return this.firestore;
   }
-
 
   async checkIfEmailOrPhoneExists(email: string, phone: string): Promise<boolean> {
     const userCollection = collection(this.firestore, 'users');
 
     const emailQuery = query(userCollection, where('email', '==', email))
     const phoneQuery = query(userCollection, where('phone', '==', phone))
-
 
     const emailSnapshot = await getDocs(emailQuery);
     const phoneSnapshot = await getDocs(phoneQuery)
@@ -73,7 +63,6 @@ export class UserService {
     }
     return false;
   }
-
 
   async updateProfilePicture(uid: string, imageUrl: string): Promise<void> {
     try {
@@ -86,22 +75,20 @@ export class UserService {
         await updateDoc(userDocRef, {
           profilePicture: imageUrl
         });
-        console.log('Профилната снимка беше обновена!');
+        console.log('Profile picture has been updated!');
       } else {
         await setDoc(userDocRef, {
           profilePicture: imageUrl
         });
-        console.log('Документът беше създаден с профилна снимка!');
+        console.log('Document has been created with profile picture!');
       }
 
 
       this.profilePictureSubject.next(imageUrl);
     } catch (error) {
-      console.error('Грешка при обновяване на снимка:', error);
+      console.error('Error updating the picture:', error);
     }
   }
-
-
 
   async getProfilePicture(uid: string) {
     try {
@@ -113,10 +100,8 @@ export class UserService {
         return null;
       }
     } catch (error) {
-      console.error("Грешка при зареждане на снимката от Firestore:", error);
+      console.error("Error loading the image from Firestore:", error);
       return null;
     }
   }
-
-
 }
