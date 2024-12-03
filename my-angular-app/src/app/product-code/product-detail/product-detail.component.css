@@ -171,7 +171,7 @@
 .additional-image-thumbnail {
     width: 50px;
     height: 50px;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 8px;
     transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
