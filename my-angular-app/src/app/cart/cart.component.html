@@ -1,12 +1,11 @@
 <div class="cart-container">
-    <!-- Check if the cart is empty -->
+
     <div *ngIf="cartItems.length === 0" class="empty-cart-message">
       <h2>Your cart is empty!</h2>
       <p>Don't worry, check out our products!</p>
       <button (click)="navigateTo('/')">Go to product page</button>
     </div>
   
-    <!-- If the cart is not empty, display the products -->
     <div *ngIf="cartItems.length > 0" class="wrap-cart animate__animated animate__fadeIn">
       <h2>My Cart</h2>
       <div *ngFor="let item of cartItems" class="cart-item">
