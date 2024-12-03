@@ -24,7 +24,7 @@ export class ProductAddComponent {
   };
   selectedFile: File | null = null;
 
-  colors = ['green', 'black', 'red', 'blue']
+  colors: { color: string; file: File | null }[] = [];
   colorFiles: { [color: string]: File | null } = {};
 
 
@@ -34,8 +34,26 @@ export class ProductAddComponent {
     this.selectedFile = event.target.files[0];
   }
 
-  onColorImageSelected(event: any, color: string) {
-    this.colorFiles[color] = event.target.files[0]
+  addColorImage() {
+    this.colors.push({ color: '', file: null });
+  }
+
+  removeColorImage(index: number) {
+    this.colors.splice(index, 1);
+  }
+
+  onColorFileSelected(event: any, index: number) {
+    const file = event.target.files[0];
+    if (file) {
+      this.colors[index].file = file;
+    }
+  }
+
+  onColorImageSelected(event: any, index: number) {
+    const file = event.target.files[0];
+    if (file) {
+      this.colors[index].file = file;
+    }
   }
 
   addAdditionalImage() {
@@ -62,6 +80,7 @@ export class ProductAddComponent {
     }
 
     if (this.selectedFile) {
+
       try {
         this.product.ownerId = currentUser.uid;
 
@@ -69,10 +88,15 @@ export class ProductAddComponent {
         this.product.imageUrl = imageUrl;
 
         const colorImages: { color: string; imageUrl: string }[] = [];
+
         for (const color of this.colors) {
-          if (this.colorFiles[color]) {
-            const colorImageUrl = await this.productService.uploadImageToCloudinary(this.colorFiles[color]!);
-            colorImages.push({ color, imageUrl: colorImageUrl });
+          if (color.file) {
+            try {
+              const colorImageUrl = await this.productService.uploadImageToCloudinary(color.file);
+              colorImages.push({ color: color.color || 'Default', imageUrl: colorImageUrl });
+            } catch (error) {
+              console.error(`Failed to upload color image for color ${color.color}:`, error);
+            }
           }
         }
         this.product.colorImages = colorImages;
