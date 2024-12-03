@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { Auth, onAuthStateChanged, User } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
 
-
 @Injectable({
     providedIn: 'root'
 })
@@ -17,7 +16,6 @@ export class AuthService {
             this.userSubject.next(user);
         });
     }
-
 
     getCurrentUser(): User | null {
         return this.auth.currentUser
