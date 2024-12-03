@@ -8,7 +8,7 @@
 
 
     <div class="main-section" *ngIf="!isLoading">
-        <swiper-container class="product-swiper-1" [navigation]="swiperConfig.navigation" [loop]="swiperConfig.loop"
+        <swiper-container class="product-swiper-1" [loop]="swiperConfig.loop"
             [slidesPerView]="swiperConfig.slidesPerView" [spaceBetween]="swiperConfig.spaceBetween"
             [pagination]="swiperConfig.pagination">
             <swiper-slide *ngFor="let product of swiperProducts">
@@ -23,15 +23,10 @@
                         </div>
                     </div>
                 </div>
-            </swiper-slide>
 
-            <!-- <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div> -->
+            </swiper-slide>
         </swiper-container>
     </div>
-
-
-
 
     <div class="filter-sidebarProduct">
         <div *ngIf="isLoading" class="sidebar-loading">
@@ -83,24 +78,35 @@
             <div class="filter-by-likes">
                 <label>Likes Range</label>
                 <label class="custom-checkbox">
-                    <input type="checkbox" [(ngModel)]="filters.likesRange['1-2']" name="likesRange1to2"
+                    <input type="checkbox" [(ngModel)]="filters.likesRange['1-5']" name="likesRange1to6"
                         (change)="applyFilters()" />
-                    <span>1 - 2 Likes</span>
+                    <span>1 - 5 Likes</span>
                 </label>
                 <label class="custom-checkbox">
-                    <input type="checkbox" [(ngModel)]="filters.likesRange['3-4']" name="likesRange3to4"
+                    <input type="checkbox" [(ngModel)]="filters.likesRange['6-10']" name="likesRange6to10"
                         (change)="applyFilters()" />
-                    <span>3 - 4 Likes</span>
+                    <span>6 - 10 Likes</span>
                 </label>
                 <label class="custom-checkbox">
-                    <input type="checkbox" [(ngModel)]="filters.likesRange['5-6']" name="likesRange5to6"
+                    <input type="checkbox" [(ngModel)]="filters.likesRange['11-15']" name="likesRange11to15"
                         (change)="applyFilters()" />
-                    <span>5 - 6 Likes</span>
+                    <span>11 - 15 Likes</span>
+                </label>
+
+                <label class="custom-checkbox">
+                    <input type="checkbox" [(ngModel)]="filters.likesRange['16-19']" name="likesRange16to19"
+                        (change)="applyFilters()" />
+                    <span>16 - 20 Likes</span>
+                </label>
+
+                <label class="custom-checkbox">
+                    <input type="checkbox" [(ngModel)]="filters.likesRange['20+']" name="likesRange20Plus"
+                        (change)="applyFilters()" />
+                    <span>20+ Likes</span>
                 </label>
             </div>
 
         </aside>
-
 
         <section class="products">
             <div *ngIf="showSuccessMessage" class="success-message">
@@ -114,7 +120,7 @@
                 <p>The product is not available!</p>
             </div>
 
-            <div class="product-grid" *ngIf="filteredProducts.length > 0">
+            <div class="product-grid" *ngIf="pagedProducts.length > 0">
 
 
                 <div class="product-card" *ngFor="let product of filteredProducts" (click)="goToDetail(product.id)">
@@ -140,6 +146,16 @@
 
 
                 </div>
+            </div>
+
+            <div class="pagination-controls">
+                <button (click)="goToPreviousPage()" [disabled]="currentPage === 1">Previous</button>
+                <span>Page {{ currentPage }} of {{ getTotalPages() }}</span>
+                <span>Page {{ currentPage }} of {{ (filteredProducts.length / productsPerPage) | number: '1.0-0'
+                    }}</span>
+
+                <button (click)="goToNextPage()"
+                    [disabled]="currentPage * productsPerPage >= filteredProducts.length">Next</button>
             </div>
         </section>
     </div>
