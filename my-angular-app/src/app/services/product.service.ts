@@ -38,7 +38,7 @@ export class ProductService {
             });
         }
     }
- 
+
     async toggleDislike(productId: string, userId: string): Promise<void> {
         const productRef = doc(this.firestore, `products/${productId}`);
         const docSnap = await getDoc(productRef);

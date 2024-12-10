@@ -59,7 +59,6 @@ export class ProductAddComponent {
   addAdditionalImage() {
     this.product.additionalImages.push({ name: '', imageUrl: '' });
   }
-
   onAdditionalImageSelected(event: any, index: number) {
     const file = event.target.files[0];
     if (file) {
@@ -83,7 +82,6 @@ export class ProductAddComponent {
 
       try {
         this.product.ownerId = currentUser.uid;
-
         const imageUrl = await this.productService.uploadImageToCloudinary(this.selectedFile);
         this.product.imageUrl = imageUrl;
 

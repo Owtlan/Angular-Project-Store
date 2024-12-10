@@ -50,24 +50,19 @@ export class NavbarComponent implements OnInit {
       }
     });
 
-
     this.userService.profilePicture$.subscribe(newProfilePictureUrl => {
       this.profilePictureUrl = newProfilePictureUrl
     })
-
     this.cartService.cartItems$.subscribe(items => {
       this.cartItems = items;
     });
-
     this.cartService.cartCount$.subscribe(count => {
       this.cartCount = count;
     });
-
     this.cartService.totalSum$.subscribe(total => {
       this.totalSum = total;
     });
   }
-
   @HostListener('window:scroll', ['$event'])
   onWindowScroll(event: any) {
     const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;

@@ -43,7 +43,6 @@ export class HomeComponent implements OnInit {
   faHeart = faHeart;
 
   swiperConfig: SwiperOptions = {
-    // navigation: true,
     pagination: { clickable: true, type: 'bullets', el: '.swiper-pagination' },
     loop: false,
     slidesPerView: 1,
@@ -87,7 +86,6 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  // home page rendering
   updatePagedProducts(): void {
     const startIndex = (this.currentPage - 1) * this.productsPerPage;
     const endIndex = startIndex + this.productsPerPage;
@@ -112,7 +110,6 @@ export class HomeComponent implements OnInit {
     return Math.ceil(this.filteredProducts.length / this.productsPerPage);
   }
 
-  // home page rendering
 
   private setupAuthListener(): void {
     authState(this.auth).subscribe(user => {
@@ -144,15 +141,15 @@ export class HomeComponent implements OnInit {
       }
     );
   }
-
   applyFilters(): void {
     this.filteredProducts = this.products.filter(product => this.matchesFilters(product));
+    this.currentPage = 1; 
+    this.updatePagedProducts();
   }
 
   applyReactiveFilters(): void {
     this.filters$.next({ ...this.filters });
   }
-
   private matchesFilters(product: Product): boolean {
     const matchesName = this.filters.productName
       ? product.name.toLowerCase().includes(this.filters.productName.toLowerCase())
@@ -236,6 +233,9 @@ export class HomeComponent implements OnInit {
 
     this.lastAddedProduct = product;
     this.showSuccessMessage = true;
+
+    this.applyFilters();
+
     setTimeout(() => (this.showSuccessMessage = false), 5000)
   }
 

@@ -133,7 +133,6 @@ export class ProductDetailComponent implements OnInit {
     this.router.navigate(['/product/edit', product.id]);
   }
 
-
   onBuyClick(product: Product): void {
     if (this.authService.isLoggedIn()) {
       this.addToCart(product);

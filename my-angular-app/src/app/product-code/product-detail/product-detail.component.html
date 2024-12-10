@@ -1,4 +1,3 @@
-<!-- Success message -->
 <div *ngIf="product" class="product-detail animate__animated animate__fadeIn">
     <div class="wrapper-container">
         <h2 class="product-name">{{ product.name | titlecase }}</h2>
@@ -28,7 +27,6 @@
 
                 </div>
 
-
                 <div *ngIf="product.additionalImages && product.additionalImages.length" class="additional-images">
                     <label>Additional Views:</label>
                     <div class="additional-image-options">
@@ -41,7 +39,6 @@
                     </div>
                 </div>
 
-
                 <div class="action-buttons">
                     <button *ngIf="isProductOwner(product)" (click)="editProduct(product)"
                         class="btn edit-btn">Edit</button>
@@ -51,7 +48,7 @@
                         <fa-icon [icon]="faCartShopping"></fa-icon> Buy
                     </button>
                 </div>
-                <!-- like dislike -->
+
                 <div class="like-dislike-buttons animate__animated animate__pulse" *ngIf="!isProductOwner(product)">
                     <button [class.active]="currentUserId && product.likes.includes(currentUserId)"
                         (click)="onLikeClick(product)" class="like-button">

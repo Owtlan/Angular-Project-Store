@@ -35,9 +35,6 @@ export class OrderComponent {
     })
   }
 
-
-
-
   placeOrder() {
     const productsInCart = this.cartService.getCart()
     this.totalPrice = productsInCart.reduce((total, product) => total + product.price, 0)
