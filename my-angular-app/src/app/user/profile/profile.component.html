@@ -4,12 +4,20 @@
   <div class="profile-picture">
     <img *ngIf="profilePictureUrl" [src]="profilePictureUrl" alt="Profile Picture" (click)="triggerFileInput()" />
     <input type="file" #fileInput (change)="onFileSelected($event)" style="display: none;" />
-    <div *ngIf="!profilePictureUrl">
-      <button (click)="triggerFileInput()">Upload Photo</button>
+    <div class="wrap-profile-button" *ngIf="!profilePictureUrl">
+
+      <div class="button">
+        <p class="btnText">Upload</p>
+        <div class="btnTwo">
+          <p class="btnText2" (click)="triggerFileInput()">Photo!</p>
+          <!-- <button class="btnText2" (click)="triggerFileInput()">Upload Photo</button> -->
+        </div>
+      </div>
+
     </div>
 
     <input type="file" #fileInput (change)="onFileSelected($event)" style="display: none;" />
-
+    
   </div>
 
   <div class="user-info">
