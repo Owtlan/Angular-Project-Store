@@ -123,7 +123,7 @@
             <div class="product-grid" *ngIf="pagedProducts.length > 0">
 
 
-                <div class="product-card" *ngFor="let product of filteredProducts" (click)="goToDetail(product.id)">
+                <div class="product-card" *ngFor="let product of pagedProducts" (click)="goToDetail(product.id)">
 
                     <div class="like-section">
                         <button [class.active]="currentUserId && product.likes.includes(currentUserId)"
@@ -151,9 +151,6 @@
             <div class="pagination-controls">
                 <button (click)="goToPreviousPage()" [disabled]="currentPage === 1">Previous</button>
                 <span>Page {{ currentPage }} of {{ getTotalPages() }}</span>
-                <span>Page {{ currentPage }} of {{ (filteredProducts.length / productsPerPage) | number: '1.0-0'
-                    }}</span>
-
                 <button (click)="goToNextPage()"
                     [disabled]="currentPage * productsPerPage >= filteredProducts.length">Next</button>
             </div>
