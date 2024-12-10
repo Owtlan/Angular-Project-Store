@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, ElementRef,ViewChild } from '@angular/core';
+import { Component, OnInit, Output, ElementRef, ViewChild } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { UserService } from 'src/app/services/user.service';
 import { ProductService } from 'src/app/services/product.service';
@@ -12,7 +12,7 @@ export class ProfileComponent implements OnInit {
   currentUser: any;
   profilePictureUrl: string | null = null;
 
-  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>; 
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
 
   constructor(
@@ -23,16 +23,16 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     const user = this.auth.currentUser;
-  
+
     if (user) {
 
       this.currentUser = {
         email: user.email,
-        phone: user.phoneNumber || null, 
+        phone: user.phoneNumber || null,
         photoURL: user.photoURL,
         uid: user.uid,
       };
-  
+
       if (!this.currentUser.phone) {
         this.userService.getFirestoreUser(user.uid).then((data) => {
           if (data?.phone) {
@@ -67,7 +67,7 @@ export class ProfileComponent implements OnInit {
         if (this.currentUser) {
           await this.userService.updateProfilePicture(this.currentUser.uid, imageUrl);
           this.profilePictureUrl = imageUrl;
-     
+
         }
       } catch (error) {
         console.error('Error uploading image:', error);
@@ -76,6 +76,6 @@ export class ProfileComponent implements OnInit {
   }
 
   triggerFileInput() {
-    this.fileInput.nativeElement.click(); 
+    this.fileInput.nativeElement.click();
   }
 }
