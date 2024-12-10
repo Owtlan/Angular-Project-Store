@@ -107,8 +107,7 @@
             </div>
 
         </aside>
-
-        <section class="products">
+        <section class="products" *ngIf="!isLoading">
             <div *ngIf="showSuccessMessage" class="success-message">
                 The product {{ lastAddedProduct?.name }} has been successfully added to the cart!
             </div>
@@ -155,6 +154,7 @@
                     [disabled]="currentPage * productsPerPage >= filteredProducts.length">Next</button>
             </div>
         </section>
+
     </div>
 
 </div>
