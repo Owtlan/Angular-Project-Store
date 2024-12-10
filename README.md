@@ -75,6 +75,19 @@ ng serve
 - **User Profiles**  
   Manage profile settings, including uploading custom profile pictures.
 
+
+## Bonuses
+
+- **Deploy the application in a cloud environment.**
+  The application is hosted on Firebase, which is a cloud platform provided by Google, ensuring scalability and reliability.
+
+- **Use a file storage cloud API, e.g., Dropbox, Google Drive or other for storing the files.**
+  Images are stored using **Cloudinary**, a cloud-based media management platform that allows efficient uploading, storing, and delivering of images.
+
+- **Use Angular Animations somewhere in your application.**
+  The animation implemented in the **product-detail** component is triggered when the user clicks a button. After clicking the button, the product's description is smoothly revealed, enhancing the user experience with a fluid transition.
+
+
 ## Host
  
 The Angular-Store platform is hosted on Firebase for both frontend and backend.
