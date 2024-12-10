@@ -23,12 +23,8 @@ export class CartComponent implements OnInit {
     this.cartService.removeFromCart(item); 
     this.cartItems = this.cartService.getCart(); 
   }
-
-
   navigateTo(path: string) {
     this.router.navigate([path]);
     // this.router.navigate(['/']);
   }
-
-
 }
