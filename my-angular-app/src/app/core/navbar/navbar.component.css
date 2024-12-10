@@ -162,6 +162,7 @@
   object-fit: cover;
   border-radius: 4px;
   margin-right: 15px;
+  object-fit: contain;
 }
 
 .cart-item-details span {
