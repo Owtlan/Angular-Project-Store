@@ -32,7 +32,7 @@
       <p *ngIf="lastnameField.errors?.['pattern']">Username can only contain letters and numbers.</p>
     </div>
 
-    <!-- Phone Field -->
+
     <label for="phone">Phone number:</label>
     <input type="tel" id="phone" [(ngModel)]="phone" name="phone" #phoneField="ngModel" required
       pattern="^\+?[0-9]{10,15}$">
@@ -41,7 +41,7 @@
       <p *ngIf="phoneField.errors?.['pattern']">Please enter a valid phone number (e.g., +1234567890).</p>
     </div>
 
-    <!-- Password Field -->
+
     <label for="password">Password:</label>
     <input type="password" id="password" [(ngModel)]="password" name="password" #passwordField="ngModel" required
       minlength="6" pattern="^[a-zA-Z0-9]+$">
@@ -51,7 +51,7 @@
       <p *ngIf="passwordField.errors?.['pattern']">Password can only contain letters and numbers.</p>
     </div>
 
-    <!-- Repeat Password Field -->
+ 
     <label for="rePass">Repeat Password:</label>
     <input type="password" id="rePass" [(ngModel)]="rePass" name="rePass" #rePassField="ngModel" required
       [pattern]="password" minlength="6">
