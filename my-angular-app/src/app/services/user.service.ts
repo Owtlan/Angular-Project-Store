@@ -12,8 +12,6 @@ export class UserService {
 
   constructor(private firestore: Firestore, private auth: Auth) { }
 
-
-
   async getFirestoreUser(uid: string): Promise<any> {
     try {
       const userDocRef = doc(this.firestore, `users/${uid}`);
